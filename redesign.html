@@ -108,12 +108,12 @@ em{font-style:italic;color:var(--g);}
 .hero{position:relative;height:100vh;min-height:640px;overflow:hidden;display:flex;align-items:center;background:#0d1a10;}
 .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 85% 65% at 62% 50%,rgba(69,108,84,.3) 0%,transparent 70%);pointer-events:none;}
 .hero-grid{position:absolute;inset:0;pointer-events:none;opacity:.045;background-image:linear-gradient(rgba(98,154,120,1) 1px,transparent 1px),linear-gradient(90deg,rgba(98,154,120,1) 1px,transparent 1px);background-size:64px 64px;}
-.hero-content{position:relative;z-index:2;padding:0 5%;width:100%;}
+.hero-content{position:relative;z-index:2;padding:0 5%;width:100%;max-width:900px;}
 .hero-pre{font-size:10px;font-weight:600;letter-spacing:.35em;text-transform:uppercase;color:var(--g2);margin-bottom:22px;display:flex;align-items:center;gap:10px;opacity:0;animation:fadeIn .8s ease .1s forwards;}
 .hero-pre::before{content:'';width:24px;height:1.5px;background:var(--g2);}
 .hero-line1{font-family:var(--serif);font-size:clamp(20px,3vw,38px);font-weight:300;color:rgba(255,255,255,.45);letter-spacing:.06em;margin-bottom:4px;opacity:0;animation:fadeIn .7s ease .35s forwards;}
-.hero-word{display:flex;flex-wrap:wrap;line-height:.95;margin-bottom:8px;}
-.hero-letter{font-family:var(--serif);font-size:clamp(72px,11vw,150px);font-weight:300;color:#fff;display:inline-block;opacity:0;transform:translateY(70px);animation:letterDrop .6s var(--ease) both;}
+.hero-word{display:flex;flex-wrap:nowrap;line-height:.95;margin-bottom:8px;overflow:hidden;}
+.hero-letter{font-family:var(--serif);font-size:clamp(60px,9.5vw,130px);font-weight:300;color:#fff;display:inline-block;opacity:0;transform:translateY(70px);animation:letterDrop .6s var(--ease) both;}
 .hero-letter.gr{color:var(--g2);}
 @keyframes letterDrop{to{opacity:1;transform:translateY(0);}}
 .hero-line3{font-family:var(--serif);font-size:clamp(20px,3vw,38px);font-weight:300;font-style:italic;color:var(--g2);letter-spacing:.04em;opacity:0;animation:slideUp .8s var(--ease) 1.3s forwards;}
