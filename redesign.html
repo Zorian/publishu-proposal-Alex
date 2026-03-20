@@ -380,7 +380,7 @@ footer{background:var(--dk);padding:72px 5% 36px;}
   .stats{grid-template-columns:repeat(2,1fr);}
   .stat:nth-child(2){border-right:none;}
   /* ── HERO MOBILE ── */
-  .hero{align-items:flex-start;padding-top:60px;}
+  .hero{align-items:flex-start;padding-top:60px;height:auto;min-height:100svh;padding-bottom:60px;}
   .hero-content{padding:0 5%;width:100%;}
   .hero-line1{font-size:clamp(16px,4vw,22px);}
   .hero-letter{font-size:clamp(48px,13vw,80px);}
@@ -391,7 +391,8 @@ footer{background:var(--dk);padding:72px 5% 36px;}
   /* hide pills on mobile — they overlap */
   .stat-pill{display:none;}
   /* Matt section mobile */
-  .matt-img{height:260px;max-height:260px;}
+  .matt-img{height:320px;max-height:320px;}
+  .matt-img img{object-position:center 25%;}
   .matt-copy{padding:44px 5%;}
   /* Impact section */
   .impact{padding:56px 5%;gap:36px;}
