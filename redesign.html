@@ -1,539 +1,651 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PublishU — From Idea to Published Author</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --dark:    #1a1a1a;
-      --dark2:   #111111;
-      --green:   #629A78;
-      --green2:  #91b8a1;
-      --green3:  #456c54;
-      --green4:  #d6ebe0;
-      --white:   #ffffff;
-      --offwhite:#f8f8f6;
-      --cream:   #f2f0ec;
-      --mid:     #666;
-      --serif:   'Cormorant Garamond', Georgia, serif;
-      --sans:    'DM Sans', sans-serif;
-    }
-    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-    html { scroll-behavior:smooth; }
-    body { font-family:var(--sans); background:var(--white); color:var(--dark); overflow-x:hidden; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PublishU — From Idea to Published Author</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --g:#629A78; --g2:#91b8a1; --g3:#456c54; --g4:#e8f4ed; --g5:#d0e8da;
+  --dk:#111; --dk2:#1a1a1a; --dk3:#222;
+  --wh:#fff; --off:#f7f7f5; --cr:#f2f0eb;
+  --mid:#666; --lt:#999;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'DM Sans',sans-serif;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--sans);background:var(--wh);color:var(--dk);overflow-x:hidden;}
 
-    /* NAV */
-    nav {
-      position:fixed; top:0; left:0; right:0; z-index:200; height:68px;
-      background:var(--dark); display:flex; align-items:center;
-      justify-content:space-between; padding:0 5.5%;
-      border-bottom:1px solid rgba(98,154,120,0.25);
-    }
-    .nav-logo { cursor:pointer; }
-    .nav-logo img { height:27px; display:block; }
-    .nav-links { display:flex; align-items:center; gap:34px; list-style:none; }
-    .nav-links a { font-size:11.5px; font-weight:500; letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,255,255,0.5); text-decoration:none; cursor:pointer; transition:color 0.2s; }
-    .nav-links a:hover, .nav-links a.active { color:#fff; }
-    .nav-cta { background:var(--green) !important; color:#fff !important; padding:9px 22px; letter-spacing:0.1em !important; border-radius:2px; }
-    .nav-cta:hover { background:var(--green3) !important; color:#fff !important; }
-    .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; }
-    .hamburger span { width:22px; height:1.5px; background:#fff; display:block; }
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:300;height:66px;background:var(--dk);display:flex;align-items:center;justify-content:space-between;padding:0 5%;}
+.nl{cursor:pointer;}
+.nl img{height:26px;display:block;}
+.nm{display:flex;align-items:center;gap:32px;list-style:none;}
+.nm a{font-size:11px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.48);text-decoration:none;cursor:pointer;transition:color .2s;}
+.nm a:hover,.nm a.on{color:#fff;}
+.nm .cta{background:var(--g);color:#fff!important;padding:9px 22px;border-radius:2px;letter-spacing:.1em!important;}
+.nm .cta:hover{background:var(--g3)!important;}
+.hb{display:none;flex-direction:column;gap:5px;cursor:pointer;}
+.hb span{width:22px;height:1.5px;background:#fff;display:block;}
 
-    /* BANNER */
-    .banner { position:fixed; top:68px; left:0; right:0; z-index:199; background:var(--green3); color:#fff; text-align:center; padding:9px 16px; font-size:12px; font-weight:500; letter-spacing:0.04em; }
-    .banner a { color:#fff; font-weight:700; margin-left:14px; border-bottom:1px solid rgba(255,255,255,0.45); text-decoration:none; }
-    .banner a:hover { border-color:#fff; }
+/* MOBILE NAV */
+.mob{display:none;position:fixed;top:66px;left:0;right:0;z-index:290;background:var(--dk);padding:20px 5%;flex-direction:column;gap:16px;}
+.mob.on{display:flex;}
+.mob a{font-size:14px;font-weight:500;color:rgba(255,255,255,.7);text-decoration:none;cursor:pointer;}
 
-    /* PAGES */
-    .page { display:none; padding-top:106px; }
-    .page.active { display:block; animation:fadeUp 0.3s ease; }
-    @keyframes fadeUp { from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);} }
+/* PAGE */
+.pg{display:none;padding-top:66px;}
+.pg.on{display:block;animation:fu .3s ease;}
+@keyframes fu{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
 
-    /* BUTTONS */
-    .btn { display:inline-block; font-family:var(--sans); font-size:12px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; text-decoration:none; padding:14px 32px; cursor:pointer; border:none; transition:all 0.2s; border-radius:2px; }
-    .btn-green { background:var(--green); color:#fff; }
-    .btn-green:hover { background:var(--green3); transform:translateY(-1px); }
-    .btn-outline { background:transparent; color:var(--dark); border:1.5px solid rgba(22,22,22,0.22); }
-    .btn-outline:hover { border-color:var(--green); color:var(--green); }
-    .btn-outline-white { background:transparent; color:#fff; border:1.5px solid rgba(255,255,255,0.3); }
-    .btn-outline-white:hover { border-color:#fff; background:rgba(255,255,255,0.07); }
-    .btn-outline-green { background:transparent; color:var(--green); border:1.5px solid var(--green); }
-    .btn-outline-green:hover { background:var(--green); color:#fff; }
+/* BUTTONS */
+.btn{display:inline-block;font-family:var(--sans);font-size:11.5px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;text-decoration:none;padding:14px 30px;cursor:pointer;border:none;transition:all .2s;border-radius:2px;}
+.bg{background:var(--g);color:#fff;}
+.bg:hover{background:var(--g3);transform:translateY(-1px);}
+.bo{background:transparent;color:var(--dk);border:1.5px solid rgba(0,0,0,.18);}
+.bo:hover{border-color:var(--g);color:var(--g);}
+.bow{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.28);}
+.bow:hover{border-color:#fff;background:rgba(255,255,255,.08);}
+.bog{background:transparent;color:var(--g);border:1.5px solid var(--g);}
+.bog:hover{background:var(--g);color:#fff;}
 
-    /* TYPE */
-    .eyebrow { font-size:10.5px; font-weight:600; letter-spacing:0.28em; text-transform:uppercase; color:var(--green); display:flex; align-items:center; gap:11px; margin-bottom:18px; }
-    .eyebrow::before { content:''; width:30px; height:1.5px; background:var(--green); flex-shrink:0; }
-    .eyebrow.center { justify-content:center; }
-    .eyebrow.center::before { display:none; }
-    .eyebrow.light { color:var(--green2); }
-    .eyebrow.light::before { background:var(--green2); }
-    h1,h2,h3 { font-family:var(--serif); font-weight:400; line-height:1.08; }
-    h1 { font-size:clamp(48px,7vw,88px); }
-    h2 { font-size:clamp(32px,4vw,52px); }
-    h3 { font-size:clamp(18px,2vw,26px); }
-    em { font-style:italic; color:var(--green); }
-    .rule { width:46px; height:2px; background:var(--green); margin:26px 0; }
-    .rule.light { background:var(--green2); }
+/* TYPE */
+.ey{font-size:10px;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:var(--g);display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+.ey::before{content:'';width:28px;height:1.5px;background:var(--g);flex-shrink:0;}
+.ey.c{justify-content:center;}
+.ey.c::before{display:none;}
+.ey.lv{color:var(--g2);}
+.ey.lv::before{background:var(--g2);}
+h1,h2,h3{font-family:var(--serif);font-weight:400;line-height:1.06;}
+h1{font-size:clamp(44px,7vw,90px);}
+h2{font-size:clamp(30px,4vw,52px);}
+h3{font-size:clamp(17px,2vw,24px);}
+em{font-style:italic;color:var(--g);}
+.ru{width:42px;height:2px;background:var(--g);margin:24px 0;}
+.ru.lv{background:var(--g2);}
+.bt{font-size:14.5px;line-height:1.85;color:var(--mid);max-width:540px;}
 
-    /* SECTIONS */
-    .sec { padding:88px 5.5%; }
-    .sec-white { background:var(--white); }
-    .sec-off { background:var(--offwhite); }
-    .sec-cream { background:var(--cream); }
-    .sec-dark { background:var(--dark); }
-    .sec-dark2 { background:var(--dark2); }
-    .sec-green { background:var(--green3); }
-    .sec-dark h2,.sec-dark h3,.sec-dark2 h2,.sec-dark2 h3 { color:#fff; }
-    .sec-dark p,.sec-dark2 p { color:rgba(255,255,255,0.58); }
-    .body-text { font-size:15px; line-height:1.85; color:var(--mid); max-width:560px; }
+/* SECTIONS */
+.sec{padding:84px 5%;}
+.sw{background:var(--wh);}
+.so{background:var(--off);}
+.sc{background:var(--cr);}
+.sg{background:var(--g4);}
+.sdk{background:var(--dk);}
+.sdk2{background:var(--dk2);}
+.sdk3{background:var(--dk3);}
+.sdk h2,.sdk h3,.sdk2 h2,.sdk2 h3,.sdk3 h2,.sdk3 h3{color:#fff;}
+.sdk p,.sdk2 p,.sdk3 p{color:rgba(255,255,255,.55);}
 
-    /* HERO */
-    .hero { position:relative; min-height:calc(100vh - 106px); display:flex; align-items:center; overflow:hidden; }
-    .hero-img { position:absolute; inset:0; background:url('https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=1800&q=80') center/cover no-repeat; }
-    .hero-overlay { position:absolute; inset:0; background:linear-gradient(108deg,rgba(26,26,26,0.96) 42%,rgba(26,26,26,0.52) 100%); }
-    .hero-content { position:relative; z-index:2; padding:0 5.5%; max-width:660px; }
-    .hero-content h1 { color:#fff; }
-    .hero-content .sub { font-size:16px; line-height:1.8; color:rgba(255,255,255,0.6); margin:24px 0 44px; max-width:430px; }
-    .hero-actions { display:flex; gap:14px; flex-wrap:wrap; }
+/* ═══════ HOME HERO ═══════ */
+.hero{position:relative;height:100vh;min-height:600px;display:grid;grid-template-columns:1fr 1fr;overflow:hidden;}
+.hero-l{background:var(--dk);display:flex;flex-direction:column;justify-content:flex-end;padding:0 5% 80px;position:relative;z-index:2;}
+.hero-l::after{content:'';position:absolute;right:-1px;top:0;bottom:0;width:80px;background:linear-gradient(to right,var(--dk),transparent);z-index:3;}
+.hero-r{position:relative;overflow:hidden;}
+.hero-r img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;}
+.hero-r::before{content:'';position:absolute;inset:0;background:linear-gradient(to right,var(--dk) 0%,transparent 40%);z-index:1;}
+.hero-eyebrow{font-size:10px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--g2);margin-bottom:20px;}
+.hero h1{color:#fff;line-height:1.02;margin-bottom:6px;}
+.hero-sub{font-size:16px;line-height:1.8;color:rgba(255,255,255,.58);margin:22px 0 44px;max-width:400px;}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;}
+.hero-scroll{position:absolute;bottom:32px;right:5%;z-index:5;font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.35);display:flex;align-items:center;gap:8px;}
+.hero-scroll::after{content:'';width:40px;height:1px;background:rgba(255,255,255,.25);}
 
-    /* STATS */
-    .stats-bar { display:flex; background:var(--green3); }
-    .stat { flex:1; text-align:center; padding:26px 16px; border-right:1px solid rgba(255,255,255,0.12); }
-    .stat:last-child { border-right:none; }
-    .stat-n { font-family:var(--serif); font-size:46px; font-weight:600; color:#fff; line-height:1; }
-    .stat-l { font-size:10px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; color:rgba(255,255,255,0.62); margin-top:5px; }
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);background:var(--g3);}
+.stat{text-align:center;padding:24px 16px;border-right:1px solid rgba(255,255,255,.12);}
+.stat:last-child{border-right:none;}
+.sn{font-family:var(--serif);font-size:48px;font-weight:600;color:#fff;line-height:1;}
+.sl{font-size:9.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-top:5px;}
 
-    /* PILLARS */
-    .pillars { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; margin-top:52px; background:rgba(0,0,0,0.08); }
-    .pillar { background:var(--dark); padding:48px 34px; cursor:pointer; border-top:3px solid transparent; transition:border-color 0.2s, background 0.2s; }
-    .pillar:hover { border-top-color:var(--green); background:#222; }
-    .pillar-n { font-family:var(--serif); font-size:56px; font-weight:300; color:rgba(98,154,120,0.13); line-height:1; margin-bottom:16px; }
-    .pillar h3 { color:#fff; margin-bottom:9px; }
-    .pillar p { font-size:13.5px; line-height:1.75; color:rgba(255,255,255,0.5); margin-bottom:26px; }
-    .pillar-link { font-size:11px; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; color:var(--green2); }
+/* THREE PILLARS */
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:52px;background:rgba(0,0,0,.06);}
+.pil{background:var(--dk);padding:50px 36px;cursor:pointer;position:relative;overflow:hidden;transition:background .2s;}
+.pil:hover{background:#1e1e1e;}
+.pil::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--g);transform:scaleX(0);transform-origin:left;transition:transform .3s;}
+.pil:hover::before{transform:scaleX(1);}
+.pil-n{font-family:var(--serif);font-size:60px;font-weight:300;color:rgba(98,154,120,.1);line-height:1;margin-bottom:18px;}
+.pil h3{color:#fff;margin-bottom:10px;}
+.pil p{font-size:13.5px;line-height:1.75;color:rgba(255,255,255,.48);margin-bottom:28px;}
+.pil-a{font-size:10.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--g2);}
 
-    /* MATT SPLIT */
-    .matt-split { display:grid; grid-template-columns:1fr 1fr; }
-    .matt-photo { overflow:hidden; min-height:520px; }
-    .matt-photo img { width:100%; height:100%; object-fit:cover; object-position:top; display:block; }
-    .matt-copy { padding:76px 60px; background:var(--offwhite); display:flex; flex-direction:column; justify-content:center; }
+/* MATT SECTION */
+.matt{display:grid;grid-template-columns:1fr 1fr;min-height:580px;}
+.matt-img{overflow:hidden;}
+.matt-img img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;filter:grayscale(8%);}
+.matt-copy{padding:72px 64px;background:var(--off);display:flex;flex-direction:column;justify-content:center;}
 
-    /* COHORTS */
-    .cohort-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; margin-top:52px; background:rgba(255,255,255,0.06); }
-    .cohort { background:var(--dark2); padding:34px 28px; }
-    .cohort-d { font-family:var(--serif); font-size:52px; font-weight:300; color:#fff; line-height:1; }
-    .cohort-m { font-family:var(--serif); font-size:20px; font-weight:300; color:var(--green2); margin-bottom:20px; }
-    .cohort-hr { height:1px; background:rgba(255,255,255,0.07); margin:14px 0; }
-    .cohort-info { font-size:12.5px; color:rgba(255,255,255,0.5); margin-bottom:4px; }
-    .cohort-info strong { color:rgba(255,255,255,0.82); }
-    .c-row { display:flex; gap:7px; flex-wrap:wrap; margin:16px 0 14px; }
-    .c-tab { padding:7px 13px; font-size:11.5px; font-weight:600; border:1px solid rgba(255,255,255,0.15); background:transparent; cursor:pointer; text-decoration:none; color:rgba(255,255,255,0.6); transition:all 0.15s; }
-    .c-tab:hover { background:var(--green); color:#fff; border-color:var(--green); }
+/* ═══════ 0.02% SECTION ═══════ */
+.stat-impact{background:var(--g3);padding:80px 5%;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+.si-l h2{font-size:clamp(44px,6vw,80px);color:#fff;line-height:1.0;}
+.si-l h2 span{display:block;font-size:clamp(16px,2vw,22px);font-weight:300;font-style:italic;color:rgba(255,255,255,.65);margin-top:8px;}
+.si-r p{font-size:17px;line-height:1.85;color:rgba(255,255,255,.7);margin-bottom:10px;}
+.si-r strong{color:#fff;}
+.si-r .tagline{font-family:var(--serif);font-size:28px;font-style:italic;color:var(--g2);margin-top:24px;display:block;}
 
-    /* TESTIMONIALS */
-    .testi-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; margin-top:52px; background:rgba(255,255,255,0.06); }
-    .testi { background:var(--dark2); padding:32px 26px; position:relative; }
-    .testi-q { font-family:var(--serif); font-size:68px; color:var(--green); opacity:0.22; position:absolute; top:6px; left:20px; line-height:1; }
-    .testi p { font-family:var(--serif); font-size:16px; font-style:italic; line-height:1.65; color:rgba(255,255,255,0.88); margin-bottom:20px; padding-top:14px; }
-    .testi-auth { display:flex; align-items:center; gap:10px; }
-    .testi-auth img { width:38px; height:38px; border-radius:50%; object-fit:cover; border:2px solid var(--green); }
-    .testi-name { font-size:11.5px; font-weight:600; color:rgba(255,255,255,0.65); }
+/* AUTHOR SHOWCASE */
+.authors{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:52px;border:1px solid rgba(0,0,0,.08);}
+.author-card{padding:0;overflow:hidden;position:relative;}
+.author-card img{width:100%;height:360px;object-fit:cover;object-position:top;display:block;transition:transform .4s;}
+.author-card:hover img{transform:scale(1.03);}
+.author-info{padding:24px 24px 28px;}
+.auth-name{font-family:var(--serif);font-size:22px;font-weight:500;color:var(--dk);margin-bottom:4px;}
+.auth-book{font-size:13px;font-style:italic;color:var(--mid);margin-bottom:8px;}
+.auth-rank{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--g3);background:var(--g4);padding:5px 10px;display:inline-block;}
 
-    /* MASTERCLASS */
-    .mc-block { display:grid; grid-template-columns:280px 1fr; max-width:900px; margin:52px auto 0; }
-    .mc-block img { width:100%; height:100%; object-fit:cover; min-height:280px; display:block; }
-    .mc-copy { background:var(--offwhite); padding:52px 46px; border-left:3px solid var(--green); }
-    .mc-copy h3 { font-size:28px; color:var(--dark); margin-bottom:12px; }
-    .mc-copy p { font-size:14.5px; line-height:1.8; color:var(--mid); margin-bottom:32px; }
-    .btn-row { display:flex; gap:12px; flex-wrap:wrap; }
+/* ═══════ FREE EBOOK CAPTURE ═══════ */
+.ebook{background:var(--dk);padding:80px 5%;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+.ebook-mock{position:relative;display:flex;align-items:center;justify-content:center;}
+.book-3d{width:220px;height:300px;position:relative;transform:perspective(800px) rotateY(-12deg);transform-style:preserve-3d;}
+.book-front{width:100%;height:100%;background:linear-gradient(145deg,var(--g3) 0%,var(--g) 60%,var(--g2) 100%);display:flex;flex-direction:column;justify-content:space-between;padding:30px 24px;box-shadow:8px 8px 30px rgba(0,0,0,.5),2px 2px 8px rgba(0,0,0,.3);position:relative;overflow:hidden;}
+.book-front::before{content:'';position:absolute;top:0;right:0;bottom:0;width:8px;background:rgba(0,0,0,.2);}
+.book-front::after{content:'';position:absolute;inset:0;background:linear-gradient(105deg,rgba(255,255,255,.08) 0%,transparent 50%);}
+.book-title{font-family:var(--serif);font-size:22px;font-weight:600;color:#fff;line-height:1.15;z-index:1;}
+.book-sub{font-size:10.5px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.7);z-index:1;}
+.book-author{font-size:11px;font-weight:600;color:rgba(255,255,255,.9);letter-spacing:.08em;text-transform:uppercase;z-index:1;}
+.book-glow{position:absolute;bottom:-40px;left:50%;transform:translateX(-50%);width:180px;height:80px;background:rgba(98,154,120,.25);filter:blur(28px);border-radius:50%;}
+.ebook-copy{color:#fff;}
+.ebook-copy .ey.lv{margin-bottom:16px;}
+.ebook-copy h2{color:#fff;margin-bottom:0;}
+.ebook-copy .ru.lv{margin:22px 0;}
+.ebook-copy p{font-size:15px;line-height:1.8;color:rgba(255,255,255,.6);margin-bottom:8px;}
+.ebook-form{margin-top:32px;display:flex;flex-direction:column;gap:12px;}
+.ef-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.ef-input{width:100%;padding:14px 16px;font-family:var(--sans);font-size:14px;background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.12);color:#fff;outline:none;transition:border-color .2s;border-radius:2px;}
+.ef-input::placeholder{color:rgba(255,255,255,.35);}
+.ef-input:focus{border-color:var(--g2);}
+.ef-btn{width:100%;padding:15px;font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;background:var(--g);color:#fff;border:none;cursor:pointer;transition:background .2s;border-radius:2px;}
+.ef-btn:hover{background:var(--g3);}
+.ef-small{font-size:11px;color:rgba(255,255,255,.3);text-align:center;}
 
-    /* FAQ */
-    .faq-wrap { max-width:720px; margin:52px auto 0; }
-    .faq-item { border-bottom:1px solid rgba(26,26,26,0.1); }
-    .faq-item.on-dark { border-bottom-color:rgba(255,255,255,0.1); }
-    .faq-q { display:flex; justify-content:space-between; align-items:center; padding:20px 0; cursor:pointer; font-family:var(--serif); font-size:19px; font-weight:500; color:var(--dark); }
-    .faq-item.on-dark .faq-q { color:#fff; }
-    .faq-icon { font-size:20px; color:var(--green); transition:transform 0.2s; min-width:20px; text-align:center; }
-    .faq-item.open .faq-icon { transform:rotate(45deg); }
-    .faq-a { display:none; padding-bottom:20px; font-size:14px; line-height:1.8; color:var(--mid); }
-    .faq-item.on-dark .faq-a { color:rgba(255,255,255,0.55); }
-    .faq-item.open .faq-a { display:block; }
+/* COHORTS */
+.coh-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:52px;background:rgba(255,255,255,.05);}
+.coh{background:var(--dk2);padding:36px 28px;}
+.coh-d{font-family:var(--serif);font-size:54px;font-weight:300;color:#fff;line-height:1;}
+.coh-m{font-family:var(--serif);font-size:18px;font-weight:300;color:var(--g2);margin-bottom:20px;}
+.coh-hr{height:1px;background:rgba(255,255,255,.07);margin:14px 0;}
+.coh-i{font-size:12.5px;color:rgba(255,255,255,.5);margin-bottom:4px;}
+.coh-i strong{color:rgba(255,255,255,.82);}
+.ctabs{display:flex;gap:6px;flex-wrap:wrap;margin:16px 0 14px;}
+.ct{padding:7px 12px;font-size:11px;font-weight:600;border:1px solid rgba(255,255,255,.13);background:transparent;cursor:pointer;text-decoration:none;color:rgba(255,255,255,.58);transition:all .15s;}
+.ct:hover{background:var(--g);color:#fff;border-color:var(--g);}
 
-    /* INNER HERO */
-    .inner-hero { background:var(--dark); padding:92px 5.5% 96px; position:relative; overflow:hidden; }
-    .ihero-bg { position:absolute; right:0; top:0; bottom:0; width:44%; background-size:cover; background-position:center; opacity:0.15; }
-    .ihero-grad { position:absolute; inset:0; background:linear-gradient(to right, var(--dark) 50%, transparent); }
-    .ihero-content { position:relative; z-index:2; max-width:540px; }
-    .ihero-content h1 { color:#fff; font-size:clamp(42px,5.5vw,74px); }
-    .ihero-content .sub { font-size:15px; line-height:1.8; color:rgba(255,255,255,0.6); margin-top:16px; max-width:420px; }
+/* TESTIMONIALS (text quotes) */
+.tq-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:52px;background:rgba(255,255,255,.05);}
+.tq{background:var(--dk3);padding:34px 28px;position:relative;}
+.tq-qm{font-family:var(--serif);font-size:80px;color:var(--g);opacity:.18;position:absolute;top:4px;left:18px;line-height:1;}
+.tq p{font-family:var(--serif);font-size:16px;font-style:italic;line-height:1.65;color:rgba(255,255,255,.88);margin-bottom:20px;padding-top:14px;}
+.tq-auth{display:flex;align-items:center;gap:10px;}
+.tq-auth img{width:38px;height:38px;border-radius:50%;object-fit:cover;border:2px solid var(--g);}
+.tq-nm{font-size:11.5px;font-weight:600;color:rgba(255,255,255,.62);}
 
-    /* PRICING */
-    .pricing-grid { display:grid; grid-template-columns:1fr 1.08fr 1fr; gap:0; margin-top:52px; align-items:start; }
-    .price-card { padding:42px 32px; border:1px solid rgba(26,26,26,0.1); background:var(--white); }
-    .price-card.feat { background:var(--dark); padding-top:58px; padding-bottom:58px; margin:-14px 0; z-index:2; position:relative; border:none; }
-    .price-card.feat::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; background:var(--green); }
-    .p-tag { font-size:10px; font-weight:600; letter-spacing:0.2em; text-transform:uppercase; color:var(--green); margin-bottom:7px; }
-    .price-card.feat .p-tag { color:var(--green2); }
-    .p-name { font-family:var(--serif); font-size:24px; font-weight:500; color:var(--dark); margin-bottom:8px; }
-    .price-card.feat .p-name { color:#fff; }
-    .p-amount { font-family:var(--serif); font-size:54px; font-weight:300; color:var(--dark); line-height:1; margin:16px 0 6px; }
-    .price-card.feat .p-amount { color:var(--green2); }
-    .p-desc { font-size:13px; font-style:italic; color:var(--mid); padding-bottom:20px; margin-bottom:20px; border-bottom:1px solid rgba(26,26,26,0.1); }
-    .price-card.feat .p-desc { color:rgba(255,255,255,0.48); border-color:rgba(255,255,255,0.1); }
-    .p-feats { list-style:none; margin-bottom:32px; }
-    .p-feats li { font-size:13px; line-height:1.6; color:var(--mid); padding:7px 0 7px 20px; border-bottom:1px solid rgba(26,26,26,0.06); position:relative; }
-    .price-card.feat .p-feats li { color:rgba(255,255,255,0.65); border-color:rgba(255,255,255,0.08); }
-    .p-feats li::before { content:'✓'; position:absolute; left:0; color:var(--green); font-weight:700; }
+/* MATT CTA BLOCK */
+.mc-block{display:grid;grid-template-columns:260px 1fr;max-width:860px;margin:52px auto 0;}
+.mc-img img{width:100%;height:100%;object-fit:cover;object-position:top;min-height:260px;display:block;}
+.mc-copy{background:var(--dk2);padding:48px 44px;border-left:3px solid var(--g);}
+.mc-copy h3{color:#fff;font-size:25px;margin-bottom:10px;}
+.mc-copy p{font-size:14px;line-height:1.8;color:rgba(255,255,255,.58);margin-bottom:26px;}
+.mc-btns{display:flex;gap:10px;flex-wrap:wrap;}
 
-    /* WHY CARDS */
-    .why-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:52px; }
-    .why-card { background:var(--white); padding:32px; border-top:3px solid var(--green); }
-    .why-icon { font-size:22px; margin-bottom:11px; }
-    .why-card h3 { font-size:19px; margin-bottom:6px; }
-    .why-card p { font-size:13px; line-height:1.75; color:var(--mid); }
-    .why-fig { font-family:var(--serif); font-size:30px; font-weight:600; color:var(--green3); margin-top:10px; }
+/* FAQ */
+.faq-w{max-width:720px;margin:52px auto 0;}
+.fi{border-bottom:1px solid rgba(0,0,0,.09);}
+.fi.dk{border-bottom-color:rgba(255,255,255,.09);}
+.fq{display:flex;justify-content:space-between;align-items:center;padding:19px 0;cursor:pointer;font-family:var(--serif);font-size:19px;font-weight:500;color:var(--dk);}
+.fi.dk .fq{color:#fff;}
+.fi-ic{font-size:20px;color:var(--g);transition:transform .2s;min-width:20px;text-align:center;}
+.fi.open .fi-ic{transform:rotate(45deg);}
+.fa{display:none;padding-bottom:19px;font-size:14px;line-height:1.8;color:var(--mid);}
+.fi.dk .fa{color:rgba(255,255,255,.52);}
+.fi.open .fa{display:block;}
 
-    /* TWO COL */
-    .two-col { display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center; }
-    .two-col img { width:100%; height:440px; object-fit:cover; display:block; }
+/* INNER HERO */
+.ih{background:var(--dk);padding:90px 5% 96px;position:relative;overflow:hidden;}
+.ihbg{position:absolute;right:0;top:0;bottom:0;width:46%;background-size:cover;background-position:center top;opacity:.15;}
+.ihgr{position:absolute;inset:0;background:linear-gradient(to right,var(--dk) 50%,transparent);}
+.ihc{position:relative;z-index:2;max-width:520px;}
+.ihc h1{color:#fff;font-size:clamp(40px,5.5vw,72px);}
+.ihc .sub{font-size:15px;line-height:1.8;color:rgba(255,255,255,.58);margin-top:14px;max-width:400px;}
 
-    /* TIMELINE */
-    .timeline { display:grid; grid-template-columns:repeat(4,1fr); gap:0; margin-top:52px; counter-reset:step; }
-    .t-step { padding:26px 20px; border-left:1px solid rgba(98,154,120,0.2); }
-    .t-step::before { counter-increment:step; content:counter(step,decimal-leading-zero); font-family:var(--serif); font-size:40px; font-weight:300; color:rgba(98,154,120,0.14); display:block; line-height:1; margin-bottom:9px; }
-    .t-step h3 { font-size:13.5px; font-family:var(--sans); font-weight:600; color:#fff; margin-bottom:5px; letter-spacing:0; }
-    .t-step p { font-size:12px; line-height:1.65; color:rgba(255,255,255,0.45); }
+/* PRICING */
+.price-g{display:grid;grid-template-columns:1fr 1.08fr 1fr;gap:0;margin-top:52px;align-items:start;}
+.pc{padding:40px 30px;border:1px solid rgba(0,0,0,.09);background:var(--wh);}
+.pc.feat{background:var(--dk);padding-top:56px;padding-bottom:56px;margin:-14px 0;z-index:2;position:relative;border:none;}
+.pc.feat::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--g);}
+.pt{font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--g);margin-bottom:6px;}
+.pc.feat .pt{color:var(--g2);}
+.pn{font-family:var(--serif);font-size:22px;font-weight:500;color:var(--dk);margin-bottom:8px;}
+.pc.feat .pn{color:#fff;}
+.pa{font-family:var(--serif);font-size:52px;font-weight:300;color:var(--dk);line-height:1;margin:14px 0 5px;}
+.pc.feat .pa{color:var(--g2);}
+.pd{font-size:12.5px;font-style:italic;color:var(--mid);padding-bottom:18px;margin-bottom:18px;border-bottom:1px solid rgba(0,0,0,.09);}
+.pc.feat .pd{color:rgba(255,255,255,.45);border-color:rgba(255,255,255,.09);}
+.pf{list-style:none;margin-bottom:30px;}
+.pf li{font-size:13px;line-height:1.6;color:var(--mid);padding:7px 0 7px 18px;border-bottom:1px solid rgba(0,0,0,.05);position:relative;}
+.pc.feat .pf li{color:rgba(255,255,255,.65);border-color:rgba(255,255,255,.07);}
+.pf li::before{content:'✓';position:absolute;left:0;color:var(--g);font-weight:700;}
 
-    /* BENEFITS */
-    .benefits-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:52px; }
-    .benefit { background:var(--white); padding:30px; border-top:3px solid var(--green); }
-    .benefit-icon { font-size:22px; margin-bottom:10px; }
-    .benefit h3 { font-size:17px; margin-bottom:5px; }
-    .benefit p { font-size:13px; line-height:1.75; color:var(--mid); }
-    .benefit-fig { font-family:var(--serif); font-size:28px; font-weight:600; color:var(--green3); margin-top:10px; }
+/* WHY */
+.why-g{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:52px;}
+.wc{background:var(--wh);padding:30px;border-top:3px solid var(--g);}
+.wi{font-size:22px;margin-bottom:10px;}
+.wc h3{font-size:18px;margin-bottom:6px;}
+.wc p{font-size:13px;line-height:1.75;color:var(--mid);}
+.wf{font-family:var(--serif);font-size:30px;font-weight:600;color:var(--g3);margin-top:10px;}
 
-    /* AUTHORS CENTRE */
-    .authors-centre { max-width:620px; margin:0 auto; text-align:center; }
-    .authors-centre p { font-size:15px; line-height:1.85; color:rgba(255,255,255,0.58); margin:20px 0 42px; }
+/* TWO COL */
+.tc{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;}
+.tc img{width:100%;height:440px;object-fit:cover;display:block;}
 
-    /* MATT CTA */
-    .matt-cta { display:grid; grid-template-columns:260px 1fr; max-width:840px; margin:52px auto 0; }
-    .matt-cta img { width:100%; height:100%; object-fit:cover; object-position:top; min-height:250px; display:block; }
-    .matt-cta-copy { background:var(--dark2); padding:48px 44px; border-left:3px solid var(--green); }
-    .matt-cta-copy h3 { font-size:25px; color:#fff; margin-bottom:10px; }
-    .matt-cta-copy p { font-size:14px; line-height:1.8; color:rgba(255,255,255,0.58); margin-bottom:26px; }
+/* TIMELINE */
+.tl{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:52px;counter-reset:step;}
+.ts{padding:26px 20px;border-left:1px solid rgba(98,154,120,.18);}
+.ts::before{counter-increment:step;content:counter(step,decimal-leading-zero);font-family:var(--serif);font-size:42px;font-weight:300;color:rgba(98,154,120,.14);display:block;line-height:1;margin-bottom:8px;}
+.ts h3{font-size:13.5px;font-family:var(--sans);font-weight:600;color:#fff;margin-bottom:5px;letter-spacing:0;}
+.ts p{font-size:12px;line-height:1.65;color:rgba(255,255,255,.43);}
 
-    /* PROG GRID */
-    .prog-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1px; margin-top:52px; background:rgba(255,255,255,0.06); }
-    .prog-item { padding:32px; background:var(--dark2); }
-    .prog-icon { font-size:22px; margin-bottom:11px; }
-    .prog-item h3 { font-size:19px; color:#fff; margin-bottom:7px; }
-    .prog-item p { font-size:13px; line-height:1.75; color:rgba(255,255,255,0.55); }
+/* BENEFITS */
+.ben-g{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:52px;}
+.ben{background:var(--wh);padding:28px;border-top:3px solid var(--g);}
+.bi{font-size:20px;margin-bottom:10px;}
+.ben h3{font-size:17px;margin-bottom:5px;}
+.ben p{font-size:13px;line-height:1.75;color:var(--mid);}
+.bf{font-family:var(--serif);font-size:28px;font-weight:600;color:var(--g3);margin-top:8px;}
 
-    /* PATHWAY */
-    .pathway { display:grid; grid-template-columns:repeat(3,1fr); gap:0; margin-top:52px; }
-    .path-step { padding:40px 32px; border-right:1px solid rgba(26,26,26,0.1); cursor:pointer; transition:background 0.2s; }
-    .path-step:last-child { border-right:none; border-top:3px solid var(--green); background:var(--green4); }
-    .path-step:hover { background:var(--offwhite); }
-    .path-step:last-child:hover { background:rgba(98,154,120,0.12); }
-    .path-icon { font-size:24px; margin-bottom:11px; }
-    .path-step h3 { margin-bottom:6px; }
-    .path-step p { font-size:13px; line-height:1.7; color:var(--mid); }
+/* AUTHORS CENTRE */
+.ac{max-width:600px;margin:0 auto;text-align:center;}
+.ac p{font-size:15px;line-height:1.85;color:rgba(255,255,255,.58);margin:18px 0 40px;}
 
-    /* PRICE HERO */
-    .price-hero { max-width:540px; margin:0 auto; text-align:center; }
-    .price-hero .big-price { font-family:var(--serif); font-size:76px; font-weight:300; color:var(--green2); line-height:1; margin:12px 0 8px; }
-    .price-hero p { font-size:15px; color:rgba(255,255,255,0.58); margin-bottom:36px; }
+/* PROG */
+.pg-g{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;margin-top:52px;background:rgba(255,255,255,.05);}
+.pi{padding:32px;background:var(--dk2);}
+.pi-ic{font-size:22px;margin-bottom:11px;}
+.pi h3{font-size:19px;color:#fff;margin-bottom:7px;}
+.pi p{font-size:13px;line-height:1.75;color:rgba(255,255,255,.53);}
 
-    /* CONTACT */
-    .contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:start; }
-    .form-group { margin-bottom:20px; }
-    .form-label { display:block; font-size:10.5px; font-weight:600; letter-spacing:0.16em; text-transform:uppercase; color:var(--mid); margin-bottom:7px; }
-    .form-input { width:100%; padding:13px 14px; font-family:var(--sans); font-size:14px; border:1.5px solid rgba(26,26,26,0.15); background:var(--white); color:var(--dark); outline:none; transition:border-color 0.2s; }
-    .form-input:focus { border-color:var(--green); }
-    textarea.form-input { min-height:120px; resize:vertical; }
-    .sched-list { display:flex; flex-direction:column; gap:10px; margin-top:34px; }
-    .sched-row { display:grid; grid-template-columns:60px 1fr auto; gap:16px; align-items:center; padding:18px 20px; background:var(--white); border-left:3px solid var(--green); border:1px solid rgba(26,26,26,0.08); border-left:3px solid var(--green); }
-    .sched-date { font-family:var(--serif); font-size:34px; font-weight:300; color:var(--dark); line-height:1; }
-    .sched-mo { font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; color:var(--green3); }
-    .sched-info strong { font-size:13px; font-weight:600; color:var(--dark); display:block; }
-    .sched-info span { font-size:11.5px; color:var(--mid); }
+/* PATHWAY */
+.path{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:52px;}
+.ps{padding:40px 32px;border-right:1px solid rgba(0,0,0,.09);cursor:pointer;transition:background .2s;}
+.ps:last-child{border-right:none;border-top:3px solid var(--g);background:var(--g4);}
+.ps:hover{background:var(--off);}
+.ps:last-child:hover{background:rgba(98,154,120,.1);}
+.ps-ic{font-size:24px;margin-bottom:10px;}
+.ps h3{margin-bottom:6px;}
+.ps p{font-size:13px;line-height:1.7;color:var(--mid);}
 
-    /* FOOTER */
-    footer { background:var(--dark2); padding:68px 5.5% 34px; }
-    .foot-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:48px; margin-bottom:48px; }
-    .foot-logo img { height:24px; margin-bottom:14px; display:block; }
-    .foot-tag { font-size:13px; line-height:1.75; color:rgba(255,255,255,0.4); max-width:240px; }
-    .foot-head { font-size:10px; font-weight:600; letter-spacing:0.22em; text-transform:uppercase; color:var(--green2); margin-bottom:14px; }
-    .foot-links { list-style:none; display:flex; flex-direction:column; gap:9px; }
-    .foot-links a { font-size:13px; color:rgba(255,255,255,0.48); text-decoration:none; cursor:pointer; transition:color 0.15s; }
-    .foot-links a:hover { color:var(--green2); }
-    .foot-bottom { border-top:1px solid rgba(255,255,255,0.07); padding-top:24px; display:flex; justify-content:space-between; }
-    .foot-copy { font-size:12px; color:rgba(255,255,255,0.22); }
+/* PRICE HERO */
+.ph{max-width:520px;margin:0 auto;text-align:center;}
+.ph .bp{font-family:var(--serif);font-size:76px;font-weight:300;color:var(--g2);line-height:1;margin:12px 0 8px;}
+.ph p{font-size:15px;color:rgba(255,255,255,.55);margin-bottom:34px;}
 
-    /* RESPONSIVE */
-    @media (max-width:960px) {
-      .pillars,.cohort-grid,.testi-grid,.pricing-grid,.timeline,
-      .benefits-grid,.why-grid,.pathway,.prog-grid,.contact-grid,
-      .two-col,.foot-grid { grid-template-columns:1fr; }
-      .price-card.feat { margin:0; padding:42px 32px; }
-      .matt-split,.mc-block,.matt-cta { grid-template-columns:1fr; }
-      .matt-photo,.mc-block img,.matt-cta img { min-height:240px; max-height:300px; }
-    }
-    @media (max-width:768px) {
-      .nav-links { display:none; }
-      .hamburger { display:flex; }
-      .sec,.inner-hero { padding-left:5%; padding-right:5%; }
-      .hero-content { padding-left:5%; }
-      .stats-bar { flex-wrap:wrap; }
-      .stat { min-width:50%; border-bottom:1px solid rgba(255,255,255,0.08); }
-    }
-    .mob-nav { display:none; position:fixed; top:68px; left:0; right:0; z-index:190; background:var(--dark); padding:20px 5.5%; flex-direction:column; gap:16px; border-top:1px solid rgba(98,154,120,0.2); }
-    .mob-nav.open { display:flex; }
-    .mob-nav a { font-size:14px; font-weight:500; color:rgba(255,255,255,0.68); text-decoration:none; cursor:pointer; }
-  </style>
+/* CONTACT */
+.cg{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;}
+.fg{margin-bottom:19px;}
+.fl{display:block;font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--mid);margin-bottom:7px;}
+.fi2{width:100%;padding:13px 14px;font-family:var(--sans);font-size:14px;border:1.5px solid rgba(0,0,0,.14);background:var(--wh);color:var(--dk);outline:none;transition:border-color .2s;}
+.fi2:focus{border-color:var(--g);}
+textarea.fi2{min-height:120px;resize:vertical;}
+.sch-l{display:flex;flex-direction:column;gap:10px;margin-top:32px;}
+.sr{display:grid;grid-template-columns:58px 1fr auto;gap:14px;align-items:center;padding:18px 20px;background:var(--wh);border:1px solid rgba(0,0,0,.08);border-left:3px solid var(--g);}
+.sd{font-family:var(--serif);font-size:34px;font-weight:300;color:var(--dk);line-height:1;}
+.sm{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--g3);}
+.si strong{font-size:13px;font-weight:600;color:var(--dk);display:block;}
+.si span{font-size:11.5px;color:var(--mid);}
+
+/* FOOTER */
+footer{background:var(--dk);padding:64px 5% 32px;}
+.fg2{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px;}
+.fli img{height:24px;margin-bottom:14px;display:block;}
+.ft{font-size:13px;line-height:1.75;color:rgba(255,255,255,.38);max-width:230px;}
+.fh{font-size:9.5px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--g2);margin-bottom:14px;}
+.fls{list-style:none;display:flex;flex-direction:column;gap:9px;}
+.fls a{font-size:13px;color:rgba(255,255,255,.45);text-decoration:none;cursor:pointer;transition:color .15s;}
+.fls a:hover{color:var(--g2);}
+.fb{border-top:1px solid rgba(255,255,255,.07);padding-top:24px;display:flex;justify-content:space-between;}
+.fc{font-size:12px;color:rgba(255,255,255,.2);}
+
+/* RESPONSIVE */
+@media(max-width:960px){
+  .hero{grid-template-columns:1fr;height:auto;min-height:100vh;}
+  .hero-r{height:50vh;}
+  .pillars,.coh-grid,.tq-grid,.price-g,.tl,.ben-g,.why-g,.path,.pg-g,.cg,.fg2{grid-template-columns:1fr;}
+  .pc.feat{margin:0;padding:40px 30px;}
+  .matt,.stat-impact,.ebook,.tc{grid-template-columns:1fr;}
+  .matt-img,.tc img{max-height:320px;}
+  .ebook-mock{margin-bottom:32px;}
+  .authors{grid-template-columns:1fr 1fr;}
+  .mc-block{grid-template-columns:1fr;}
+  .mc-img img{max-height:240px;}
+  .hero-l{padding:60px 5% 60px;}
+}
+@media(max-width:768px){
+  .nm{display:none;}
+  .hb{display:flex;}
+  .sec,.ih,.stat-impact,.ebook{padding-left:5%;padding-right:5%;}
+  .stats{grid-template-columns:repeat(2,1fr);}
+  .stat:nth-child(2){border-right:none;}
+  .authors{grid-template-columns:1fr;}
+}
+</style>
 </head>
 <body>
 
-<div class="banner">Next course starts <strong>7 April 2026</strong><a href="https://buy.stripe.com/fZu3cvcur49ebfG6vTcQU0g" target="_blank">Reserve Your Place →</a></div>
-
 <nav>
-  <div class="nav-logo" onclick="go('home')">
-    <img src="https://cdn.prod.website-files.com/63298f3b5649aa4943acb8d0/6329aaaedf80057696fdb491_PublishU%20white.svg" alt="PublishU">
+  <div class="nl" onclick="go('home')">
+    <img src="https://raw.githubusercontent.com/Zorian/publishu-proposal-Alex/main/assets/logo.svg" alt="PublishU">
   </div>
-  <ul class="nav-links">
+  <ul class="nm">
     <li><a onclick="go('writing')" id="nl-writing">Writing</a></li>
     <li><a onclick="go('publishing')" id="nl-publishing">Publishing</a></li>
     <li><a onclick="go('marketing')" id="nl-marketing">Marketing</a></li>
-    <li><a onclick="go('contact')" id="nl-contact" class="nav-cta">Contact</a></li>
+    <li><a onclick="go('contact')" id="nl-contact" class="cta">Contact</a></li>
   </ul>
-  <div class="hamburger" onclick="toggleMob()"><span></span><span></span><span></span></div>
+  <div class="hb" onclick="toggleMob()"><span></span><span></span><span></span></div>
 </nav>
 
-<div class="mob-nav" id="mob-nav">
+<div class="mob" id="mob">
   <a onclick="go('writing');toggleMob()">Writing</a>
   <a onclick="go('publishing');toggleMob()">Publishing</a>
   <a onclick="go('marketing');toggleMob()">Marketing</a>
   <a onclick="go('contact');toggleMob()">Contact</a>
 </div>
 
-<!-- ══ HOME ══ -->
-<div class="page active" id="pg-home">
+<!-- ═══════════ HOME ═══════════ -->
+<div class="pg on" id="pg-home">
 
+  <!-- HERO -->
   <div class="hero">
-    <div class="hero-img"></div>
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-      <div class="eyebrow light" style="margin-bottom:22px">The Book Writing Programme</div>
-      <h1 style="color:#fff">Become<br><em style="color:var(--green2)">An Author</em></h1>
-      <p class="sub">PublishU turns willing writers into published authors — from first idea to finished book, in just 100 days.</p>
-      <div class="hero-actions">
-        <a onclick="go('writing')" class="btn btn-green">Join A Course</a>
-        <a href="#about" class="btn btn-outline-white">How It Works</a>
+    <div class="hero-l">
+      <div class="hero-eyebrow">The Book Writing Programme</div>
+      <h1 style="color:#fff">Become<br><em style="color:var(--g2)">An Author</em></h1>
+      <p class="hero-sub">PublishU turns willing writers into globally published authors — from first idea to finished book, in just 100 days.</p>
+      <div class="hero-btns">
+        <a onclick="go('writing')" class="btn bg">Join A Course</a>
+        <a href="#about" class="btn bow">How It Works</a>
       </div>
     </div>
+    <div class="hero-r">
+      <img src="https://raw.githubusercontent.com/Zorian/publishu-proposal-Alex/main/assets/matt-1.jpg" alt="Matt Bird — PublishU">
+    </div>
+    <div class="hero-scroll">Scroll to explore</div>
   </div>
 
-  <div class="stats-bar">
-    <div class="stat"><div class="stat-n">25+</div><div class="stat-l">Books by Matt</div></div>
-    <div class="stat"><div class="stat-n">100</div><div class="stat-l">Days to Manuscript</div></div>
-    <div class="stat"><div class="stat-n">90%</div><div class="stat-l">Completion Rate</div></div>
-    <div class="stat"><div class="stat-n">400+</div><div class="stat-l">Published Authors</div></div>
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat"><div class="sn">25+</div><div class="sl">Books by Matt</div></div>
+    <div class="stat"><div class="sn">100</div><div class="sl">Days to Manuscript</div></div>
+    <div class="stat"><div class="sn">90%</div><div class="sl">Completion Rate</div></div>
+    <div class="stat"><div class="sn">400+</div><div class="sl">Published Authors</div></div>
   </div>
 
-  <div class="sec sec-dark" id="about">
-    <div class="eyebrow light">The PublishU Journey</div>
-    <h2>From <em>First Idea</em><br>to Global Publication</h2>
+  <!-- 3 PILLARS -->
+  <div class="sec sdk" id="about">
+    <div class="ey lv">The PublishU Journey</div>
+    <h2>From <em>First Idea</em> to Global Publication</h2>
     <div class="pillars">
-      <div class="pillar" onclick="go('writing')">
-        <div class="pillar-n">01</div>
+      <div class="pil" onclick="go('writing')">
+        <div class="pil-n">01</div>
         <h3>Writing My Book</h3>
-        <p>Turn your idea into a completed manuscript in 100 days. Max 10 authors per cohort for dedicated coaching from Matt Bird.</p>
-        <div class="pillar-link">Explore Writing →</div>
+        <p>Turn your idea into a completed manuscript in 100 days. Maximum 10 authors per cohort for dedicated coaching from Matt Bird.</p>
+        <div class="pil-a">Explore Writing →</div>
       </div>
-      <div class="pillar" onclick="go('publishing')">
-        <div class="pillar-n">02</div>
+      <div class="pil" onclick="go('publishing')">
+        <div class="pil-n">02</div>
         <h3>Publishing My Book</h3>
-        <p>From manuscript to global publication in 100 days. Paperback, Kindle and Audiobook across all major retailers worldwide.</p>
-        <div class="pillar-link">Explore Publishing →</div>
+        <p>From manuscript to global publication in 100 days. Paperback, Kindle and Audiobook across every major retailer worldwide.</p>
+        <div class="pil-a">Explore Publishing →</div>
       </div>
-      <div class="pillar" onclick="go('marketing')">
-        <div class="pillar-n">03</div>
+      <div class="pil" onclick="go('marketing')">
+        <div class="pil-n">03</div>
         <h3>Marketing My Book</h3>
-        <p>Six months of structured support to build momentum, visibility and opportunity around your book after publication.</p>
-        <div class="pillar-link">Explore Marketing →</div>
+        <p>Six months of structured support to build momentum, visibility and real opportunity around your book after publication.</p>
+        <div class="pil-a">Explore Marketing →</div>
       </div>
     </div>
   </div>
 
-  <div class="matt-split">
-    <div class="matt-photo">
-      <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80" alt="Matt Bird">
+  <!-- 0.02% STAT IMPACT -->
+  <div class="stat-impact">
+    <div class="si-l">
+      <div class="ey lv" style="margin-bottom:20px">Proven Results</div>
+      <h2 style="color:#fff">Top 0.02%<span>of all books on Amazon.</span></h2>
+      <div class="ru lv" style="margin:28px 0"></div>
+      <a onclick="go('publishing')" class="btn bg" style="margin-top:8px">See How We Do It</a>
+    </div>
+    <div class="si-r">
+      <p>Top 10,000 on Amazon means your book ranks in the <strong>top 0.02% of 44 million books.</strong></p>
+      <p>These aren't lucky breaks. They're the result of the PublishU system — professional editing, strategic cover design, global distribution, and a marketing programme that keeps momentum alive.</p>
+      <span class="tagline">"These authors didn't just publish. They published well."</span>
+    </div>
+  </div>
+
+  <!-- AUTHOR SHOWCASE -->
+  <div class="sec sw">
+    <div class="ey c">Published Authors</div>
+    <h2 style="text-align:center">Real Authors. <em>Real Results.</em></h2>
+    <div class="authors">
+      <div class="author-card">
+        <img src="https://raw.githubusercontent.com/Zorian/publishu-proposal-Alex/main/assets/testi-jimmy.jpg" alt="Jimmy Orr">
+        <div class="author-info">
+          <div class="auth-name">Jimmy Orr</div>
+          <div class="auth-book">'Stand There, Don't Just Do Something'</div>
+          <span class="auth-rank">Amazon Top 10,000 — Top 0.02%</span>
+        </div>
+      </div>
+      <div class="author-card">
+        <img src="https://raw.githubusercontent.com/Zorian/publishu-proposal-Alex/main/assets/testi-alex.jpg" alt="Alexander Hoare">
+        <div class="author-info">
+          <div class="auth-name">Alexander Hoare</div>
+          <div class="auth-book">'Impact Banker'</div>
+          <span class="auth-rank">Amazon Rank #1,714 — Top 0.004%</span>
+        </div>
+      </div>
+      <div class="author-card">
+        <img src="https://raw.githubusercontent.com/Zorian/publishu-proposal-Alex/main/assets/testi-leslie.jpg" alt="Leslie Newton">
+        <div class="author-info">
+          <div class="auth-name">Leslie Newton</div>
+          <div class="auth-book">'Church Unbound'</div>
+          <span class="auth-rank">Amazon Top 10,000 — Top 0.02%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MATT -->
+  <div class="matt">
+    <div class="matt-img">
+      <img src="https://raw.githubusercontent.com/Zorian/publishu-proposal-Alex/main/assets/matt-2.jpg" alt="Matt Bird">
     </div>
     <div class="matt-copy">
-      <div class="eyebrow">Your Coach</div>
+      <div class="ey">Your Coach</div>
       <h2>Meet<br><em>Matt Bird</em></h2>
-      <div class="rule"></div>
-      <p class="body-text" style="margin-bottom:16px">Matt Bird has authored 25 books, won a Book of the Year prize, and written for The Times. He overcame remedial English classes and dyslexia to become one of the UK's most prolific authors.</p>
-      <p class="body-text" style="margin-bottom:36px">Every PublishU programme is led by Matt personally. You get direct access to his expertise, his publishing network, and 25 years of hands-on experience — whatever your starting point.</p>
-      <a href="https://www.publishu.com/free-consultation" target="_blank" class="btn btn-green">Book A Free Call With Matt</a>
+      <div class="ru"></div>
+      <p class="bt" style="margin-bottom:16px">Matt Bird has authored 25 books, won a Book of the Year prize and written for The Times. He overcame remedial English classes and dyslexia to become one of the UK's most prolific authors and publishers.</p>
+      <p class="bt" style="margin-bottom:36px">Every PublishU programme is led by Matt personally. You get his direct expertise, his publishing network, and 25 years of hands-on experience — from idea through to Amazon bestseller.</p>
+      <a href="https://www.publishu.com/free-consultation" target="_blank" class="btn bg">Book A Free Call With Matt</a>
     </div>
   </div>
 
-  <div class="sec sec-dark" id="courses">
-    <div class="eyebrow light">Upcoming Cohorts</div>
+  <!-- FREE EBOOK CAPTURE -->
+  <div class="ebook" id="ebook">
+    <div class="ebook-mock">
+      <div class="book-3d">
+        <div class="book-front">
+          <div>
+            <div class="book-sub" style="margin-bottom:10px">Free Guide by Matt Bird</div>
+            <div class="book-title">My Coaching Business</div>
+          </div>
+          <div>
+            <div class="book-sub" style="margin-bottom:6px">A Step-by-Step Guide to Build Your Coaching Venture</div>
+            <div class="book-author">Matt Bird · PublishU</div>
+          </div>
+        </div>
+      </div>
+      <div class="book-glow"></div>
+    </div>
+    <div class="ebook-copy">
+      <div class="ey lv">Free Download</div>
+      <h2 style="color:#fff">My Coaching <em style="color:var(--g2)">Business</em></h2>
+      <div class="ru lv"></div>
+      <p>Get Matt Bird's complete step-by-step guide to building your coaching venture — completely free.</p>
+      <p style="margin-top:4px">Covers positioning, pricing, getting your first clients, and how your book becomes your most powerful coaching asset.</p>
+      <div class="ebook-form" id="ebook-form">
+        <div class="ef-row">
+          <input type="text" class="ef-input" placeholder="First name" id="ef-first">
+          <input type="text" class="ef-input" placeholder="Last name" id="ef-last">
+        </div>
+        <input type="email" class="ef-input" placeholder="Your email address" id="ef-email">
+        <button class="ef-btn" onclick="submitEbook()">Send Me The Free Guide →</button>
+        <div class="ef-small">No spam. Unsubscribe anytime.</div>
+      </div>
+      <div id="ebook-thanks" style="display:none;margin-top:24px;padding:24px;background:rgba(98,154,120,.15);border:1px solid rgba(98,154,120,.3);border-radius:2px;">
+        <div style="font-size:18px;margin-bottom:6px;color:#fff;font-family:var(--serif)">You're in! ✓</div>
+        <div style="font-size:14px;color:rgba(255,255,255,.65)">Check your inbox — your free copy of <em>My Coaching Business</em> is on its way.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COHORTS -->
+  <div class="sec sdk" id="courses">
+    <div class="ey lv">Upcoming Cohorts</div>
     <h2>Choose <em>Your Start Date</em></h2>
-    <div class="cohort-grid">
-      <div class="cohort">
-        <div class="cohort-d">07</div><div class="cohort-m">April 2026</div>
-        <div class="cohort-hr"></div>
-        <div class="cohort-info">Day: <strong>Tuesdays</strong></div>
-        <div class="cohort-info">Times: <strong>10–11am UK · 1–2pm Dubai · 8–9pm Sydney</strong></div>
-        <div class="cohort-info" style="font-size:11.5px;margin-top:3px">7, 14, 21, 28 Apr · 12, 26 May · 9, 23 Jun</div>
-        <div class="c-row">
-          <a href="https://buy.stripe.com/fZu3cvcur49ebfG6vTcQU0g" target="_blank" class="c-tab">£995</a>
-          <a href="https://buy.stripe.com/5kQcN5eCzgW0dnOaM9cQU0m" target="_blank" class="c-tab">AED 5,000</a>
-          <a href="https://buy.stripe.com/00wfZh2TRfRWfvW8E1cQU0u" target="_blank" class="c-tab">$2,000 AUD</a>
+    <div class="coh-grid">
+      <div class="coh">
+        <div class="coh-d">07</div><div class="coh-m">April 2026</div>
+        <div class="coh-hr"></div>
+        <div class="coh-i">Day: <strong>Tuesdays</strong></div>
+        <div class="coh-i">Times: <strong>10–11am UK · 1–2pm Dubai · 8–9pm Sydney</strong></div>
+        <div class="coh-i" style="font-size:11.5px;margin-top:3px">7, 14, 21, 28 Apr · 12, 26 May · 9, 23 Jun</div>
+        <div class="ctabs">
+          <a href="https://buy.stripe.com/fZu3cvcur49ebfG6vTcQU0g" target="_blank" class="ct">£995</a>
+          <a href="https://buy.stripe.com/5kQcN5eCzgW0dnOaM9cQU0m" target="_blank" class="ct">AED 5,000</a>
+          <a href="https://buy.stripe.com/00wfZh2TRfRWfvW8E1cQU0u" target="_blank" class="ct">$2,000 AUD</a>
         </div>
-        <a onclick="go('writing')" class="btn btn-green" style="font-size:11px;padding:11px 22px">View Course Details</a>
+        <a onclick="go('writing')" class="btn bg" style="font-size:10.5px;padding:11px 20px">View Details</a>
       </div>
-      <div class="cohort">
-        <div class="cohort-d">06</div><div class="cohort-m">May 2026</div>
-        <div class="cohort-hr"></div>
-        <div class="cohort-info">Day: <strong>Wednesdays</strong></div>
-        <div class="cohort-info">Times: <strong>8–9am New York · 1–2pm UK · 4–5pm Dubai</strong></div>
-        <div class="cohort-info" style="font-size:11.5px;margin-top:3px">6, 13, 20, 27 May · 10, 24 Jun · 8, 22 Jul</div>
-        <div class="c-row">
-          <a href="https://buy.stripe.com/00wbJ19if8pu3Ne07vcQU0p" target="_blank" class="c-tab">$1,350 USD</a>
-          <a href="https://buy.stripe.com/4gM8wP7a78pugA07zXcQU0o" target="_blank" class="c-tab">£995</a>
-          <a href="https://buy.stripe.com/cNibJ1663dJO3Ne9I5cQU0q" target="_blank" class="c-tab">AED 5,000</a>
+      <div class="coh">
+        <div class="coh-d">06</div><div class="coh-m">May 2026</div>
+        <div class="coh-hr"></div>
+        <div class="coh-i">Day: <strong>Wednesdays</strong></div>
+        <div class="coh-i">Times: <strong>8–9am New York · 1–2pm UK · 4–5pm Dubai</strong></div>
+        <div class="coh-i" style="font-size:11.5px;margin-top:3px">6, 13, 20, 27 May · 10, 24 Jun · 8, 22 Jul</div>
+        <div class="ctabs">
+          <a href="https://buy.stripe.com/00wbJ19if8pu3Ne07vcQU0p" target="_blank" class="ct">$1,350 USD</a>
+          <a href="https://buy.stripe.com/4gM8wP7a78pugA07zXcQU0o" target="_blank" class="ct">£995</a>
+          <a href="https://buy.stripe.com/cNibJ1663dJO3Ne9I5cQU0q" target="_blank" class="ct">AED 5,000</a>
         </div>
-        <a onclick="go('writing')" class="btn btn-green" style="font-size:11px;padding:11px 22px">View Course Details</a>
+        <a onclick="go('writing')" class="btn bg" style="font-size:10.5px;padding:11px 20px">View Details</a>
       </div>
-      <div class="cohort">
-        <div class="cohort-d">01</div><div class="cohort-m">June 2026</div>
-        <div class="cohort-hr"></div>
-        <div class="cohort-info">Day: <strong>Mondays</strong></div>
-        <div class="cohort-info">Times: <strong>12–1pm New York · 5–6pm UK · 8–9pm Dubai</strong></div>
-        <div class="cohort-info" style="font-size:11.5px;margin-top:3px">1, 8, 15, 22 Jun · 6, 20 Jul · 3, 17 Aug</div>
-        <div class="c-row">
-          <a href="https://buy.stripe.com/6oU14nfGD2165VmbQdcQU0s" target="_blank" class="c-tab">$1,350 USD</a>
-          <a href="https://buy.stripe.com/6oU4gzbqn49egA0g6tcQU0r" target="_blank" class="c-tab">£995</a>
-          <a href="https://buy.stripe.com/3cIcN58eb5di4Ri9I5cQU0t" target="_blank" class="c-tab">AED 5,000</a>
+      <div class="coh">
+        <div class="coh-d">01</div><div class="coh-m">June 2026</div>
+        <div class="coh-hr"></div>
+        <div class="coh-i">Day: <strong>Mondays</strong></div>
+        <div class="coh-i">Times: <strong>12–1pm New York · 5–6pm UK · 8–9pm Dubai</strong></div>
+        <div class="coh-i" style="font-size:11.5px;margin-top:3px">1, 8, 15, 22 Jun · 6, 20 Jul · 3, 17 Aug</div>
+        <div class="ctabs">
+          <a href="https://buy.stripe.com/6oU14nfGD2165VmbQdcQU0s" target="_blank" class="ct">$1,350 USD</a>
+          <a href="https://buy.stripe.com/6oU4gzbqn49egA0g6tcQU0r" target="_blank" class="ct">£995</a>
+          <a href="https://buy.stripe.com/3cIcN58eb5di4Ri9I5cQU0t" target="_blank" class="ct">AED 5,000</a>
         </div>
-        <a onclick="go('writing')" class="btn btn-green" style="font-size:11px;padding:11px 22px">View Course Details</a>
+        <a onclick="go('writing')" class="btn bg" style="font-size:10.5px;padding:11px 20px">View Details</a>
       </div>
     </div>
   </div>
 
-  <div class="sec sec-dark2">
-    <div class="eyebrow light">What Authors Say</div>
+  <!-- TESTIMONIALS -->
+  <div class="sec sdk2">
+    <div class="ey lv">What Authors Say</div>
     <h2>Real <em>Results</em></h2>
-    <div class="testi-grid">
-      <div class="testi"><div class="testi-q">"</div><p>Practical, encouraging, beneficial, clear and purposeful in achieving the goal of writing the book in 90 days.</p><div class="testi-auth"><img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=100&q=80" alt=""><div class="testi-name">Emete Ogbomo</div></div></div>
-      <div class="testi"><div class="testi-q">"</div><p>Publishing with PublishU was an absolute pleasure. Their professionalism and commitment to quality truly sets them apart.</p><div class="testi-auth"><img src="https://images.unsplash.com/photo-1589156280159-27698a70f29e?w=100&q=80" alt=""><div class="testi-name">Ify Oji</div></div></div>
-      <div class="testi"><div class="testi-q">"</div><p>I never would have believed at the beginning of this year that I'd have written and published a book in 9 months!</p><div class="testi-auth"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&q=80" alt=""><div class="testi-name">Jess Hymus-Gant</div></div></div>
-      <div class="testi"><div class="testi-q">"</div><p>I don't think I would have a book out today without PublishU. I still am shocked that I'm a globally published author.</p><div class="testi-auth"><img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=100&q=80" alt=""><div class="testi-name">Vicky Lloyd</div></div></div>
-      <div class="testi"><div class="testi-q">"</div><p>With PublishU in your camp, you can get your first book on the shelves. Their process and their people — it works.</p><div class="testi-auth"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&q=80" alt=""><div class="testi-name">Harriet Gould</div></div></div>
-      <div class="testi"><div class="testi-q">"</div><p>Dreams require active, purposeful steps to materialise — and that is exactly what PublishU has given me.</p><div class="testi-auth"><img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=100&q=80" alt=""><div class="testi-name">Dr Genevieve Da Silva</div></div></div>
+    <div class="tq-grid">
+      <div class="tq"><div class="tq-qm">"</div><p>Practical, encouraging, beneficial, clear and purposeful in achieving the goal of writing the book in 90 days.</p><div class="tq-auth"><div class="tq-nm">Emete Ogbomo</div></div></div>
+      <div class="tq"><div class="tq-qm">"</div><p>Publishing with PublishU was an absolute pleasure. Their professionalism, attention to detail and commitment to quality truly sets them apart.</p><div class="tq-auth"><div class="tq-nm">Ify Oji</div></div></div>
+      <div class="tq"><div class="tq-qm">"</div><p>I never would have believed at the beginning of this year that I'd have written and published a book in 9 months!</p><div class="tq-auth"><div class="tq-nm">Jess Hymus-Gant</div></div></div>
+      <div class="tq"><div class="tq-qm">"</div><p>I don't think I would have a book out today without PublishU. I still am shocked that I'm a globally published author.</p><div class="tq-auth"><div class="tq-nm">Vicky Lloyd</div></div></div>
+      <div class="tq"><div class="tq-qm">"</div><p>Writing a book always felt beyond my reach until I did the Writing My Book programme. Highly recommended.</p><div class="tq-auth"><div class="tq-nm">Madz Deyzel</div></div></div>
+      <div class="tq"><div class="tq-qm">"</div><p>Dreams require active, purposeful steps to materialise — and that is exactly what PublishU has given me.</p><div class="tq-auth"><div class="tq-nm">Dr Genevieve Da Silva</div></div></div>
     </div>
   </div>
 
-  <div class="sec sec-off">
-    <div class="eyebrow">Monthly Live Event</div>
-    <h2>Matt's <em>Masterclass</em></h2>
-    <div class="mc-block">
-      <img src="https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=600&q=80" alt="Masterclass">
-      <div class="mc-copy">
-        <h3>Join The Live Masterclass</h3>
-        <p>Learn the six-fold framework for writing, publishing and marketing a book — direct from prolific author Matt Bird. Includes live Q&A so your questions get answered directly.</p>
-        <div class="btn-row">
-          <a href="https://www.publishu.com/course/webinar" target="_blank" class="btn btn-green">Save Your Seat — £50</a>
-          <a href="https://www.publishu.com/free-consultation" target="_blank" class="btn btn-outline">Free Consultation</a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="sec sec-white" id="faq">
-    <div class="eyebrow center">Common Questions</div>
+  <!-- FAQ -->
+  <div class="sec so">
+    <div class="ey c">Common Questions</div>
     <h2 style="text-align:center">Frequently Asked <em>Questions</em></h2>
-    <div class="faq-wrap">
-      <div class="faq-item"><div class="faq-q" onclick="faq(this)">Do you help once my book is written?<span class="faq-icon">+</span></div><div class="faq-a">The Writing My Book course explains three publishing routes with benefits and challenges of each. Many authors choose to publish worldwide through PublishU — you always choose what is right for you.</div></div>
-      <div class="faq-item"><div class="faq-q" onclick="faq(this)">What if I need to miss a session?<span class="faq-icon">+</span></div><div class="faq-a">We understand life happens. You receive a written resource covering every session plus the assignment, so you can stay completely on track with your coach's support.</div></div>
-      <div class="faq-item"><div class="faq-q" onclick="faq(this)">Does the course work alongside other commitments?<span class="faq-icon">+</span></div><div class="faq-a">Yes. Contact time is 8 hours, plus approximately 90 hours for writing — the equivalent of one hour per day over 100 days. Designed for busy people.</div></div>
-      <div class="faq-item"><div class="faq-q" onclick="faq(this)">I don't know what to write about — can you help?<span class="faq-icon">+</span></div><div class="faq-a">Absolutely. The Writing My Book course will help you create and crystallise the perfect book idea from the very first session.</div></div>
+    <div class="faq-w">
+      <div class="fi"><div class="fq" onclick="faq(this)">Do you help once my book is written?<span class="fi-ic">+</span></div><div class="fa">The Writing My Book course explains three publishing routes with benefits and challenges of each. Many authors choose to publish worldwide through PublishU — you always choose what is right for you.</div></div>
+      <div class="fi"><div class="fq" onclick="faq(this)">What if I need to miss a session?<span class="fi-ic">+</span></div><div class="fa">We understand life happens. You receive a written resource covering every session's content plus the assignment, so you can stay completely on track with your coach's support.</div></div>
+      <div class="fi"><div class="fq" onclick="faq(this)">Does the course work alongside other commitments?<span class="fi-ic">+</span></div><div class="fa">Yes. Contact time is 8 hours, plus approximately 90 hours for writing — the equivalent of one hour per day over 100 days. Designed for busy people.</div></div>
+      <div class="fi"><div class="fq" onclick="faq(this)">I don't know what to write about — can you help?<span class="fi-ic">+</span></div><div class="fa">Absolutely. The Writing My Book course will help you create and crystallise the perfect book idea from the very first session.</div></div>
     </div>
   </div>
 
   <footer>
-    <div class="foot-grid">
-      <div><div class="foot-logo"><img src="https://cdn.prod.website-files.com/63298f3b5649aa4943acb8d0/6329aaaedf80057696fdb491_PublishU%20white.svg" alt="PublishU"></div><p class="foot-tag">Turning willing writers into globally published authors — from first idea to finished book.</p></div>
-      <div><div class="foot-head">Programme</div><ul class="foot-links"><li><a href="https://www.publishu.com/masterclass" target="_blank">Masterclass</a></li><li><a onclick="go('writing')">Writing</a></li><li><a onclick="go('publishing')">Publishing</a></li><li><a onclick="go('marketing')">Marketing</a></li></ul></div>
-      <div><div class="foot-head">Company</div><ul class="foot-links"><li><a href="https://www.publishu.com/free-consultation" target="_blank">Free Consultation</a></li><li><a href="https://www.publishu.com/team" target="_blank">Team</a></li><li><a href="https://www.publishu.com/blog" target="_blank">Blog</a></li><li><a onclick="go('contact')">Contact</a></li></ul></div>
-      <div><div class="foot-head">Connect</div><ul class="foot-links"><li><a href="https://Instagram.com/PublishUGlobal" target="_blank">Instagram</a></li><li><a href="https://www.linkedin.com/in/mattbirdglobal" target="_blank">LinkedIn</a></li><li><a href="https://Facebook.com/PublishUGlobal" target="_blank">Facebook</a></li><li><a href="https://www.tiktok.com/@bookcoach" target="_blank">TikTok</a></li></ul></div>
+    <div class="fg2">
+      <div><div class="fli"><img src="https://raw.githubusercontent.com/Zorian/publishu-proposal-Alex/main/assets/logo.svg" alt="PublishU"></div><p class="ft">Turning willing writers into globally published authors — from first idea to finished book.</p></div>
+      <div><div class="fh">Programme</div><ul class="fls"><li><a href="https://www.publishu.com/masterclass" target="_blank">Masterclass</a></li><li><a onclick="go('writing')">Writing</a></li><li><a onclick="go('publishing')">Publishing</a></li><li><a onclick="go('marketing')">Marketing</a></li></ul></div>
+      <div><div class="fh">Company</div><ul class="fls"><li><a href="https://www.publishu.com/free-consultation" target="_blank">Free Consultation</a></li><li><a href="https://www.publishu.com/team" target="_blank">Team</a></li><li><a href="https://www.publishu.com/blog" target="_blank">Blog</a></li><li><a onclick="go('contact')">Contact</a></li></ul></div>
+      <div><div class="fh">Connect</div><ul class="fls"><li><a href="https://Instagram.com/PublishUGlobal" target="_blank">Instagram</a></li><li><a href="https://www.linkedin.com/in/mattbirdglobal" target="_blank">LinkedIn</a></li><li><a href="https://Facebook.com/PublishUGlobal" target="_blank">Facebook</a></li><li><a href="https://www.tiktok.com/@bookcoach" target="_blank">TikTok</a></li></ul></div>
     </div>
-    <div class="foot-bottom"><span class="foot-copy">© 2026 PublishU. All rights reserved.</span><span class="foot-copy">Redesigned by Zorian</span></div>
+    <div class="fb"><span class="fc">© 2026 PublishU. All rights reserved.</span><span class="fc">Redesigned by Zorian</span></div>
   </footer>
 </div>
 
-<!-- ══ WRITING ══ -->
-<div class="page" id="pg-writing">
-  <div class="inner-hero">
-    <div class="ihero-bg" style="background-image:url('https://images.unsplash.com/photo-1455390582262-044cdead277a?w=1200&q=80')"></div>
-    <div class="ihero-grad"></div>
-    <div class="ihero-content">
-      <div class="eyebrow light">The Course</div>
-      <h1>Writing<br><em style="color:var(--green2)">My Book</em></h1>
-      <div class="rule light"></div>
+<!-- ═══════════ WRITING ═══════════ -->
+<div class="pg" id="pg-writing">
+  <div class="ih">
+    <div class="ihbg" style="background-image:url('https://images.unsplash.com/photo-1455390582262-044cdead277a?w=1200&q=80')"></div>
+    <div class="ihgr"></div>
+    <div class="ihc">
+      <div class="ey lv">The Course</div>
+      <h1>Writing<br><em style="color:var(--g2)">My Book</em></h1>
+      <div class="ru lv"></div>
       <p class="sub">From a spark of an idea to holding your finished book — we've built the exact steps to get you there in 100 days.</p>
     </div>
   </div>
 
-  <div class="sec sec-white">
-    <div class="eyebrow">Choose Your Path</div>
+  <div class="sec sw">
+    <div class="ey">Choose Your Path</div>
     <h2>Three Ways to <em>Work With Matt</em></h2>
-    <div class="pricing-grid">
-      <div class="price-card">
-        <div class="p-tag">The Kickstart</div>
-        <div class="p-name">Live Masterclass</div>
-        <div class="p-amount">£50</div>
-        <p class="p-desc">Perfect for exploring the process without a big commitment.</p>
-        <ul class="p-feats">
-          <li>60-min live online masterclass with Matt Bird</li>
+    <div class="price-g">
+      <div class="pc">
+        <div class="pt">The Kickstart</div>
+        <div class="pn">Live Masterclass</div>
+        <div class="pa">£50</div>
+        <p class="pd">Perfect for exploring without a big commitment.</p>
+        <ul class="pf">
+          <li>60-min live masterclass with Matt Bird</li>
           <li>Proven strategies to write your book in months</li>
           <li>What agents and publishers really look for</li>
           <li>How successful authors generate income</li>
           <li>Live Q&A — your questions answered</li>
           <li>£50 credit towards the Writing course</li>
         </ul>
-        <a href="https://www.publishu.com/course/webinar" target="_blank" class="btn btn-outline">Secure My Seat</a>
+        <a href="https://www.publishu.com/course/webinar" target="_blank" class="btn bo">Secure My Seat</a>
       </div>
-      <div class="price-card feat">
-        <div class="p-tag">Most Popular — Bestseller Path</div>
-        <div class="p-name">Writing My Book Group Course</div>
-        <div class="p-amount">£995</div>
-        <p class="p-desc">For writers who want to finish their best book and get it published.</p>
-        <ul class="p-feats">
+      <div class="pc feat">
+        <div class="pt">Most Popular — Bestseller Path</div>
+        <div class="pn">Writing My Book Group Course</div>
+        <div class="pa">£995</div>
+        <p class="pd">For writers who want to finish their best book and get it published.</p>
+        <ul class="pf">
           <li>Write your book in 100 days — six-fold framework</li>
           <li>Max 10 places per cohort for dedicated coaching</li>
           <li>8 live sessions, assignments and ongoing support</li>
           <li>Reusable templates, techniques and tools</li>
           <li>9/10 participants finish their manuscript</li>
-          <li>£500 credit towards your book's publication</li>
+          <li>£500 credit towards publication of your book</li>
         </ul>
-        <a onclick="go('contact')" class="btn btn-green">Start My Book Journey</a>
+        <a onclick="go('contact')" class="btn bg">Start My Book Journey</a>
       </div>
-      <div class="price-card">
-        <div class="p-tag">The Full Mastermind</div>
-        <div class="p-name">1-to-1 Coaching</div>
-        <div class="p-amount">£5,000</div>
-        <p class="p-desc">For founders and executives who want a fully tailored experience.</p>
-        <ul class="p-feats">
+      <div class="pc">
+        <div class="pt">The Full Mastermind</div>
+        <div class="pn">1-to-1 Coaching</div>
+        <div class="pa">£5,000</div>
+        <p class="pd">For founders and executives who want a tailored experience.</p>
+        <ul class="pf">
           <li>3 months of private 1-to-1 mentoring with Matt</li>
           <li>Customised writing schedule and accountability</li>
           <li>Personal support with every milestone</li>
@@ -541,278 +653,293 @@
           <li>End-to-end publishing handled for you</li>
           <li>Strategic marketing plan for your launch</li>
         </ul>
-        <a href="https://buy.stripe.com/28EeVddyv0X20B2f2pcQU02" target="_blank" class="btn btn-outline">Work With Matt 1-to-1</a>
+        <a href="https://buy.stripe.com/28EeVddyv0X20B2f2pcQU02" target="_blank" class="btn bo">Work With Matt 1-to-1</a>
       </div>
     </div>
   </div>
 
-  <div class="sec sec-off">
-    <div class="eyebrow">Why Us</div>
+  <div class="sec so">
+    <div class="ey">Why Us</div>
     <h2>Why <em>PublishU?</em></h2>
-    <div class="why-grid">
-      <div class="why-card"><div class="why-icon">📚</div><h3>Proven Track Record</h3><p>Hundreds of authors published worldwide. 9 out of 10 participants finish within 100 days.</p><div class="why-fig">90%</div></div>
-      <div class="why-card"><div class="why-icon">🎓</div><h3>Expert Guidance</h3><p>Best-selling author Matt Bird leads every programme personally — 25 books, Book of the Year, The Times.</p><div class="why-fig">25 Books</div></div>
-      <div class="why-card"><div class="why-icon">🌍</div><h3>Global Reach</h3><p>Your finished book on Amazon and all major retailers worldwide in paperback, Kindle and Audiobook.</p><div class="why-fig">Worldwide</div></div>
+    <div class="why-g">
+      <div class="wc"><div class="wi">📚</div><h3>Proven Track Record</h3><p>Hundreds of authors published worldwide. 9/10 participants finish their manuscript within 100 days.</p><div class="wf">90%</div></div>
+      <div class="wc"><div class="wi">🎓</div><h3>Expert Guidance</h3><p>Best-selling author Matt Bird leads every programme personally — 25 books, Book of the Year, The Times.</p><div class="wf">25 Books</div></div>
+      <div class="wc"><div class="wi">🌍</div><h3>Global Reach</h3><p>Your finished book on Amazon and all major retailers worldwide in paperback, Kindle and Audiobook.</p><div class="wf">Worldwide</div></div>
     </div>
   </div>
 
-  <div class="sec sec-white">
-    <div class="two-col">
+  <div class="sec sw">
+    <div class="tc">
       <img src="https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=800&q=80" alt="Writing coaching">
       <div>
-        <div class="eyebrow">Not Sure Where to Start?</div>
+        <div class="ey">Not Sure Where to Start?</div>
         <h2>Schedule A Free Call<br><em>With Matt</em></h2>
-        <div class="rule"></div>
-        <p class="body-text" style="margin-bottom:16px">Do you have a book idea but aren't certain it's strong enough, or where to start? Book a one-to-one consultation with Matt — completely free.</p>
-        <p class="body-text" style="margin-bottom:36px">Matt has overcome remedial English classes and dyslexia to author 25 books. He knows exactly how to get you started, wherever you are right now.</p>
-        <a href="mailto:mattbird@publishu.com?subject=Can%20I%20Schedule%20A%20Free%20Call%20With%20You%20Please%3F" class="btn btn-green">Request Free Consultation</a>
+        <div class="ru"></div>
+        <p class="bt" style="margin-bottom:14px">Do you have a book idea but aren't certain where to start? Book a one-to-one consultation with Matt — completely free.</p>
+        <p class="bt" style="margin-bottom:34px">Matt has overcome remedial English classes and dyslexia to author 25 books. He knows exactly how to get you started, wherever you are right now.</p>
+        <a href="mailto:mattbird@publishu.com?subject=Can%20I%20Schedule%20A%20Free%20Call%20With%20You%20Please%3F" class="btn bg">Request Free Consultation</a>
       </div>
     </div>
   </div>
 
-  <div class="sec sec-off">
-    <div class="eyebrow center">Questions</div>
+  <div class="sec so">
+    <div class="ey c">Questions</div>
     <h2 style="text-align:center">Writing Course <em>FAQs</em></h2>
-    <div class="faq-wrap">
-      <div class="faq-item"><div class="faq-q" onclick="faq(this)">I'm not sure which option is right for me<span class="faq-icon">+</span></div><div class="faq-a">Start with the £50 masterclass to test the waters. Ready to commit? Choose the group course. Want maximum support? Go 1-to-1. Your masterclass fee is always credited towards any upgrade.</div></div>
-      <div class="faq-item"><div class="faq-q" onclick="faq(this)">Can I upgrade later?<span class="faq-icon">+</span></div><div class="faq-a">Yes. You can start small and upgrade at any time — the masterclass fee is credited towards the full course.</div></div>
-      <div class="faq-item"><div class="faq-q" onclick="faq(this)">Will I really finish my book?<span class="faq-icon">+</span></div><div class="faq-a">Our process has a 90% success rate. If you do the work, we will stay with you until the book is done.</div></div>
+    <div class="faq-w">
+      <div class="fi"><div class="fq" onclick="faq(this)">I'm not sure which option is right for me<span class="fi-ic">+</span></div><div class="fa">Start with the £50 masterclass to test the waters. Ready to commit? Choose the group course. Want maximum support? Go 1-to-1. Your masterclass fee is always credited towards any upgrade.</div></div>
+      <div class="fi"><div class="fq" onclick="faq(this)">Can I upgrade later?<span class="fi-ic">+</span></div><div class="fa">Yes — the masterclass fee is always credited towards the full course.</div></div>
+      <div class="fi"><div class="fq" onclick="faq(this)">Will I really finish my book?<span class="fi-ic">+</span></div><div class="fa">Our process has a 90% success rate. If you do the work, we will stay with you until the book is done.</div></div>
     </div>
   </div>
 
   <footer>
-    <div class="foot-grid">
-      <div><div class="foot-logo"><img src="https://cdn.prod.website-files.com/63298f3b5649aa4943acb8d0/6329aaaedf80057696fdb491_PublishU%20white.svg" alt="PublishU"></div><p class="foot-tag">Turning willing writers into globally published authors.</p></div>
-      <div><div class="foot-head">Programme</div><ul class="foot-links"><li><a onclick="go('writing')">Writing</a></li><li><a onclick="go('publishing')">Publishing</a></li><li><a onclick="go('marketing')">Marketing</a></li></ul></div>
-      <div><div class="foot-head">Company</div><ul class="foot-links"><li><a href="https://www.publishu.com/free-consultation" target="_blank">Free Consultation</a></li><li><a onclick="go('contact')">Contact</a></li></ul></div>
-      <div><div class="foot-head">Social</div><ul class="foot-links"><li><a href="https://Instagram.com/PublishUGlobal" target="_blank">Instagram</a></li><li><a href="https://www.linkedin.com/in/mattbirdglobal" target="_blank">LinkedIn</a></li></ul></div>
+    <div class="fg2">
+      <div><div class="fli"><img src="https://raw.githubusercontent.com/Zorian/publishu-proposal-Alex/main/assets/logo.svg" alt="PublishU"></div><p class="ft">Turning willing writers into globally published authors.</p></div>
+      <div><div class="fh">Programme</div><ul class="fls"><li><a onclick="go('writing')">Writing</a></li><li><a onclick="go('publishing')">Publishing</a></li><li><a onclick="go('marketing')">Marketing</a></li></ul></div>
+      <div><div class="fh">Company</div><ul class="fls"><li><a href="https://www.publishu.com/free-consultation" target="_blank">Free Consultation</a></li><li><a onclick="go('contact')">Contact</a></li></ul></div>
+      <div><div class="fh">Social</div><ul class="fls"><li><a href="https://Instagram.com/PublishUGlobal" target="_blank">Instagram</a></li><li><a href="https://www.linkedin.com/in/mattbirdglobal" target="_blank">LinkedIn</a></li></ul></div>
     </div>
-    <div class="foot-bottom"><span class="foot-copy">© 2026 PublishU</span></div>
+    <div class="fb"><span class="fc">© 2026 PublishU</span></div>
   </footer>
 </div>
 
-<!-- ══ PUBLISHING ══ -->
-<div class="page" id="pg-publishing">
-  <div class="inner-hero">
-    <div class="ihero-bg" style="background-image:url('https://images.unsplash.com/photo-1524578271613-d550eacf6090?w=1200&q=80')"></div>
-    <div class="ihero-grad"></div>
-    <div class="ihero-content">
-      <div class="eyebrow light">Publishing</div>
-      <h1>Publishing<br><em style="color:var(--green2)">My Book</em></h1>
-      <div class="rule light"></div>
+<!-- ═══════════ PUBLISHING ═══════════ -->
+<div class="pg" id="pg-publishing">
+  <div class="ih">
+    <div class="ihbg" style="background-image:url('https://images.unsplash.com/photo-1524578271613-d550eacf6090?w=1200&q=80')"></div>
+    <div class="ihgr"></div>
+    <div class="ihc">
+      <div class="ey lv">Publishing</div>
+      <h1>Publishing<br><em style="color:var(--g2)">My Book</em></h1>
+      <div class="ru lv"></div>
       <p class="sub">From manuscript to global publication in 100 days. Paperback, Kindle and Audiobook — available worldwide.</p>
     </div>
   </div>
 
-  <div class="sec sec-white">
-    <div class="eyebrow">The Advantages</div>
+  <div class="sec sw">
+    <div class="ey">The Advantages</div>
     <h2>Why Publish <em>With PublishU?</em></h2>
-    <div class="benefits-grid">
-      <div class="benefit"><div class="benefit-icon">⚡</div><h3>100-Day Timeline</h3><p>From manuscript to global publication in 100 days — not the 18-month industry standard.</p><div class="benefit-fig">100 Days</div></div>
-      <div class="benefit"><div class="benefit-icon">📈</div><h3>35–60% Margin</h3><p>Authors earn 35% of retail and 60% on wholesale — versus just 8–12% from traditional publishers.</p><div class="benefit-fig">35–60%</div></div>
-      <div class="benefit"><div class="benefit-icon">🌍</div><h3>Worldwide Distribution</h3><p>Print-on-demand with zero stock investment. Delivered within 24–48 hours in most countries.</p><div class="benefit-fig">Global</div></div>
-      <div class="benefit"><div class="benefit-icon">🎨</div><h3>World-Class Design</h3><p>Cover design, editing, proofreading and typesetting — all handled by dedicated professionals.</p></div>
-      <div class="benefit"><div class="benefit-icon">💰</div><h3>Bi-Annual Royalties</h3><p>Sales reports and payments twice a year — 31 Jan and 31 Jul. Twice the frequency of traditional publishers.</p></div>
-      <div class="benefit"><div class="benefit-icon">🎧</div><h3>Three Formats</h3><p>Paperback, Kindle and Audiobook as standard. Optional hardback, human-voice audio and translations.</p></div>
+    <div class="ben-g">
+      <div class="ben"><div class="bi">⚡</div><h3>100-Day Timeline</h3><p>From manuscript to global publication in 100 days — not the 18-month industry standard.</p><div class="bf">100 Days</div></div>
+      <div class="ben"><div class="bi">📈</div><h3>35–60% Margin</h3><p>Authors earn 35% of retail and 60% on wholesale — versus 8–12% from traditional publishers.</p><div class="bf">35–60%</div></div>
+      <div class="ben"><div class="bi">🌍</div><h3>Worldwide Distribution</h3><p>Print-on-demand with zero stock investment. Delivered within 24–48 hours in most countries.</p><div class="bf">Global</div></div>
+      <div class="ben"><div class="bi">🎨</div><h3>World-Class Design</h3><p>Cover design, editing, proofreading and typesetting — all handled by dedicated professionals.</p></div>
+      <div class="ben"><div class="bi">💰</div><h3>Bi-Annual Royalties</h3><p>Sales reports and payments twice a year — 31 Jan and 31 Jul. Twice the frequency of traditional publishers.</p></div>
+      <div class="ben"><div class="bi">🎧</div><h3>Three Formats</h3><p>Paperback, Kindle and Audiobook as standard. Optional hardback, human-voice audio and translations.</p></div>
     </div>
   </div>
 
-  <div class="sec sec-dark">
-    <div class="eyebrow light">The Process</div>
+  <div class="sec sdk">
+    <div class="ey lv">The Process</div>
     <h2>Your 12-Step <em>Publishing Pathway</em></h2>
-    <p style="margin-top:12px;max-width:540px;font-size:15px;line-height:1.8;color:rgba(255,255,255,0.55)">From contract to global publication — a clear, structured journey with expert guidance at every stage.</p>
-    <div class="timeline">
-      <div class="t-step"><h3>Contracting</h3><p>Agree dates, sign contract and 50% deposit to secure your publication date.</p></div>
-      <div class="t-step"><h3>Manuscript Submission</h3><p>Submit manuscript with author questionnaire. Reviewed immediately.</p></div>
-      <div class="t-step"><h3>Cover Design</h3><p>Your designer creates 2–3 creative directions. Together you refine until you love it.</p></div>
-      <div class="t-step"><h3>Cover Sign Off</h3><p>Approve the final cover as ready for print and global publication.</p></div>
-      <div class="t-step"><h3>Editing</h3><p>Your editor strengthens clarity and flow. Optional developmental edit available.</p></div>
-      <div class="t-step"><h3>Proofreading</h3><p>Professionally proofread and checked by a second proofreader for accuracy.</p></div>
-      <div class="t-step"><h3>Manuscript Sign Off</h3><p>Review and approve your final manuscript as ready for typesetting.</p></div>
-      <div class="t-step"><h3>Typesetting</h3><p>Professionally typeset for paperback with optional hardback edition.</p></div>
-      <div class="t-step"><h3>Kindle Formatting</h3><p>Formatted for Kindle ebook distribution on all digital devices worldwide.</p></div>
-      <div class="t-step"><h3>Audiobook Creation</h3><p>Professional virtual voice audiobook. Option to record in your own voice.</p></div>
-      <div class="t-step"><h3>Publication Sign Off</h3><p>Review the final typeset book and give approval for worldwide publication.</p></div>
-      <div class="t-step"><h3>Global Publication</h3><p>Published worldwide in paperback, Kindle and Audiobook from day one.</p></div>
+    <p style="margin-top:12px;max-width:520px;font-size:15px;line-height:1.8;color:rgba(255,255,255,.5)">From contract to global publication — a clear, structured journey with expert guidance at every stage.</p>
+    <div class="tl">
+      <div class="ts"><h3>Contracting</h3><p>Agree dates, sign contract and 50% deposit to secure your publication date.</p></div>
+      <div class="ts"><h3>Manuscript Submission</h3><p>Submit manuscript with author questionnaire. Reviewed immediately.</p></div>
+      <div class="ts"><h3>Cover Design</h3><p>2–3 creative directions presented. Together you refine until you love it.</p></div>
+      <div class="ts"><h3>Cover Sign Off</h3><p>Approve the final cover as ready for print and global publication.</p></div>
+      <div class="ts"><h3>Editing</h3><p>Your editor strengthens clarity and flow. Optional developmental edit available.</p></div>
+      <div class="ts"><h3>Proofreading</h3><p>Professionally proofread and checked by a second proofreader for accuracy.</p></div>
+      <div class="ts"><h3>Manuscript Sign Off</h3><p>Review and approve your final manuscript as ready for typesetting.</p></div>
+      <div class="ts"><h3>Typesetting</h3><p>Professionally typeset for paperback with optional hardback edition.</p></div>
+      <div class="ts"><h3>Kindle Formatting</h3><p>Formatted for Kindle ebook distribution on all digital devices worldwide.</p></div>
+      <div class="ts"><h3>Audiobook Creation</h3><p>Professional virtual voice audiobook. Option to record in your own voice.</p></div>
+      <div class="ts"><h3>Publication Sign Off</h3><p>Review the final typeset book and give approval for worldwide publication.</p></div>
+      <div class="ts"><h3>Global Publication</h3><p>Published worldwide in paperback, Kindle and Audiobook from day one.</p></div>
     </div>
   </div>
 
-  <div class="sec sec-off">
-    <div class="two-col">
+  <div class="sec so">
+    <div class="tc">
       <div>
-        <div class="eyebrow">The Package</div>
+        <div class="ey">The Package</div>
         <h2>Everything <em>Included</em></h2>
-        <div class="rule"></div>
-        <p class="body-text" style="margin-bottom:16px">The standard PublishU package covers a 30,000-word book in three formats — paperback, Kindle and audiobook — everything you need to professionally publish worldwide.</p>
-        <p class="body-text">Optional enhancements include hardback, human-voice audiobook, extra word count, premium developmental editing, illustrations, infographics, language translation, and 60-day fast-track.</p>
+        <div class="ru"></div>
+        <p class="bt" style="margin-bottom:14px">The standard PublishU package covers a 30,000-word book in three formats — paperback, Kindle and audiobook. Everything you need to professionally publish worldwide.</p>
+        <p class="bt">Optional enhancements include hardback, human-voice audiobook, extra word count, premium developmental editing, illustrations, infographics, language translation, and 60-day fast-track publication.</p>
       </div>
       <img src="https://images.unsplash.com/photo-1553729459-efe14ef6055d?w=800&q=80" alt="Published books">
     </div>
   </div>
 
-  <div class="sec sec-dark">
-    <div class="authors-centre">
-      <div class="eyebrow center light">Community</div>
+  <div class="sec sdk">
+    <div class="ac">
+      <div class="ey c lv">Community</div>
       <h2>The Global <em>Authors Club</em></h2>
-      <div class="rule light" style="margin:20px auto"></div>
-      <p>When you publish with PublishU you become a lifetime member of an international community of 100+ authors. Regular online gatherings, shared ideas, and a private author community — because building the impact of a book should never be done alone.</p>
-      <a onclick="go('contact')" class="btn btn-green">Talk to Matt About Publishing</a>
+      <div class="ru lv" style="margin:20px auto"></div>
+      <p>When you publish with PublishU you become a lifetime member of an international community of 100+ authors. Regular gatherings, shared ideas, and a private author community — because building the impact of a book should never be done alone.</p>
+      <a onclick="go('contact')" class="btn bg">Talk to Matt About Publishing</a>
     </div>
   </div>
 
-  <div class="sec sec-white">
-    <div class="matt-cta">
-      <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80" alt="Matt Bird">
-      <div class="matt-cta-copy">
-        <div class="eyebrow light" style="margin-bottom:12px">Next Steps</div>
+  <div class="sec sw">
+    <div class="mc-block">
+      <div class="mc-img"><img src="https://raw.githubusercontent.com/Zorian/publishu-proposal-Alex/main/assets/matt-2.jpg" alt="Matt Bird"></div>
+      <div class="mc-copy">
+        <div class="ey lv" style="margin-bottom:12px">Next Steps</div>
         <h3>Talk to Matt About Publishing Your Book</h3>
         <p>To discuss publication of your book — costs, submission and publication dates — speak with Matt directly.</p>
-        <div class="btn-row">
-          <a href="https://wa.me/+447444111222" target="_blank" class="btn btn-green">WhatsApp Matt</a>
-          <a href="mailto:team@publishu.com" class="btn btn-outline-white">Email Matt</a>
+        <div class="mc-btns">
+          <a href="https://wa.me/+447444111222" target="_blank" class="btn bg">WhatsApp Matt</a>
+          <a href="mailto:team@publishu.com" class="btn bow">Email Matt</a>
         </div>
       </div>
     </div>
   </div>
 
   <footer>
-    <div class="foot-grid">
-      <div><div class="foot-logo"><img src="https://cdn.prod.website-files.com/63298f3b5649aa4943acb8d0/6329aaaedf80057696fdb491_PublishU%20white.svg" alt="PublishU"></div><p class="foot-tag">Turning willing writers into globally published authors.</p></div>
-      <div><div class="foot-head">Programme</div><ul class="foot-links"><li><a onclick="go('writing')">Writing</a></li><li><a onclick="go('publishing')">Publishing</a></li><li><a onclick="go('marketing')">Marketing</a></li></ul></div>
-      <div><div class="foot-head">Company</div><ul class="foot-links"><li><a href="https://www.publishu.com/free-consultation" target="_blank">Free Consultation</a></li><li><a onclick="go('contact')">Contact</a></li></ul></div>
-      <div><div class="foot-head">Social</div><ul class="foot-links"><li><a href="https://Instagram.com/PublishUGlobal" target="_blank">Instagram</a></li><li><a href="https://www.linkedin.com/in/mattbirdglobal" target="_blank">LinkedIn</a></li></ul></div>
+    <div class="fg2">
+      <div><div class="fli"><img src="https://raw.githubusercontent.com/Zorian/publishu-proposal-Alex/main/assets/logo.svg" alt="PublishU"></div><p class="ft">Turning willing writers into globally published authors.</p></div>
+      <div><div class="fh">Programme</div><ul class="fls"><li><a onclick="go('writing')">Writing</a></li><li><a onclick="go('publishing')">Publishing</a></li><li><a onclick="go('marketing')">Marketing</a></li></ul></div>
+      <div><div class="fh">Company</div><ul class="fls"><li><a onclick="go('contact')">Contact</a></li></ul></div>
+      <div><div class="fh">Social</div><ul class="fls"><li><a href="https://Instagram.com/PublishUGlobal" target="_blank">Instagram</a></li><li><a href="https://www.linkedin.com/in/mattbirdglobal" target="_blank">LinkedIn</a></li></ul></div>
     </div>
-    <div class="foot-bottom"><span class="foot-copy">© 2026 PublishU</span></div>
+    <div class="fb"><span class="fc">© 2026 PublishU</span></div>
   </footer>
 </div>
 
-<!-- ══ MARKETING ══ -->
-<div class="page" id="pg-marketing">
-  <div class="inner-hero">
-    <div class="ihero-bg" style="background-image:url('https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=1200&q=80')"></div>
-    <div class="ihero-grad"></div>
-    <div class="ihero-content">
-      <div class="eyebrow light">Post-Publication</div>
-      <h1>Marketing<br><em style="color:var(--green2)">My Book</em></h1>
-      <div class="rule light"></div>
+<!-- ═══════════ MARKETING ═══════════ -->
+<div class="pg" id="pg-marketing">
+  <div class="ih">
+    <div class="ihbg" style="background-image:url('https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=1200&q=80')"></div>
+    <div class="ihgr"></div>
+    <div class="ihc">
+      <div class="ey lv">Post-Publication</div>
+      <h1>Marketing<br><em style="color:var(--g2)">My Book</em></h1>
+      <div class="ru lv"></div>
       <p class="sub">Turn your book into credibility, conversations and opportunities — six months of structured support.</p>
     </div>
   </div>
 
-  <div class="sec sec-white">
-    <div class="two-col">
+  <div class="sec sw">
+    <div class="tc">
       <div>
-        <div class="eyebrow">The Challenge</div>
+        <div class="ey">The Challenge</div>
         <h2>Your Book Deserves<br>to Be <em>Heard</em></h2>
-        <div class="rule"></div>
-        <p class="body-text" style="margin-bottom:16px">After the excitement of publication fades, many authors are unsure what to do next. They post a few times — and hope the book finds its audience on its own.</p>
-        <p class="body-text">Momentum fades. Opportunities never appear. The book never becomes what it could have been. Marketing My Book exists to change that.</p>
+        <div class="ru"></div>
+        <p class="bt" style="margin-bottom:14px">After the excitement of publication fades, many authors are unsure what to do next. They post a few times — and hope the book finds its audience on its own.</p>
+        <p class="bt">Momentum fades. Opportunities never appear. The book never becomes what it could have been. Marketing My Book exists to change that.</p>
       </div>
       <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=800&q=80" alt="Book marketing">
     </div>
   </div>
 
-  <div class="sec sec-dark">
-    <div class="eyebrow light">The Programme</div>
+  <div class="sec sdk">
+    <div class="ey lv">The Programme</div>
     <h2>What's <em>Included</em></h2>
-    <div class="prog-grid">
-      <div class="prog-item"><div class="prog-icon">❤️</div><h3>24/7 Marketing Community</h3><p>A private WhatsApp group where authors support, encourage and learn from one another around the clock.</p></div>
-      <div class="prog-item"><div class="prog-icon">🎯</div><h3>Six Month Action Plan</h3><p>A simple weekly structure of recommended actions — around one hour per week — that builds real momentum.</p></div>
-      <div class="prog-item"><div class="prog-icon">✅</div><h3>Weekly Marketing Check-In</h3><p>Every Wednesday, share what you've done and commit to your next step. Accountability that keeps you moving.</p></div>
-      <div class="prog-item"><div class="prog-icon">🧠</div><h3>Monthly Mastermind</h3><p>Bring questions, share ideas, hear what's working. Live group session, first Wednesday each month, 8–9am UK.</p></div>
+    <div class="pg-g">
+      <div class="pi"><div class="pi-ic">❤️</div><h3>24/7 Marketing Community</h3><p>A private WhatsApp group where authors support, encourage and learn from one another around the clock.</p></div>
+      <div class="pi"><div class="pi-ic">🎯</div><h3>Six Month Action Plan</h3><p>A simple weekly structure of recommended actions — around one hour per week — that builds real momentum.</p></div>
+      <div class="pi"><div class="pi-ic">✅</div><h3>Weekly Marketing Check-In</h3><p>Every Wednesday, share what you've done and commit to your next step. Accountability that keeps you moving.</p></div>
+      <div class="pi"><div class="pi-ic">🧠</div><h3>Monthly Mastermind</h3><p>Bring questions, share ideas, hear what's working. Live group session, first Wednesday each month.</p></div>
     </div>
   </div>
 
-  <div class="sec sec-dark2" style="padding-top:0">
-    <div class="testi-grid" style="grid-template-columns:repeat(2,1fr)">
-      <div class="testi"><div class="testi-q">"</div><p>Immensely helpful. After the warm glow of publication I knew I wasn't confident about promoting my book. The programme combines practical wisdom with supportive accountability that kept me proactive in the first 100 days.</p><div class="testi-auth"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&q=80" alt=""><div class="testi-name">Jess Hymus-Gant, Author</div></div></div>
-      <div class="testi"><div class="testi-q">"</div><p>I would hope every author considers this small extra cost well worth it. It was worth a great deal to me and I'm so glad I was part of it.</p><div class="testi-auth"><div class="testi-name">Dr Colin Stoodly, Author</div></div></div>
+  <div class="sec sdk2" style="padding-top:0">
+    <div class="tq-grid" style="grid-template-columns:repeat(2,1fr)">
+      <div class="tq"><div class="tq-qm">"</div><p>Immensely helpful. After the warm glow of publication I wasn't confident about promoting my book. The programme combines practical wisdom with supportive accountability that kept me proactive in the first 100 days.</p><div class="tq-auth"><div class="tq-nm">Jess Hymus-Gant, Author</div></div></div>
+      <div class="tq"><div class="tq-qm">"</div><p>I would hope every author considers this small extra cost well worth it. It was worth a great deal to me and I'm so glad I was part of it.</p><div class="tq-auth"><div class="tq-nm">Dr Colin Stoodly, Author</div></div></div>
     </div>
   </div>
 
-  <div class="sec sec-off">
-    <div class="eyebrow">The Full Journey</div>
+  <div class="sec so">
+    <div class="ey">The Full Journey</div>
     <h2>Part of the <em>PublishU Pathway</em></h2>
-    <div class="pathway">
-      <div class="path-step" onclick="go('writing')"><div class="path-icon">✍️</div><div class="eyebrow" style="margin-bottom:4px">Step 1</div><h3>Writing My Book</h3><p>Turning ideas into completed manuscripts in 100 days.</p></div>
-      <div class="path-step" onclick="go('publishing')"><div class="path-icon">📕</div><div class="eyebrow" style="margin-bottom:4px">Step 2</div><h3>Publishing My Book</h3><p>Turning manuscripts into professionally produced books.</p></div>
-      <div class="path-step"><div class="path-icon">📣</div><div class="eyebrow" style="margin-bottom:4px">Step 3 — You Are Here</div><h3>Marketing My Book</h3><p>Turning books into credibility, conversations and opportunities.</p></div>
+    <div class="path">
+      <div class="ps" onclick="go('writing')"><div class="ps-ic">✍️</div><div class="ey" style="margin-bottom:4px">Step 1</div><h3>Writing My Book</h3><p>Turning ideas into completed manuscripts in 100 days.</p></div>
+      <div class="ps" onclick="go('publishing')"><div class="ps-ic">📕</div><div class="ey" style="margin-bottom:4px">Step 2</div><h3>Publishing My Book</h3><p>Turning manuscripts into professionally produced books.</p></div>
+      <div class="ps"><div class="ps-ic">📣</div><div class="ey" style="margin-bottom:4px">Step 3 — You Are Here</div><h3>Marketing My Book</h3><p>Turning books into credibility, conversations and opportunities.</p></div>
     </div>
   </div>
 
-  <div class="sec sec-dark" style="text-align:center">
-    <div class="price-hero">
-      <div class="eyebrow center light">Ready to Build Momentum?</div>
+  <div class="sec sdk" style="text-align:center">
+    <div class="ph">
+      <div class="ey c lv">Ready to Build Momentum?</div>
       <h2>Join Marketing <em>My Book</em></h2>
-      <div class="big-price">£995</div>
+      <div class="bp">£995</div>
       <p>Six months of structure, support and accountability to help your book reach the readers, conversations and opportunities it was written for.</p>
-      <a href="https://buy.stripe.com/00w9ASdHw5UFdI11mHeQM0l" target="_blank" class="btn btn-green">Join Now — £995</a>
+      <a href="https://buy.stripe.com/00w9ASdHw5UFdI11mHeQM0l" target="_blank" class="btn bg">Join Now — £995</a>
     </div>
   </div>
 
   <footer>
-    <div class="foot-grid">
-      <div><div class="foot-logo"><img src="https://cdn.prod.website-files.com/63298f3b5649aa4943acb8d0/6329aaaedf80057696fdb491_PublishU%20white.svg" alt="PublishU"></div><p class="foot-tag">Turning willing writers into globally published authors.</p></div>
-      <div><div class="foot-head">Programme</div><ul class="foot-links"><li><a onclick="go('writing')">Writing</a></li><li><a onclick="go('publishing')">Publishing</a></li><li><a onclick="go('marketing')">Marketing</a></li></ul></div>
-      <div><div class="foot-head">Company</div><ul class="foot-links"><li><a onclick="go('contact')">Contact</a></li></ul></div>
-      <div><div class="foot-head">Social</div><ul class="foot-links"><li><a href="https://Instagram.com/PublishUGlobal" target="_blank">Instagram</a></li><li><a href="https://www.linkedin.com/in/mattbirdglobal" target="_blank">LinkedIn</a></li></ul></div>
+    <div class="fg2">
+      <div><div class="fli"><img src="https://raw.githubusercontent.com/Zorian/publishu-proposal-Alex/main/assets/logo.svg" alt="PublishU"></div><p class="ft">Turning willing writers into globally published authors.</p></div>
+      <div><div class="fh">Programme</div><ul class="fls"><li><a onclick="go('writing')">Writing</a></li><li><a onclick="go('publishing')">Publishing</a></li><li><a onclick="go('marketing')">Marketing</a></li></ul></div>
+      <div><div class="fh">Company</div><ul class="fls"><li><a onclick="go('contact')">Contact</a></li></ul></div>
+      <div><div class="fh">Social</div><ul class="fls"><li><a href="https://Instagram.com/PublishUGlobal" target="_blank">Instagram</a></li><li><a href="https://www.linkedin.com/in/mattbirdglobal" target="_blank">LinkedIn</a></li></ul></div>
     </div>
-    <div class="foot-bottom"><span class="foot-copy">© 2026 PublishU</span></div>
+    <div class="fb"><span class="fc">© 2026 PublishU</span></div>
   </footer>
 </div>
 
-<!-- ══ CONTACT ══ -->
-<div class="page" id="pg-contact">
-  <div class="inner-hero">
-    <div class="ihero-bg" style="background-image:url('https://images.unsplash.com/photo-1556761175-b413da4baf72?w=1200&q=80')"></div>
-    <div class="ihero-grad"></div>
-    <div class="ihero-content">
-      <div class="eyebrow light">Get In Touch</div>
-      <h1>Let's <em style="color:var(--green2)">Talk</em></h1>
-      <div class="rule light"></div>
-      <p class="sub">Reach us at <a href="mailto:team@publishu.com" style="color:var(--green2);text-decoration:none;font-weight:500">team@publishu.com</a></p>
+<!-- ═══════════ CONTACT ═══════════ -->
+<div class="pg" id="pg-contact">
+  <div class="ih">
+    <div class="ihbg" style="background-image:url('https://images.unsplash.com/photo-1556761175-b413da4baf72?w=1200&q=80')"></div>
+    <div class="ihgr"></div>
+    <div class="ihc">
+      <div class="ey lv">Get In Touch</div>
+      <h1>Let's <em style="color:var(--g2)">Talk</em></h1>
+      <div class="ru lv"></div>
+      <p class="sub">Reach us at <a href="mailto:team@publishu.com" style="color:var(--g2);text-decoration:none;font-weight:500">team@publishu.com</a></p>
     </div>
   </div>
 
-  <div class="sec sec-white">
-    <div class="contact-grid">
+  <div class="sec sw">
+    <div class="cg">
       <div>
-        <div class="eyebrow">Send A Message</div>
-        <h2 style="margin-bottom:32px">We'd love to<br><em>hear from you</em></h2>
-        <div class="form-group"><label class="form-label">Full Name</label><input type="text" class="form-input" placeholder="Your name"></div>
-        <div class="form-group"><label class="form-label">Email Address</label><input type="email" class="form-input" placeholder="your@email.com"></div>
-        <div class="form-group"><label class="form-label">Mobile</label><input type="tel" class="form-input" placeholder="+44 000 000 0000"></div>
-        <div class="form-group"><label class="form-label">Your Message</label><textarea class="form-input" placeholder="Tell us about your book idea or any questions you have..."></textarea></div>
-        <button class="btn btn-green" style="width:100%;padding:16px;font-size:12px" onclick="this.textContent='Message Sent ✓';this.style.background='var(--green3)'">Send Message</button>
+        <div class="ey">Send A Message</div>
+        <h2 style="margin-bottom:30px">We'd love to<br><em>hear from you</em></h2>
+        <div class="fg"><label class="fl">Full Name</label><input type="text" class="fi2" placeholder="Your name"></div>
+        <div class="fg"><label class="fl">Email Address</label><input type="email" class="fi2" placeholder="your@email.com"></div>
+        <div class="fg"><label class="fl">Mobile</label><input type="tel" class="fi2" placeholder="+44 000 000 0000"></div>
+        <div class="fg"><label class="fl">Your Message</label><textarea class="fi2" placeholder="Tell us about your book idea or any questions..."></textarea></div>
+        <button class="btn bg" style="width:100%;padding:15px;font-size:12px" onclick="this.textContent='Message Sent ✓';this.style.background='var(--g3)'">Send Message</button>
       </div>
       <div>
-        <div class="eyebrow">Upcoming Cohorts</div>
-        <h2 style="margin-bottom:32px">Choose <em>Your Course</em></h2>
-        <div class="sched-list">
-          <div class="sched-row"><div><div class="sched-date">07</div><div class="sched-mo">April</div></div><div class="sched-info"><strong>Tuesdays — 10–11am UK / 1–2pm Dubai</strong><span>7, 14, 21, 28 Apr · 12, 26 May · 9, 23 Jun</span></div><a href="https://buy.stripe.com/fZu3cvcur49ebfG6vTcQU0g" target="_blank" class="btn btn-green" style="padding:10px 16px;font-size:11px;white-space:nowrap">Register</a></div>
-          <div class="sched-row"><div><div class="sched-date">06</div><div class="sched-mo">May</div></div><div class="sched-info"><strong>Wednesdays — 1–2pm UK / 4–5pm Dubai</strong><span>6, 13, 20, 27 May · 10, 24 Jun · 8, 22 Jul</span></div><a href="https://buy.stripe.com/00wbJ19if8pu3Ne07vcQU0p" target="_blank" class="btn btn-green" style="padding:10px 16px;font-size:11px;white-space:nowrap">Register</a></div>
-          <div class="sched-row"><div><div class="sched-date">01</div><div class="sched-mo">June</div></div><div class="sched-info"><strong>Mondays — 5–6pm UK / 8–9pm Dubai</strong><span>1, 8, 15, 22 Jun · 6, 20 Jul · 3, 17 Aug</span></div><a href="https://buy.stripe.com/6oU14nfGD2165VmbQdcQU0s" target="_blank" class="btn btn-green" style="padding:10px 16px;font-size:11px;white-space:nowrap">Register</a></div>
-          <div class="sched-row" style="opacity:0.5"><div><div class="sched-date">07</div><div class="sched-mo">July</div></div><div class="sched-info"><strong>Tuesdays — 10–11am UK / 1–2pm Dubai</strong><span>7, 14, 21, 28 Jul · 11, 25 Aug · 8, 22 Sep</span></div><span style="font-size:11px;font-weight:600;color:var(--mid);white-space:nowrap">Coming Soon</span></div>
+        <div class="ey">Upcoming Cohorts</div>
+        <h2 style="margin-bottom:30px">Choose <em>Your Course</em></h2>
+        <div class="sch-l">
+          <div class="sr"><div><div class="sd">07</div><div class="sm">April</div></div><div class="si"><strong>Tuesdays — 10–11am UK / 1–2pm Dubai</strong><span>7, 14, 21, 28 Apr · 12, 26 May · 9, 23 Jun</span></div><a href="https://buy.stripe.com/fZu3cvcur49ebfG6vTcQU0g" target="_blank" class="btn bg" style="padding:9px 14px;font-size:10.5px;white-space:nowrap">Register</a></div>
+          <div class="sr"><div><div class="sd">06</div><div class="sm">May</div></div><div class="si"><strong>Wednesdays — 1–2pm UK / 4–5pm Dubai</strong><span>6, 13, 20, 27 May · 10, 24 Jun · 8, 22 Jul</span></div><a href="https://buy.stripe.com/00wbJ19if8pu3Ne07vcQU0p" target="_blank" class="btn bg" style="padding:9px 14px;font-size:10.5px;white-space:nowrap">Register</a></div>
+          <div class="sr"><div><div class="sd">01</div><div class="sm">June</div></div><div class="si"><strong>Mondays — 5–6pm UK / 8–9pm Dubai</strong><span>1, 8, 15, 22 Jun · 6, 20 Jul · 3, 17 Aug</span></div><a href="https://buy.stripe.com/6oU14nfGD2165VmbQdcQU0s" target="_blank" class="btn bg" style="padding:9px 14px;font-size:10.5px;white-space:nowrap">Register</a></div>
+          <div class="sr" style="opacity:.5"><div><div class="sd">07</div><div class="sm">July</div></div><div class="si"><strong>Tuesdays — 10–11am UK / 1–2pm Dubai</strong><span>7, 14, 21, 28 Jul · 11, 25 Aug · 8, 22 Sep</span></div><span style="font-size:11px;font-weight:600;color:var(--mid);white-space:nowrap">Coming Soon</span></div>
         </div>
       </div>
     </div>
   </div>
 
   <footer>
-    <div class="foot-grid">
-      <div><div class="foot-logo"><img src="https://cdn.prod.website-files.com/63298f3b5649aa4943acb8d0/6329aaaedf80057696fdb491_PublishU%20white.svg" alt="PublishU"></div><p class="foot-tag">Turning willing writers into globally published authors.</p></div>
-      <div><div class="foot-head">Programme</div><ul class="foot-links"><li><a onclick="go('writing')">Writing</a></li><li><a onclick="go('publishing')">Publishing</a></li><li><a onclick="go('marketing')">Marketing</a></li></ul></div>
-      <div><div class="foot-head">Company</div><ul class="foot-links"><li><a href="https://www.publishu.com/free-consultation" target="_blank">Free Consultation</a></li><li><a href="https://www.publishu.com/blog" target="_blank">Blog</a></li></ul></div>
-      <div><div class="foot-head">Social</div><ul class="foot-links"><li><a href="https://Instagram.com/PublishUGlobal" target="_blank">Instagram</a></li><li><a href="https://www.linkedin.com/in/mattbirdglobal" target="_blank">LinkedIn</a></li><li><a href="https://Facebook.com/PublishUGlobal" target="_blank">Facebook</a></li><li><a href="https://www.tiktok.com/@bookcoach" target="_blank">TikTok</a></li></ul></div>
+    <div class="fg2">
+      <div><div class="fli"><img src="https://raw.githubusercontent.com/Zorian/publishu-proposal-Alex/main/assets/logo.svg" alt="PublishU"></div><p class="ft">Turning willing writers into globally published authors.</p></div>
+      <div><div class="fh">Programme</div><ul class="fls"><li><a onclick="go('writing')">Writing</a></li><li><a onclick="go('publishing')">Publishing</a></li><li><a onclick="go('marketing')">Marketing</a></li></ul></div>
+      <div><div class="fh">Company</div><ul class="fls"><li><a href="https://www.publishu.com/free-consultation" target="_blank">Free Consultation</a></li><li><a href="https://www.publishu.com/blog" target="_blank">Blog</a></li></ul></div>
+      <div><div class="fh">Social</div><ul class="fls"><li><a href="https://Instagram.com/PublishUGlobal" target="_blank">Instagram</a></li><li><a href="https://www.linkedin.com/in/mattbirdglobal" target="_blank">LinkedIn</a></li><li><a href="https://Facebook.com/PublishUGlobal" target="_blank">Facebook</a></li><li><a href="https://www.tiktok.com/@bookcoach" target="_blank">TikTok</a></li></ul></div>
     </div>
-    <div class="foot-bottom"><span class="foot-copy">© 2026 PublishU. All rights reserved.</span><span class="foot-copy">Redesigned by Zorian</span></div>
+    <div class="fb"><span class="fc">© 2026 PublishU. All rights reserved.</span><span class="fc">Redesigned by Zorian</span></div>
   </footer>
 </div>
 
 <script>
-  function go(p){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.getElementById('pg-'+p).classList.add('active');document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));const el=document.getElementById('nl-'+p);if(el)el.classList.add('active');window.scrollTo({top:0});}
-  function faq(el){el.parentElement.classList.toggle('open');}
-  function toggleMob(){document.getElementById('mob-nav').classList.toggle('open');}
+function go(p){
+  document.querySelectorAll('.pg').forEach(x=>x.classList.remove('on'));
+  document.getElementById('pg-'+p).classList.add('on');
+  document.querySelectorAll('.nm a').forEach(a=>a.classList.remove('on'));
+  const el=document.getElementById('nl-'+p);
+  if(el)el.classList.add('on');
+  window.scrollTo({top:0});
+}
+function faq(el){el.parentElement.classList.toggle('open');}
+function toggleMob(){document.getElementById('mob').classList.toggle('on');}
+function submitEbook(){
+  const f=document.getElementById('ef-first').value;
+  const l=document.getElementById('ef-last').value;
+  const e=document.getElementById('ef-email').value;
+  if(!f||!e){alert('Please enter your name and email.');return;}
+  document.getElementById('ebook-form').style.display='none';
+  document.getElementById('ebook-thanks').style.display='block';
+}
 </script>
 </body>
 </html>
