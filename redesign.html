@@ -9,332 +9,347 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --g:#629A78; --g2:#91b8a1; --g3:#456c54; --g4:#e8f4ed; --g5:#d0e8da;
-  --dk:#111; --dk2:#1a1a1a; --dk3:#222;
-  --wh:#fff; --off:#f7f7f5; --cr:#f2f0eb;
-  --mid:#666; --lt:#999;
+  --g:#629A78;--g2:#91b8a1;--g3:#456c54;--g4:#e8f4ed;--g5:#f0f7f3;
+  --dk:#111;--mid:#666;--lt:#aaa;
+  --wh:#fff;--off:#f8f8f6;--cr:#f3f1ec;
   --serif:'Cormorant Garamond',Georgia,serif;
   --sans:'DM Sans',sans-serif;
+  --ease:cubic-bezier(.22,1,.36,1);
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 body{font-family:var(--sans);background:var(--wh);color:var(--dk);overflow-x:hidden;}
 
+/* ── SCROLL ANIMATIONS ── */
+.reveal{opacity:0;transform:translateY(36px);transition:opacity .7s var(--ease),transform .7s var(--ease);}
+.reveal.in{opacity:1;transform:none;}
+.reveal-l{opacity:0;transform:translateX(-40px);transition:opacity .7s var(--ease),transform .7s var(--ease);}
+.reveal-l.in{opacity:1;transform:none;}
+.reveal-r{opacity:0;transform:translateX(40px);transition:opacity .7s var(--ease),transform .7s var(--ease);}
+.reveal-r.in{opacity:1;transform:none;}
+.d1{transition-delay:.1s!important;}
+.d2{transition-delay:.2s!important;}
+.d3{transition-delay:.3s!important;}
+.d4{transition-delay:.4s!important;}
+.d5{transition-delay:.5s!important;}
+
 /* ── NAV ── */
-nav{position:fixed;top:0;left:0;right:0;z-index:300;height:66px;background:var(--dk);display:flex;align-items:center;justify-content:space-between;padding:0 5%;}
+nav{position:fixed;top:0;left:0;right:0;z-index:300;height:64px;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,.07);display:flex;align-items:center;justify-content:space-between;padding:0 5%;transition:box-shadow .3s;}
+nav.scrolled{box-shadow:0 2px 24px rgba(0,0,0,.08);}
 .nl{cursor:pointer;}
 .nl img{height:26px;display:block;}
-.nm{display:flex;align-items:center;gap:32px;list-style:none;}
-.nm a{font-size:11px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.48);text-decoration:none;cursor:pointer;transition:color .2s;}
-.nm a:hover,.nm a.on{color:#fff;}
-.nm .cta{background:var(--g);color:#fff!important;padding:9px 22px;border-radius:2px;letter-spacing:.1em!important;}
-.nm .cta:hover{background:var(--g3)!important;}
+.nm{display:flex;align-items:center;gap:30px;list-style:none;}
+.nm a{font-size:11px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:rgba(17,17,17,.5);text-decoration:none;cursor:pointer;transition:color .2s;}
+.nm a:hover,.nm a.on{color:var(--dk);}
+.nm .cta{background:var(--g);color:#fff!important;padding:9px 20px;border-radius:2px;letter-spacing:.1em!important;}
+.nm .cta:hover{background:var(--g3)!important;transform:translateY(-1px);}
 .hb{display:none;flex-direction:column;gap:5px;cursor:pointer;}
-.hb span{width:22px;height:1.5px;background:#fff;display:block;}
-
-/* MOBILE NAV */
-.mob{display:none;position:fixed;top:66px;left:0;right:0;z-index:290;background:var(--dk);padding:20px 5%;flex-direction:column;gap:16px;}
+.hb span{width:22px;height:1.5px;background:var(--dk);display:block;transition:all .25s;}
+.mob{display:none;position:fixed;top:64px;left:0;right:0;z-index:290;background:var(--wh);padding:20px 5%;flex-direction:column;gap:16px;border-bottom:1px solid rgba(0,0,0,.08);box-shadow:0 8px 32px rgba(0,0,0,.08);}
 .mob.on{display:flex;}
-.mob a{font-size:14px;font-weight:500;color:rgba(255,255,255,.7);text-decoration:none;cursor:pointer;}
+.mob a{font-size:14px;font-weight:500;color:var(--mid);text-decoration:none;cursor:pointer;}
 
-/* PAGE */
-.pg{display:none;padding-top:66px;}
-.pg.on{display:block;animation:fu .3s ease;}
-@keyframes fu{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+/* ── PAGE SYSTEM ── */
+.pg{display:none;padding-top:64px;}
+.pg.on{display:block;}
 
-/* BUTTONS */
-.btn{display:inline-block;font-family:var(--sans);font-size:11.5px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;text-decoration:none;padding:14px 30px;cursor:pointer;border:none;transition:all .2s;border-radius:2px;}
+/* ── BTNS ── */
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--sans);font-size:11.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;padding:14px 28px;cursor:pointer;border:none;transition:all .25s var(--ease);border-radius:3px;}
 .bg{background:var(--g);color:#fff;}
-.bg:hover{background:var(--g3);transform:translateY(-1px);}
-.bo{background:transparent;color:var(--dk);border:1.5px solid rgba(0,0,0,.18);}
+.bg:hover{background:var(--g3);transform:translateY(-2px);box-shadow:0 8px 24px rgba(69,108,84,.3);}
+.bo{background:transparent;color:var(--dk);border:1.5px solid rgba(0,0,0,.15);}
 .bo:hover{border-color:var(--g);color:var(--g);}
-.bow{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.28);}
-.bow:hover{border-color:#fff;background:rgba(255,255,255,.08);}
-.bog{background:transparent;color:var(--g);border:1.5px solid var(--g);}
+.bow{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.3);}
+.bow:hover{border-color:#fff;background:rgba(255,255,255,.1);}
+.bog{background:var(--g4);color:var(--g3);border:1.5px solid var(--g2);}
 .bog:hover{background:var(--g);color:#fff;}
 
-/* TYPE */
-.ey{font-size:10px;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:var(--g);display:flex;align-items:center;gap:10px;margin-bottom:16px;}
-.ey::before{content:'';width:28px;height:1.5px;background:var(--g);flex-shrink:0;}
+/* ── TYPE ── */
+.ey{font-size:10px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--g);display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.ey::before{content:'';width:24px;height:1.5px;background:var(--g);flex-shrink:0;}
 .ey.c{justify-content:center;}
 .ey.c::before{display:none;}
-.ey.lv{color:var(--g2);}
-.ey.lv::before{background:var(--g2);}
 h1,h2,h3{font-family:var(--serif);font-weight:400;line-height:1.06;}
-h1{font-size:clamp(44px,7vw,90px);}
-h2{font-size:clamp(30px,4vw,52px);}
-h3{font-size:clamp(17px,2vw,24px);}
+h1{font-size:clamp(46px,7vw,92px);}
+h2{font-size:clamp(32px,4vw,54px);}
+h3{font-size:clamp(18px,2vw,26px);}
 em{font-style:italic;color:var(--g);}
-.ru{width:42px;height:2px;background:var(--g);margin:24px 0;}
-.ru.lv{background:var(--g2);}
-.bt{font-size:14.5px;line-height:1.85;color:var(--mid);max-width:540px;}
-
-/* SECTIONS */
-.sec{padding:84px 5%;}
-.sw{background:var(--wh);}
+.ru{width:40px;height:2px;background:var(--g);margin:22px 0;}
+.bt{font-size:15px;line-height:1.85;color:var(--mid);max-width:520px;}
+.sec{padding:96px 5%;}
 .so{background:var(--off);}
-.sc{background:var(--cr);}
-.sg{background:var(--g4);}
-.sdk{background:var(--dk);}
-.sdk2{background:var(--dk2);}
-.sdk3{background:var(--dk3);}
-.sdk h2,.sdk h3,.sdk2 h2,.sdk2 h3,.sdk3 h2,.sdk3 h3{color:#fff;}
-.sdk p,.sdk2 p,.sdk3 p{color:rgba(255,255,255,.55);}
+.sg{background:var(--g5);}
+.scr{background:var(--cr);}
 
-/* ═══════ HOME HERO ═══════ */
-.hero{position:relative;height:100vh;min-height:600px;display:grid;grid-template-columns:1fr 1fr;overflow:hidden;}
-.hero-l{background:var(--dk);display:flex;flex-direction:column;justify-content:flex-end;padding:0 5% 80px;position:relative;z-index:2;}
-.hero-l::after{content:'';position:absolute;right:-1px;top:0;bottom:0;width:80px;background:linear-gradient(to right,var(--dk),transparent);z-index:3;}
-.hero-r{position:relative;overflow:hidden;}
-.hero-r img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;}
-.hero-r::before{content:'';position:absolute;inset:0;background:linear-gradient(to right,var(--dk) 0%,transparent 40%);z-index:1;}
-.hero-eyebrow{font-size:10px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--g2);margin-bottom:20px;}
-.hero h1{color:#fff;line-height:1.02;margin-bottom:6px;}
-.hero-sub{font-size:16px;line-height:1.8;color:rgba(255,255,255,.58);margin:22px 0 44px;max-width:400px;}
+/* ═══ HERO ═══ */
+.hero{position:relative;height:100vh;min-height:640px;overflow:hidden;display:flex;align-items:flex-end;}
+.hero-bg{position:absolute;inset:0;background:url('https://raw.githubusercontent.com/Zorian/publishu-proposal-Alex/main/assets/matt-boat.jpg') center 30%/cover no-repeat;}
+.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,10,.88) 0%,rgba(10,10,10,.45) 50%,rgba(10,10,10,.1) 100%);}
+.hero-content{position:relative;z-index:2;padding:0 5% 80px;max-width:720px;}
+.hero-pre{font-size:10px;font-weight:600;letter-spacing:.35em;text-transform:uppercase;color:var(--g2);margin-bottom:18px;display:flex;align-items:center;gap:10px;}
+.hero-pre::before{content:'';width:24px;height:1.5px;background:var(--g2);}
+.hero h1{color:#fff;margin-bottom:0;}
+.hero-sub{font-size:17px;line-height:1.8;color:rgba(255,255,255,.62);margin:22px 0 44px;max-width:480px;}
 .hero-btns{display:flex;gap:12px;flex-wrap:wrap;}
-.hero-scroll{position:absolute;bottom:32px;right:5%;z-index:5;font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.35);display:flex;align-items:center;gap:8px;}
-.hero-scroll::after{content:'';width:40px;height:1px;background:rgba(255,255,255,.25);}
+.hero-scroll{position:absolute;bottom:36px;right:5%;z-index:2;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;}
+.hero-scroll span{font-size:9px;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.35);}
+.scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,var(--g2),transparent);animation:scrollpulse 1.8s ease-in-out infinite;}
+@keyframes scrollpulse{0%,100%{opacity:.4;transform:scaleY(1);}50%{opacity:1;transform:scaleY(1.2);}}
 
 /* STATS */
 .stats{display:grid;grid-template-columns:repeat(4,1fr);background:var(--g3);}
-.stat{text-align:center;padding:24px 16px;border-right:1px solid rgba(255,255,255,.12);}
+.stat{text-align:center;padding:28px 16px;border-right:1px solid rgba(255,255,255,.1);}
 .stat:last-child{border-right:none;}
-.sn{font-family:var(--serif);font-size:48px;font-weight:600;color:#fff;line-height:1;}
-.sl{font-size:9.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-top:5px;}
+.sn{font-family:var(--serif);font-size:50px;font-weight:600;color:#fff;line-height:1;}
+.sl{font-size:9.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.58);margin-top:5px;}
 
-/* THREE PILLARS */
-.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:52px;background:rgba(0,0,0,.06);}
-.pil{background:var(--dk);padding:50px 36px;cursor:pointer;position:relative;overflow:hidden;transition:background .2s;}
-.pil:hover{background:#1e1e1e;}
-.pil::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--g);transform:scaleX(0);transform-origin:left;transition:transform .3s;}
+/* ═══ 3 PILLARS — light ═══ */
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:52px;}
+.pil{background:var(--wh);border:1px solid rgba(0,0,0,.07);padding:44px 36px;cursor:pointer;position:relative;overflow:hidden;transition:transform .3s var(--ease),box-shadow .3s var(--ease),border-color .3s;}
+.pil:hover{transform:translateY(-6px);box-shadow:0 20px 60px rgba(0,0,0,.1);border-color:var(--g2);}
+.pil::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--g3),var(--g2));transform:scaleX(0);transform-origin:left;transition:transform .4s var(--ease);}
 .pil:hover::before{transform:scaleX(1);}
-.pil-n{font-family:var(--serif);font-size:60px;font-weight:300;color:rgba(98,154,120,.1);line-height:1;margin-bottom:18px;}
-.pil h3{color:#fff;margin-bottom:10px;}
-.pil p{font-size:13.5px;line-height:1.75;color:rgba(255,255,255,.48);margin-bottom:28px;}
-.pil-a{font-size:10.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--g2);}
+.pil-n{font-family:var(--serif);font-size:64px;font-weight:300;color:rgba(98,154,120,.08);line-height:1;margin-bottom:18px;}
+.pil h3{color:var(--dk);margin-bottom:10px;}
+.pil p{font-size:13.5px;line-height:1.75;color:var(--mid);margin-bottom:28px;}
+.pil-a{font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--g);display:flex;align-items:center;gap:8px;transition:gap .2s;}
+.pil:hover .pil-a{gap:14px;}
 
-/* MATT SECTION */
-.matt{display:grid;grid-template-columns:1fr 1fr;min-height:580px;}
-.matt-img{overflow:hidden;}
-.matt-img img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;filter:grayscale(8%);}
-.matt-copy{padding:72px 64px;background:var(--off);display:flex;flex-direction:column;justify-content:center;}
+/* ═══ MATT SECTION ═══ */
+.matt{display:grid;grid-template-columns:1fr 1fr;min-height:600px;}
+.matt-img{overflow:hidden;position:relative;}
+.matt-img img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;transition:transform .6s var(--ease);}
+.matt:hover .matt-img img{transform:scale(1.03);}
+.matt-copy{padding:80px 64px;background:var(--wh);display:flex;flex-direction:column;justify-content:center;}
+.matt-tag{display:inline-flex;align-items:center;gap:8px;background:var(--g5);color:var(--g3);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:8px 14px;border-radius:2px;margin-bottom:24px;}
 
-/* ═══════ 0.02% SECTION ═══════ */
-.stat-impact{background:var(--g3);padding:80px 5%;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
-.si-l h2{font-size:clamp(44px,6vw,80px);color:#fff;line-height:1.0;}
-.si-l h2 span{display:block;font-size:clamp(16px,2vw,22px);font-weight:300;font-style:italic;color:rgba(255,255,255,.65);margin-top:8px;}
-.si-r p{font-size:17px;line-height:1.85;color:rgba(255,255,255,.7);margin-bottom:10px;}
-.si-r strong{color:#fff;}
-.si-r .tagline{font-family:var(--serif);font-size:28px;font-style:italic;color:var(--g2);margin-top:24px;display:block;}
+/* ═══ IMPACT BAND ═══ */
+.impact{background:var(--off);padding:80px 5%;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+.impact-l{}
+.impact-l .big-stat{font-family:var(--serif);font-size:clamp(60px,9vw,120px);font-weight:300;color:var(--g3);line-height:1;margin:8px 0;}
+.impact-l .big-label{font-size:16px;color:var(--mid);max-width:320px;line-height:1.7;}
+.impact-r p{font-size:16px;line-height:1.85;color:var(--mid);margin-bottom:14px;}
+.impact-r strong{color:var(--dk);}
+.impact-quote{font-family:var(--serif);font-size:24px;font-style:italic;color:var(--g3);margin-top:28px;padding-left:20px;border-left:3px solid var(--g);}
 
-/* AUTHOR SHOWCASE */
-.authors{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:52px;border:1px solid rgba(0,0,0,.08);}
-.author-card{padding:0;overflow:hidden;position:relative;}
-.author-card img{width:100%;height:360px;object-fit:cover;object-position:top;display:block;transition:transform .4s;}
-.author-card:hover img{transform:scale(1.03);}
-.author-info{padding:24px 24px 28px;}
-.auth-name{font-family:var(--serif);font-size:22px;font-weight:500;color:var(--dk);margin-bottom:4px;}
-.auth-book{font-size:13px;font-style:italic;color:var(--mid);margin-bottom:8px;}
-.auth-rank{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--g3);background:var(--g4);padding:5px 10px;display:inline-block;}
+/* ═══ AUTHOR SHOWCASE ═══ */
+.authors{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:52px;}
+.acard{background:var(--wh);border:1px solid rgba(0,0,0,.07);overflow:hidden;transition:transform .3s var(--ease),box-shadow .3s var(--ease);}
+.acard:hover{transform:translateY(-6px);box-shadow:0 20px 48px rgba(0,0,0,.1);}
+.acard-img{overflow:hidden;height:280px;}
+.acard-img img{width:100%;height:100%;object-fit:cover;object-position:top;display:block;transition:transform .5s var(--ease);}
+.acard:hover .acard-img img{transform:scale(1.05);}
+.acard-body{padding:24px;}
+.acard-name{font-family:var(--serif);font-size:22px;font-weight:500;margin-bottom:3px;}
+.acard-book{font-size:13px;font-style:italic;color:var(--mid);margin-bottom:12px;}
+.acard-badge{display:inline-flex;align-items:center;gap:6px;background:var(--g4);color:var(--g3);font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:5px 10px;}
 
-/* ═══════ FREE EBOOK CAPTURE ═══════ */
-.ebook{background:var(--dk);padding:80px 5%;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
-.ebook-mock{position:relative;display:flex;align-items:center;justify-content:center;}
-.book-3d{width:220px;height:300px;position:relative;transform:perspective(800px) rotateY(-12deg);transform-style:preserve-3d;}
-.book-front{width:100%;height:100%;background:linear-gradient(145deg,var(--g3) 0%,var(--g) 60%,var(--g2) 100%);display:flex;flex-direction:column;justify-content:space-between;padding:30px 24px;box-shadow:8px 8px 30px rgba(0,0,0,.5),2px 2px 8px rgba(0,0,0,.3);position:relative;overflow:hidden;}
-.book-front::before{content:'';position:absolute;top:0;right:0;bottom:0;width:8px;background:rgba(0,0,0,.2);}
-.book-front::after{content:'';position:absolute;inset:0;background:linear-gradient(105deg,rgba(255,255,255,.08) 0%,transparent 50%);}
-.book-title{font-family:var(--serif);font-size:22px;font-weight:600;color:#fff;line-height:1.15;z-index:1;}
-.book-sub{font-size:10.5px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.7);z-index:1;}
-.book-author{font-size:11px;font-weight:600;color:rgba(255,255,255,.9);letter-spacing:.08em;text-transform:uppercase;z-index:1;}
-.book-glow{position:absolute;bottom:-40px;left:50%;transform:translateX(-50%);width:180px;height:80px;background:rgba(98,154,120,.25);filter:blur(28px);border-radius:50%;}
-.ebook-copy{color:#fff;}
-.ebook-copy .ey.lv{margin-bottom:16px;}
+/* ═══ EBOOK CAPTURE ═══ */
+.ebook{background:var(--g3);padding:96px 5%;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+.ebook-mock{display:flex;justify-content:center;align-items:center;position:relative;}
+.book-wrap{position:relative;transform:perspective(1000px) rotateY(-8deg) rotateX(2deg);transition:transform .4s var(--ease);}
+.book-wrap:hover{transform:perspective(1000px) rotateY(-2deg) rotateX(0deg);}
+.book{width:210px;height:290px;background:linear-gradient(145deg,#3d6649 0%,#629A78 55%,#91b8a1 100%);display:flex;flex-direction:column;justify-content:space-between;padding:28px 22px;box-shadow:16px 16px 48px rgba(0,0,0,.4),4px 4px 12px rgba(0,0,0,.2);position:relative;overflow:hidden;border-radius:2px;}
+.book::before{content:'';position:absolute;top:0;left:0;bottom:0;width:6px;background:rgba(0,0,0,.2);}
+.book::after{content:'';position:absolute;inset:0;background:linear-gradient(120deg,rgba(255,255,255,.12) 0%,transparent 50%);}
+.book-eyebrow{font-size:8.5px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.65);z-index:1;}
+.book-title{font-family:var(--serif);font-size:24px;font-weight:600;color:#fff;line-height:1.15;z-index:1;}
+.book-author{font-size:10px;font-weight:600;color:rgba(255,255,255,.75);letter-spacing:.1em;text-transform:uppercase;z-index:1;}
+.book-shadow{position:absolute;bottom:-24px;left:10%;right:10%;height:24px;background:rgba(0,0,0,.25);filter:blur(12px);border-radius:50%;}
+.ebook-copy{}
 .ebook-copy h2{color:#fff;margin-bottom:0;}
-.ebook-copy .ru.lv{margin:22px 0;}
-.ebook-copy p{font-size:15px;line-height:1.8;color:rgba(255,255,255,.6);margin-bottom:8px;}
-.ebook-form{margin-top:32px;display:flex;flex-direction:column;gap:12px;}
+.ebook-copy .ru{background:var(--g2);}
+.ebook-copy p{font-size:15px;line-height:1.8;color:rgba(255,255,255,.68);margin-bottom:8px;}
+.ef{margin-top:32px;display:flex;flex-direction:column;gap:12px;}
 .ef-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-.ef-input{width:100%;padding:14px 16px;font-family:var(--sans);font-size:14px;background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.12);color:#fff;outline:none;transition:border-color .2s;border-radius:2px;}
-.ef-input::placeholder{color:rgba(255,255,255,.35);}
-.ef-input:focus{border-color:var(--g2);}
-.ef-btn{width:100%;padding:15px;font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;background:var(--g);color:#fff;border:none;cursor:pointer;transition:background .2s;border-radius:2px;}
-.ef-btn:hover{background:var(--g3);}
-.ef-small{font-size:11px;color:rgba(255,255,255,.3);text-align:center;}
+.ef input{width:100%;padding:14px 16px;font-family:var(--sans);font-size:14px;background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.18);color:#fff;outline:none;transition:border-color .2s;border-radius:2px;}
+.ef input::placeholder{color:rgba(255,255,255,.38);}
+.ef input:focus{border-color:var(--g2);}
+.ef-btn{width:100%;padding:15px;font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;background:#fff;color:var(--g3);border:none;cursor:pointer;transition:all .2s var(--ease);border-radius:2px;}
+.ef-btn:hover{background:var(--g4);transform:translateY(-1px);}
+.ef-note{font-size:11px;color:rgba(255,255,255,.32);text-align:center;}
+.ef-thanks{display:none;margin-top:24px;padding:22px 24px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:2px;}
+.ef-thanks h4{font-family:var(--serif);font-size:22px;color:#fff;margin-bottom:6px;}
+.ef-thanks p{font-size:14px;color:rgba(255,255,255,.65);}
 
-/* COHORTS */
-.coh-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:52px;background:rgba(255,255,255,.05);}
-.coh{background:var(--dk2);padding:36px 28px;}
-.coh-d{font-family:var(--serif);font-size:54px;font-weight:300;color:#fff;line-height:1;}
-.coh-m{font-family:var(--serif);font-size:18px;font-weight:300;color:var(--g2);margin-bottom:20px;}
-.coh-hr{height:1px;background:rgba(255,255,255,.07);margin:14px 0;}
-.coh-i{font-size:12.5px;color:rgba(255,255,255,.5);margin-bottom:4px;}
-.coh-i strong{color:rgba(255,255,255,.82);}
+/* ═══ COHORTS ═══ */
+.cohorts{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:52px;}
+.coh{background:var(--wh);border:1px solid rgba(0,0,0,.07);padding:36px 28px;transition:transform .3s var(--ease),box-shadow .3s var(--ease),border-color .3s;}
+.coh:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.09);border-color:var(--g2);}
+.coh-d{font-family:var(--serif);font-size:56px;font-weight:300;color:var(--dk);line-height:1;}
+.coh-m{font-family:var(--serif);font-size:18px;font-weight:300;color:var(--g);margin-bottom:20px;}
+.coh-hr{height:1px;background:rgba(0,0,0,.07);margin:14px 0;}
+.coh-i{font-size:12.5px;color:var(--mid);margin-bottom:4px;}
+.coh-i strong{color:var(--dk);}
 .ctabs{display:flex;gap:6px;flex-wrap:wrap;margin:16px 0 14px;}
-.ct{padding:7px 12px;font-size:11px;font-weight:600;border:1px solid rgba(255,255,255,.13);background:transparent;cursor:pointer;text-decoration:none;color:rgba(255,255,255,.58);transition:all .15s;}
+.ct{padding:7px 12px;font-size:11px;font-weight:600;border:1px solid rgba(0,0,0,.12);background:var(--wh);cursor:pointer;text-decoration:none;color:var(--mid);transition:all .15s;}
 .ct:hover{background:var(--g);color:#fff;border-color:var(--g);}
 
-/* TESTIMONIALS (text quotes) */
-.tq-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:52px;background:rgba(255,255,255,.05);}
-.tq{background:var(--dk3);padding:34px 28px;position:relative;}
-.tq-qm{font-family:var(--serif);font-size:80px;color:var(--g);opacity:.18;position:absolute;top:4px;left:18px;line-height:1;}
-.tq p{font-family:var(--serif);font-size:16px;font-style:italic;line-height:1.65;color:rgba(255,255,255,.88);margin-bottom:20px;padding-top:14px;}
-.tq-auth{display:flex;align-items:center;gap:10px;}
-.tq-auth img{width:38px;height:38px;border-radius:50%;object-fit:cover;border:2px solid var(--g);}
-.tq-nm{font-size:11.5px;font-weight:600;color:rgba(255,255,255,.62);}
+/* ═══ TESTIMONIALS ═══ */
+.tq-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:52px;}
+.tq{background:var(--wh);border:1px solid rgba(0,0,0,.07);padding:32px 28px;position:relative;transition:transform .3s var(--ease),box-shadow .3s var(--ease);}
+.tq:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.09);}
+.tq-qm{font-family:var(--serif);font-size:80px;color:var(--g);opacity:.12;position:absolute;top:2px;left:16px;line-height:1;}
+.tq p{font-family:var(--serif);font-size:16px;font-style:italic;line-height:1.65;color:var(--dk);margin-bottom:20px;padding-top:14px;}
+.tq-nm{font-size:11.5px;font-weight:600;color:var(--g3);}
 
-/* MATT CTA BLOCK */
-.mc-block{display:grid;grid-template-columns:260px 1fr;max-width:860px;margin:52px auto 0;}
-.mc-img img{width:100%;height:100%;object-fit:cover;object-position:top;min-height:260px;display:block;}
-.mc-copy{background:var(--dk2);padding:48px 44px;border-left:3px solid var(--g);}
-.mc-copy h3{color:#fff;font-size:25px;margin-bottom:10px;}
-.mc-copy p{font-size:14px;line-height:1.8;color:rgba(255,255,255,.58);margin-bottom:26px;}
-.mc-btns{display:flex;gap:10px;flex-wrap:wrap;}
-
-/* FAQ */
-.faq-w{max-width:720px;margin:52px auto 0;}
-.fi{border-bottom:1px solid rgba(0,0,0,.09);}
-.fi.dk{border-bottom-color:rgba(255,255,255,.09);}
-.fq{display:flex;justify-content:space-between;align-items:center;padding:19px 0;cursor:pointer;font-family:var(--serif);font-size:19px;font-weight:500;color:var(--dk);}
-.fi.dk .fq{color:#fff;}
-.fi-ic{font-size:20px;color:var(--g);transition:transform .2s;min-width:20px;text-align:center;}
+/* ═══ FAQ ═══ */
+.faq-w{max-width:700px;margin:52px auto 0;}
+.fi{border-bottom:1px solid rgba(0,0,0,.08);}
+.fq{display:flex;justify-content:space-between;align-items:center;padding:20px 0;cursor:pointer;font-family:var(--serif);font-size:19px;font-weight:500;color:var(--dk);transition:color .2s;}
+.fq:hover{color:var(--g);}
+.fi-ic{font-size:20px;color:var(--g);transition:transform .25s;min-width:20px;text-align:center;}
 .fi.open .fi-ic{transform:rotate(45deg);}
-.fa{display:none;padding-bottom:19px;font-size:14px;line-height:1.8;color:var(--mid);}
-.fi.dk .fa{color:rgba(255,255,255,.52);}
-.fi.open .fa{display:block;}
+.fa{display:none;padding-bottom:20px;font-size:14px;line-height:1.8;color:var(--mid);}
+.fi.open .fa{display:block;animation:fadeInDown .25s ease;}
+@keyframes fadeInDown{from{opacity:0;transform:translateY(-6px);}to{opacity:1;transform:none;}}
 
-/* INNER HERO */
-.ih{background:var(--dk);padding:90px 5% 96px;position:relative;overflow:hidden;}
-.ihbg{position:absolute;right:0;top:0;bottom:0;width:46%;background-size:cover;background-position:center top;opacity:.15;}
-.ihgr{position:absolute;inset:0;background:linear-gradient(to right,var(--dk) 50%,transparent);}
-.ihc{position:relative;z-index:2;max-width:520px;}
-.ihc h1{color:#fff;font-size:clamp(40px,5.5vw,72px);}
-.ihc .sub{font-size:15px;line-height:1.8;color:rgba(255,255,255,.58);margin-top:14px;max-width:400px;}
+/* ═══ INNER HERO ═══ */
+.ih{padding:100px 5% 104px;position:relative;overflow:hidden;background:var(--off);}
+.ih::before{content:'';position:absolute;top:0;left:0;bottom:0;width:4px;background:linear-gradient(to bottom,var(--g),var(--g2));}
+.ihc{max-width:580px;}
+.ihc h1{font-size:clamp(40px,5.5vw,72px);color:var(--dk);}
+.ihc .sub{font-size:15px;line-height:1.8;color:var(--mid);margin-top:16px;max-width:420px;}
+.ih-img{position:absolute;right:0;top:0;bottom:0;width:40%;overflow:hidden;}
+.ih-img img{width:100%;height:100%;object-fit:cover;object-position:top;opacity:.18;}
+.ih-img::before{content:'';position:absolute;inset:0;background:linear-gradient(to right,var(--off) 20%,transparent);z-index:1;}
 
-/* PRICING */
-.price-g{display:grid;grid-template-columns:1fr 1.08fr 1fr;gap:0;margin-top:52px;align-items:start;}
-.pc{padding:40px 30px;border:1px solid rgba(0,0,0,.09);background:var(--wh);}
-.pc.feat{background:var(--dk);padding-top:56px;padding-bottom:56px;margin:-14px 0;z-index:2;position:relative;border:none;}
-.pc.feat::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--g);}
-.pt{font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--g);margin-bottom:6px;}
+/* ═══ PRICING — AGENCY STYLE ═══ */
+.pricing{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;margin-top:52px;border:1px solid rgba(0,0,0,.08);}
+.pc{padding:44px 36px;border-right:1px solid rgba(0,0,0,.08);position:relative;transition:background .3s;}
+.pc:last-child{border-right:none;}
+.pc.feat{background:var(--dk);border-right-color:transparent;}
+.pc.feat::before{content:'MOST POPULAR';position:absolute;top:0;left:0;right:0;background:var(--g);color:#fff;text-align:center;font-size:9px;font-weight:700;letter-spacing:.25em;padding:7px 0;}
+.pc.feat{padding-top:52px;}
+.pt{font-size:9.5px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--g);margin-bottom:8px;}
 .pc.feat .pt{color:var(--g2);}
-.pn{font-family:var(--serif);font-size:22px;font-weight:500;color:var(--dk);margin-bottom:8px;}
-.pc.feat .pn{color:#fff;}
-.pa{font-family:var(--serif);font-size:52px;font-weight:300;color:var(--dk);line-height:1;margin:14px 0 5px;}
-.pc.feat .pa{color:var(--g2);}
-.pd{font-size:12.5px;font-style:italic;color:var(--mid);padding-bottom:18px;margin-bottom:18px;border-bottom:1px solid rgba(0,0,0,.09);}
-.pc.feat .pd{color:rgba(255,255,255,.45);border-color:rgba(255,255,255,.09);}
-.pf{list-style:none;margin-bottom:30px;}
-.pf li{font-size:13px;line-height:1.6;color:var(--mid);padding:7px 0 7px 18px;border-bottom:1px solid rgba(0,0,0,.05);position:relative;}
-.pc.feat .pf li{color:rgba(255,255,255,.65);border-color:rgba(255,255,255,.07);}
-.pf li::before{content:'✓';position:absolute;left:0;color:var(--g);font-weight:700;}
+.pname{font-family:var(--serif);font-size:22px;font-weight:500;color:var(--dk);margin-bottom:10px;}
+.pc.feat .pname{color:#fff;}
+.pamount{font-family:var(--serif);font-size:56px;font-weight:300;color:var(--dk);line-height:1;margin:16px 0 6px;}
+.pc.feat .pamount{color:var(--g2);}
+.pdesc{font-size:12.5px;font-style:italic;color:var(--mid);padding-bottom:20px;margin-bottom:20px;border-bottom:1px solid rgba(0,0,0,.08);}
+.pc.feat .pdesc{color:rgba(255,255,255,.45);border-color:rgba(255,255,255,.1);}
+.pfeats{list-style:none;margin-bottom:32px;}
+.pfeats li{font-size:13px;line-height:1.6;color:var(--mid);padding:8px 0 8px 20px;border-bottom:1px solid rgba(0,0,0,.05);position:relative;}
+.pc.feat .pfeats li{color:rgba(255,255,255,.62);border-color:rgba(255,255,255,.07);}
+.pfeats li::before{content:'✓';position:absolute;left:0;color:var(--g);font-weight:700;}
 
-/* WHY */
-.why-g{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:52px;}
-.wc{background:var(--wh);padding:30px;border-top:3px solid var(--g);}
-.wi{font-size:22px;margin-bottom:10px;}
+/* ═══ WHY ═══ */
+.why{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:52px;}
+.wc{background:var(--wh);padding:32px;border-left:3px solid var(--g);transition:transform .3s var(--ease),box-shadow .3s;}
+.wc:hover{transform:translateX(4px);box-shadow:4px 0 24px rgba(98,154,120,.15);}
+.wi{font-size:22px;margin-bottom:12px;}
 .wc h3{font-size:18px;margin-bottom:6px;}
 .wc p{font-size:13px;line-height:1.75;color:var(--mid);}
-.wf{font-family:var(--serif);font-size:30px;font-weight:600;color:var(--g3);margin-top:10px;}
+.wf{font-family:var(--serif);font-size:32px;font-weight:600;color:var(--g3);margin-top:10px;}
 
-/* TWO COL */
+/* ═══ TWO COL ═══ */
 .tc{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;}
-.tc img{width:100%;height:440px;object-fit:cover;display:block;}
+.tc img{width:100%;height:460px;object-fit:cover;display:block;}
 
-/* TIMELINE */
-.tl{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:52px;counter-reset:step;}
-.ts{padding:26px 20px;border-left:1px solid rgba(98,154,120,.18);}
-.ts::before{counter-increment:step;content:counter(step,decimal-leading-zero);font-family:var(--serif);font-size:42px;font-weight:300;color:rgba(98,154,120,.14);display:block;line-height:1;margin-bottom:8px;}
-.ts h3{font-size:13.5px;font-family:var(--sans);font-weight:600;color:#fff;margin-bottom:5px;letter-spacing:0;}
-.ts p{font-size:12px;line-height:1.65;color:rgba(255,255,255,.43);}
+/* ═══ TIMELINE ═══ */
+.tl{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:52px;counter-reset:step;border:1px solid rgba(0,0,0,.07);}
+.ts{padding:28px 22px;border-right:1px solid rgba(0,0,0,.07);transition:background .25s;}
+.ts:last-child{border-right:none;}
+.ts:hover{background:var(--g5);}
+.ts::before{counter-increment:step;content:counter(step,decimal-leading-zero);font-family:var(--serif);font-size:44px;font-weight:300;color:rgba(98,154,120,.18);display:block;line-height:1;margin-bottom:10px;}
+.ts h3{font-size:13.5px;font-family:var(--sans);font-weight:600;color:var(--dk);margin-bottom:5px;letter-spacing:0;}
+.ts p{font-size:12px;line-height:1.65;color:var(--mid);}
 
-/* BENEFITS */
-.ben-g{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:52px;}
-.ben{background:var(--wh);padding:28px;border-top:3px solid var(--g);}
-.bi{font-size:20px;margin-bottom:10px;}
+/* ═══ BENEFITS ═══ */
+.bens{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:52px;}
+.ben{background:var(--wh);padding:30px;border-top:3px solid var(--g);transition:transform .3s var(--ease),box-shadow .3s;}
+.ben:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.08);}
+.bi{font-size:22px;margin-bottom:10px;}
 .ben h3{font-size:17px;margin-bottom:5px;}
 .ben p{font-size:13px;line-height:1.75;color:var(--mid);}
-.bf{font-family:var(--serif);font-size:28px;font-weight:600;color:var(--g3);margin-top:8px;}
+.bf{font-family:var(--serif);font-size:30px;font-weight:600;color:var(--g3);margin-top:10px;}
 
-/* AUTHORS CENTRE */
-.ac{max-width:600px;margin:0 auto;text-align:center;}
-.ac p{font-size:15px;line-height:1.85;color:rgba(255,255,255,.58);margin:18px 0 40px;}
+/* ═══ AUTHORS CENTRE ═══ */
+.ac{max-width:580px;margin:0 auto;text-align:center;}
+.ac p{font-size:15px;line-height:1.85;color:var(--mid);margin:18px 0 40px;}
 
-/* PROG */
-.pg-g{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;margin-top:52px;background:rgba(255,255,255,.05);}
-.pi{padding:32px;background:var(--dk2);}
-.pi-ic{font-size:22px;margin-bottom:11px;}
-.pi h3{font-size:19px;color:#fff;margin-bottom:7px;}
-.pi p{font-size:13px;line-height:1.75;color:rgba(255,255,255,.53);}
+/* ═══ PROG GRID ═══ */
+.pgg{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:52px;}
+.pi{background:var(--wh);padding:32px;border:1px solid rgba(0,0,0,.07);transition:transform .3s var(--ease),box-shadow .3s,border-color .3s;}
+.pi:hover{transform:translateY(-4px);box-shadow:0 14px 36px rgba(0,0,0,.08);border-color:var(--g2);}
+.pi-ic{font-size:24px;margin-bottom:12px;}
+.pi h3{font-size:19px;color:var(--dk);margin-bottom:8px;}
+.pi p{font-size:13px;line-height:1.75;color:var(--mid);}
 
-/* PATHWAY */
-.path{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:52px;}
-.ps{padding:40px 32px;border-right:1px solid rgba(0,0,0,.09);cursor:pointer;transition:background .2s;}
-.ps:last-child{border-right:none;border-top:3px solid var(--g);background:var(--g4);}
-.ps:hover{background:var(--off);}
+/* ═══ PATHWAY ═══ */
+.path{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:52px;border:1px solid rgba(0,0,0,.08);}
+.ps{padding:40px 32px;border-right:1px solid rgba(0,0,0,.08);cursor:pointer;transition:background .25s;}
+.ps:last-child{border-right:none;border-left:3px solid var(--g);background:var(--g5);}
+.ps:hover{background:var(--g5);}
 .ps:last-child:hover{background:rgba(98,154,120,.1);}
-.ps-ic{font-size:24px;margin-bottom:10px;}
-.ps h3{margin-bottom:6px;}
+.ps-ic{font-size:26px;margin-bottom:12px;}
+.ps h3{margin-bottom:7px;}
 .ps p{font-size:13px;line-height:1.7;color:var(--mid);}
 
-/* PRICE HERO */
-.ph{max-width:520px;margin:0 auto;text-align:center;}
-.ph .bp{font-family:var(--serif);font-size:76px;font-weight:300;color:var(--g2);line-height:1;margin:12px 0 8px;}
-.ph p{font-size:15px;color:rgba(255,255,255,.55);margin-bottom:34px;}
+/* ═══ PRICE HERO ═══ */
+.ph{max-width:500px;margin:0 auto;text-align:center;}
+.ph .bp{font-family:var(--serif);font-size:80px;font-weight:300;color:var(--g);line-height:1;margin:12px 0 8px;}
+.ph p{font-size:15px;color:var(--mid);margin-bottom:34px;}
 
-/* CONTACT */
+/* ═══ MATT CTA ═══ */
+.mattcta{display:grid;grid-template-columns:280px 1fr;max-width:840px;margin:52px auto 0;border:1px solid rgba(0,0,0,.08);overflow:hidden;}
+.mattcta-img{overflow:hidden;}
+.mattcta-img img{width:100%;height:100%;object-fit:cover;object-position:top;display:block;transition:transform .5s var(--ease);}
+.mattcta:hover .mattcta-img img{transform:scale(1.04);}
+.mattcta-copy{padding:48px 44px;background:var(--wh);border-left:3px solid var(--g);}
+.mattcta-copy h3{font-size:25px;margin-bottom:10px;}
+.mattcta-copy p{font-size:14px;line-height:1.8;color:var(--mid);margin-bottom:24px;}
+.mc-btns{display:flex;gap:10px;flex-wrap:wrap;}
+
+/* ═══ CONTACT ═══ */
 .cg{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;}
-.fg{margin-bottom:19px;}
+.fg-grp{margin-bottom:18px;}
 .fl{display:block;font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--mid);margin-bottom:7px;}
-.fi2{width:100%;padding:13px 14px;font-family:var(--sans);font-size:14px;border:1.5px solid rgba(0,0,0,.14);background:var(--wh);color:var(--dk);outline:none;transition:border-color .2s;}
+.fi2{width:100%;padding:13px 14px;font-family:var(--sans);font-size:14px;border:1.5px solid rgba(0,0,0,.12);background:var(--wh);color:var(--dk);outline:none;transition:border-color .25s;border-radius:2px;}
 .fi2:focus{border-color:var(--g);}
 textarea.fi2{min-height:120px;resize:vertical;}
-.sch-l{display:flex;flex-direction:column;gap:10px;margin-top:32px;}
-.sr{display:grid;grid-template-columns:58px 1fr auto;gap:14px;align-items:center;padding:18px 20px;background:var(--wh);border:1px solid rgba(0,0,0,.08);border-left:3px solid var(--g);}
+.schl{display:flex;flex-direction:column;gap:10px;margin-top:30px;}
+.sr{display:grid;grid-template-columns:56px 1fr auto;gap:14px;align-items:center;padding:18px 20px;background:var(--wh);border:1px solid rgba(0,0,0,.08);border-left:3px solid var(--g);transition:box-shadow .25s;}
+.sr:hover{box-shadow:0 4px 20px rgba(0,0,0,.07);}
 .sd{font-family:var(--serif);font-size:34px;font-weight:300;color:var(--dk);line-height:1;}
 .sm{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--g3);}
 .si strong{font-size:13px;font-weight:600;color:var(--dk);display:block;}
-.si span{font-size:11.5px;color:var(--mid);}
+.si span{font-size:11px;color:var(--mid);}
 
-/* FOOTER */
-footer{background:var(--dk);padding:64px 5% 32px;}
-.fg2{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px;}
+/* ═══ FOOTER ═══ */
+footer{background:var(--dk);padding:72px 5% 36px;}
+.fg2{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:52px;margin-bottom:52px;}
 .fli img{height:24px;margin-bottom:14px;display:block;}
-.ft{font-size:13px;line-height:1.75;color:rgba(255,255,255,.38);max-width:230px;}
+.ft{font-size:13px;line-height:1.75;color:rgba(255,255,255,.35);max-width:230px;}
 .fh{font-size:9.5px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--g2);margin-bottom:14px;}
 .fls{list-style:none;display:flex;flex-direction:column;gap:9px;}
-.fls a{font-size:13px;color:rgba(255,255,255,.45);text-decoration:none;cursor:pointer;transition:color .15s;}
+.fls a{font-size:13px;color:rgba(255,255,255,.42);text-decoration:none;cursor:pointer;transition:color .15s;}
 .fls a:hover{color:var(--g2);}
 .fb{border-top:1px solid rgba(255,255,255,.07);padding-top:24px;display:flex;justify-content:space-between;}
 .fc{font-size:12px;color:rgba(255,255,255,.2);}
 
-/* RESPONSIVE */
+/* ═══ RESPONSIVE ═══ */
 @media(max-width:960px){
-  .hero{grid-template-columns:1fr;height:auto;min-height:100vh;}
-  .hero-r{height:50vh;}
-  .pillars,.coh-grid,.tq-grid,.price-g,.tl,.ben-g,.why-g,.path,.pg-g,.cg,.fg2{grid-template-columns:1fr;}
-  .pc.feat{margin:0;padding:40px 30px;}
-  .matt,.stat-impact,.ebook,.tc{grid-template-columns:1fr;}
-  .matt-img,.tc img{max-height:320px;}
-  .ebook-mock{margin-bottom:32px;}
-  .authors{grid-template-columns:1fr 1fr;}
-  .mc-block{grid-template-columns:1fr;}
-  .mc-img img{max-height:240px;}
-  .hero-l{padding:60px 5% 60px;}
+  .pillars,.cohorts,.tq-grid,.pricing,.tl,.bens,.why,.path,.pgg,.cg,.fg2,.authors{grid-template-columns:1fr;}
+  .pc.feat{padding-top:52px;}
+  .matt,.impact,.ebook,.tc{grid-template-columns:1fr;}
+  .matt-img{height:340px;max-height:340px;}
+  .ih-img{display:none;}
+  .mattcta{grid-template-columns:1fr;}
+  .mattcta-img{height:240px;}
 }
 @media(max-width:768px){
-  .nm{display:none;}
-  .hb{display:flex;}
-  .sec,.ih,.stat-impact,.ebook{padding-left:5%;padding-right:5%;}
+  .nm{display:none;}.hb{display:flex;}
   .stats{grid-template-columns:repeat(2,1fr);}
   .stat:nth-child(2){border-right:none;}
-  .authors{grid-template-columns:1fr;}
+  .hero-content{padding-bottom:60px;}
 }
 </style>
 </head>
 <body>
 
-<nav>
+<nav id="nav">
   <div class="nl" onclick="go('home')">
     <img src="https://raw.githubusercontent.com/Zorian/publishu-proposal-Alex/main/assets/logo.svg" alt="PublishU">
   </div>
@@ -354,13 +369,13 @@ footer{background:var(--dk);padding:64px 5% 32px;}
   <a onclick="go('contact');toggleMob()">Contact</a>
 </div>
 
-<!-- ═══════════ HOME ═══════════ -->
+<!-- ══════════════════════ HOME ══════════════════════ -->
 <div class="pg on" id="pg-home">
 
-  <!-- HERO -->
   <div class="hero">
-    <div class="hero-l">
-      <div class="hero-eyebrow">The Book Writing Programme</div>
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="hero-pre">The Book Writing Programme</div>
       <h1 style="color:#fff">Become<br><em style="color:var(--g2)">An Author</em></h1>
       <p class="hero-sub">PublishU turns willing writers into globally published authors — from first idea to finished book, in just 100 days.</p>
       <div class="hero-btns">
@@ -368,38 +383,37 @@ footer{background:var(--dk);padding:64px 5% 32px;}
         <a href="#about" class="btn bow">How It Works</a>
       </div>
     </div>
-    <div class="hero-r">
-      <img src="https://raw.githubusercontent.com/Zorian/publishu-proposal-Alex/main/assets/matt-1.jpg" alt="Matt Bird — PublishU">
+    <div class="hero-scroll">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
     </div>
-    <div class="hero-scroll">Scroll to explore</div>
   </div>
 
-  <!-- STATS -->
   <div class="stats">
-    <div class="stat"><div class="sn">25+</div><div class="sl">Books by Matt</div></div>
-    <div class="stat"><div class="sn">100</div><div class="sl">Days to Manuscript</div></div>
-    <div class="stat"><div class="sn">90%</div><div class="sl">Completion Rate</div></div>
-    <div class="stat"><div class="sn">400+</div><div class="sl">Published Authors</div></div>
+    <div class="stat"><div class="sn" data-count="25">0</div><div class="sl">Books by Matt</div></div>
+    <div class="stat"><div class="sn" data-count="100">0</div><div class="sl">Days to Manuscript</div></div>
+    <div class="stat"><div class="sn" data-count="90">0</div><div class="sl">% Completion Rate</div></div>
+    <div class="stat"><div class="sn" data-count="400">0</div><div class="sl">Published Authors</div></div>
   </div>
 
   <!-- 3 PILLARS -->
-  <div class="sec sdk" id="about">
-    <div class="ey lv">The PublishU Journey</div>
-    <h2>From <em>First Idea</em> to Global Publication</h2>
-    <div class="pillars">
-      <div class="pil" onclick="go('writing')">
+  <div class="sec" id="about" style="background:var(--off)">
+    <div class="reveal"><div class="ey c">The PublishU Journey</div></div>
+    <div class="reveal d1"><h2 style="text-align:center">From <em>First Idea</em> to Global Publication</h2></div>
+    <div class="pillars" style="margin-top:52px">
+      <div class="pil reveal d1" onclick="go('writing')">
         <div class="pil-n">01</div>
         <h3>Writing My Book</h3>
-        <p>Turn your idea into a completed manuscript in 100 days. Maximum 10 authors per cohort for dedicated coaching from Matt Bird.</p>
+        <p>Turn your idea into a completed manuscript in 100 days. Max 10 authors per cohort for dedicated coaching from Matt Bird.</p>
         <div class="pil-a">Explore Writing →</div>
       </div>
-      <div class="pil" onclick="go('publishing')">
+      <div class="pil reveal d2" onclick="go('publishing')">
         <div class="pil-n">02</div>
         <h3>Publishing My Book</h3>
         <p>From manuscript to global publication in 100 days. Paperback, Kindle and Audiobook across every major retailer worldwide.</p>
         <div class="pil-a">Explore Publishing →</div>
       </div>
-      <div class="pil" onclick="go('marketing')">
+      <div class="pil reveal d3" onclick="go('marketing')">
         <div class="pil-n">03</div>
         <h3>Marketing My Book</h3>
         <p>Six months of structured support to build momentum, visibility and real opportunity around your book after publication.</p>
@@ -408,113 +422,109 @@ footer{background:var(--dk);padding:64px 5% 32px;}
     </div>
   </div>
 
-  <!-- 0.02% STAT IMPACT -->
-  <div class="stat-impact">
-    <div class="si-l">
-      <div class="ey lv" style="margin-bottom:20px">Proven Results</div>
-      <h2 style="color:#fff">Top 0.02%<span>of all books on Amazon.</span></h2>
-      <div class="ru lv" style="margin:28px 0"></div>
-      <a onclick="go('publishing')" class="btn bg" style="margin-top:8px">See How We Do It</a>
+  <!-- MATT -->
+  <div class="matt">
+    <div class="matt-img reveal-l">
+      <img src="https://raw.githubusercontent.com/Zorian/publishu-proposal-Alex/main/assets/matt-boat.jpg" alt="Matt Bird — Dubai">
     </div>
-    <div class="si-r">
-      <p>Top 10,000 on Amazon means your book ranks in the <strong>top 0.02% of 44 million books.</strong></p>
-      <p>These aren't lucky breaks. They're the result of the PublishU system — professional editing, strategic cover design, global distribution, and a marketing programme that keeps momentum alive.</p>
-      <span class="tagline">"These authors didn't just publish. They published well."</span>
+    <div class="matt-copy" style="padding:80px 64px;background:var(--wh);display:flex;flex-direction:column;justify-content:center;">
+      <div class="reveal">
+        <div class="matt-tag">✦ Your Coach</div>
+        <h2>Meet<br><em>Matt Bird</em></h2>
+        <div class="ru"></div>
+        <p class="bt" style="margin-bottom:16px">Matt Bird has authored 25 books, won a Book of the Year prize and written for The Times. He overcame remedial English classes and dyslexia to become one of the UK's most prolific authors and publishers.</p>
+        <p class="bt" style="margin-bottom:36px">Every PublishU programme is led by Matt personally. You get direct access to his expertise, his publishing network, and 25 years of hands-on experience — from idea through to Amazon bestseller.</p>
+        <a href="https://www.publishu.com/free-consultation" target="_blank" class="btn bg">Book A Free Call With Matt</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- IMPACT 0.02% -->
+  <div class="impact">
+    <div class="reveal-l">
+      <div class="ey">Proven Results</div>
+      <div class="big-stat">Top<br>0.02%</div>
+      <div class="big-label">of all 44 million books on Amazon. These authors didn't just publish — they published well.</div>
+    </div>
+    <div class="reveal-r">
+      <p>Top 10,000 on Amazon means your book ranks in the <strong>top 0.02% of 44 million books.</strong> These aren't lucky breaks.</p>
+      <p>They're the result of the PublishU system — professional editing, strategic cover design, worldwide distribution, and a marketing programme that keeps momentum alive long after launch day.</p>
+      <div class="impact-quote">"These authors didn't just publish. They published well."</div>
     </div>
   </div>
 
   <!-- AUTHOR SHOWCASE -->
-  <div class="sec sw">
-    <div class="ey c">Published Authors</div>
-    <h2 style="text-align:center">Real Authors. <em>Real Results.</em></h2>
+  <div class="sec" style="background:var(--wh)">
+    <div class="reveal"><div class="ey c">Published Authors</div></div>
+    <div class="reveal d1"><h2 style="text-align:center">Real Authors. <em>Real Results.</em></h2></div>
     <div class="authors">
-      <div class="author-card">
-        <img src="https://raw.githubusercontent.com/Zorian/publishu-proposal-Alex/main/assets/testi-jimmy.jpg" alt="Jimmy Orr">
-        <div class="author-info">
-          <div class="auth-name">Jimmy Orr</div>
-          <div class="auth-book">'Stand There, Don't Just Do Something'</div>
-          <span class="auth-rank">Amazon Top 10,000 — Top 0.02%</span>
+      <div class="acard reveal d1">
+        <div class="acard-img"><img src="https://raw.githubusercontent.com/Zorian/publishu-proposal-Alex/main/assets/testi-jimmy.jpg" alt="Jimmy Orr"></div>
+        <div class="acard-body">
+          <div class="acard-name">Jimmy Orr</div>
+          <div class="acard-book">'Stand There, Don't Just Do Something'</div>
+          <span class="acard-badge">★ Amazon Top 10,000 — Top 0.02%</span>
         </div>
       </div>
-      <div class="author-card">
-        <img src="https://raw.githubusercontent.com/Zorian/publishu-proposal-Alex/main/assets/testi-alex.jpg" alt="Alexander Hoare">
-        <div class="author-info">
-          <div class="auth-name">Alexander Hoare</div>
-          <div class="auth-book">'Impact Banker'</div>
-          <span class="auth-rank">Amazon Rank #1,714 — Top 0.004%</span>
+      <div class="acard reveal d2">
+        <div class="acard-img"><img src="https://raw.githubusercontent.com/Zorian/publishu-proposal-Alex/main/assets/testi-alex.jpg" alt="Alexander Hoare"></div>
+        <div class="acard-body">
+          <div class="acard-name">Alexander Hoare</div>
+          <div class="acard-book">'Impact Banker'</div>
+          <span class="acard-badge">★ Amazon Rank #1,714 — Top 0.004%</span>
         </div>
       </div>
-      <div class="author-card">
-        <img src="https://raw.githubusercontent.com/Zorian/publishu-proposal-Alex/main/assets/testi-leslie.jpg" alt="Leslie Newton">
-        <div class="author-info">
-          <div class="auth-name">Leslie Newton</div>
-          <div class="auth-book">'Church Unbound'</div>
-          <span class="auth-rank">Amazon Top 10,000 — Top 0.02%</span>
+      <div class="acard reveal d3">
+        <div class="acard-img"><img src="https://raw.githubusercontent.com/Zorian/publishu-proposal-Alex/main/assets/testi-leslie.jpg" alt="Leslie Newton"></div>
+        <div class="acard-body">
+          <div class="acard-name">Leslie Newton</div>
+          <div class="acard-book">'Church Unbound'</div>
+          <span class="acard-badge">★ Amazon Top 10,000 — Top 0.02%</span>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- MATT -->
-  <div class="matt">
-    <div class="matt-img">
-      <img src="https://raw.githubusercontent.com/Zorian/publishu-proposal-Alex/main/assets/matt-2.jpg" alt="Matt Bird">
-    </div>
-    <div class="matt-copy">
-      <div class="ey">Your Coach</div>
-      <h2>Meet<br><em>Matt Bird</em></h2>
-      <div class="ru"></div>
-      <p class="bt" style="margin-bottom:16px">Matt Bird has authored 25 books, won a Book of the Year prize and written for The Times. He overcame remedial English classes and dyslexia to become one of the UK's most prolific authors and publishers.</p>
-      <p class="bt" style="margin-bottom:36px">Every PublishU programme is led by Matt personally. You get his direct expertise, his publishing network, and 25 years of hands-on experience — from idea through to Amazon bestseller.</p>
-      <a href="https://www.publishu.com/free-consultation" target="_blank" class="btn bg">Book A Free Call With Matt</a>
-    </div>
-  </div>
-
-  <!-- FREE EBOOK CAPTURE -->
+  <!-- FREE EBOOK -->
   <div class="ebook" id="ebook">
-    <div class="ebook-mock">
-      <div class="book-3d">
-        <div class="book-front">
-          <div>
-            <div class="book-sub" style="margin-bottom:10px">Free Guide by Matt Bird</div>
-            <div class="book-title">My Coaching Business</div>
-          </div>
-          <div>
-            <div class="book-sub" style="margin-bottom:6px">A Step-by-Step Guide to Build Your Coaching Venture</div>
-            <div class="book-author">Matt Bird · PublishU</div>
-          </div>
+    <div class="ebook-mock reveal-l">
+      <div class="book-wrap">
+        <div class="book">
+          <div class="book-eyebrow">Free Guide by Matt Bird</div>
+          <div class="book-title">My Coaching Business</div>
+          <div class="book-author">Matt Bird · PublishU</div>
         </div>
+        <div class="book-shadow"></div>
       </div>
-      <div class="book-glow"></div>
     </div>
-    <div class="ebook-copy">
-      <div class="ey lv">Free Download</div>
+    <div class="ebook-copy reveal-r">
+      <div class="ey" style="color:var(--g2);margin-bottom:14px"><span style="width:24px;height:1.5px;background:var(--g2);display:inline-block"></span>Free Download</div>
       <h2 style="color:#fff">My Coaching <em style="color:var(--g2)">Business</em></h2>
-      <div class="ru lv"></div>
-      <p>Get Matt Bird's complete step-by-step guide to building your coaching venture — completely free.</p>
-      <p style="margin-top:4px">Covers positioning, pricing, getting your first clients, and how your book becomes your most powerful coaching asset.</p>
-      <div class="ebook-form" id="ebook-form">
+      <div class="ru"></div>
+      <p>Matt Bird's complete step-by-step guide to building your coaching venture — free.</p>
+      <p style="margin-top:6px">Covers positioning, pricing, getting your first clients, and how your book becomes your most powerful coaching asset.</p>
+      <div class="ef" id="ef">
         <div class="ef-row">
-          <input type="text" class="ef-input" placeholder="First name" id="ef-first">
-          <input type="text" class="ef-input" placeholder="Last name" id="ef-last">
+          <input type="text" placeholder="First name" id="ef-first">
+          <input type="text" placeholder="Last name" id="ef-last">
         </div>
-        <input type="email" class="ef-input" placeholder="Your email address" id="ef-email">
+        <input type="email" placeholder="Your email address" id="ef-email">
         <button class="ef-btn" onclick="submitEbook()">Send Me The Free Guide →</button>
-        <div class="ef-small">No spam. Unsubscribe anytime.</div>
+        <div class="ef-note">No spam. Unsubscribe anytime.</div>
       </div>
-      <div id="ebook-thanks" style="display:none;margin-top:24px;padding:24px;background:rgba(98,154,120,.15);border:1px solid rgba(98,154,120,.3);border-radius:2px;">
-        <div style="font-size:18px;margin-bottom:6px;color:#fff;font-family:var(--serif)">You're in! ✓</div>
-        <div style="font-size:14px;color:rgba(255,255,255,.65)">Check your inbox — your free copy of <em>My Coaching Business</em> is on its way.</div>
+      <div class="ef-thanks" id="ef-thanks">
+        <h4>You're in ✓</h4>
+        <p>Check your inbox — <em>My Coaching Business</em> is on its way.</p>
       </div>
     </div>
   </div>
 
   <!-- COHORTS -->
-  <div class="sec sdk" id="courses">
-    <div class="ey lv">Upcoming Cohorts</div>
-    <h2>Choose <em>Your Start Date</em></h2>
-    <div class="coh-grid">
-      <div class="coh">
+  <div class="sec so" id="courses">
+    <div class="reveal"><div class="ey">Upcoming Cohorts</div></div>
+    <div class="reveal d1"><h2>Choose <em>Your Start Date</em></h2></div>
+    <div class="cohorts">
+      <div class="coh reveal d1">
         <div class="coh-d">07</div><div class="coh-m">April 2026</div>
         <div class="coh-hr"></div>
         <div class="coh-i">Day: <strong>Tuesdays</strong></div>
@@ -527,7 +537,7 @@ footer{background:var(--dk);padding:64px 5% 32px;}
         </div>
         <a onclick="go('writing')" class="btn bg" style="font-size:10.5px;padding:11px 20px">View Details</a>
       </div>
-      <div class="coh">
+      <div class="coh reveal d2">
         <div class="coh-d">06</div><div class="coh-m">May 2026</div>
         <div class="coh-hr"></div>
         <div class="coh-i">Day: <strong>Wednesdays</strong></div>
@@ -540,7 +550,7 @@ footer{background:var(--dk);padding:64px 5% 32px;}
         </div>
         <a onclick="go('writing')" class="btn bg" style="font-size:10.5px;padding:11px 20px">View Details</a>
       </div>
-      <div class="coh">
+      <div class="coh reveal d3">
         <div class="coh-d">01</div><div class="coh-m">June 2026</div>
         <div class="coh-hr"></div>
         <div class="coh-i">Day: <strong>Mondays</strong></div>
@@ -557,26 +567,26 @@ footer{background:var(--dk);padding:64px 5% 32px;}
   </div>
 
   <!-- TESTIMONIALS -->
-  <div class="sec sdk2">
-    <div class="ey lv">What Authors Say</div>
-    <h2>Real <em>Results</em></h2>
+  <div class="sec" style="background:var(--wh)">
+    <div class="reveal"><div class="ey c">What Authors Say</div></div>
+    <div class="reveal d1"><h2 style="text-align:center">Real <em>Results</em></h2></div>
     <div class="tq-grid">
-      <div class="tq"><div class="tq-qm">"</div><p>Practical, encouraging, beneficial, clear and purposeful in achieving the goal of writing the book in 90 days.</p><div class="tq-auth"><div class="tq-nm">Emete Ogbomo</div></div></div>
-      <div class="tq"><div class="tq-qm">"</div><p>Publishing with PublishU was an absolute pleasure. Their professionalism, attention to detail and commitment to quality truly sets them apart.</p><div class="tq-auth"><div class="tq-nm">Ify Oji</div></div></div>
-      <div class="tq"><div class="tq-qm">"</div><p>I never would have believed at the beginning of this year that I'd have written and published a book in 9 months!</p><div class="tq-auth"><div class="tq-nm">Jess Hymus-Gant</div></div></div>
-      <div class="tq"><div class="tq-qm">"</div><p>I don't think I would have a book out today without PublishU. I still am shocked that I'm a globally published author.</p><div class="tq-auth"><div class="tq-nm">Vicky Lloyd</div></div></div>
-      <div class="tq"><div class="tq-qm">"</div><p>Writing a book always felt beyond my reach until I did the Writing My Book programme. Highly recommended.</p><div class="tq-auth"><div class="tq-nm">Madz Deyzel</div></div></div>
-      <div class="tq"><div class="tq-qm">"</div><p>Dreams require active, purposeful steps to materialise — and that is exactly what PublishU has given me.</p><div class="tq-auth"><div class="tq-nm">Dr Genevieve Da Silva</div></div></div>
+      <div class="tq reveal d1"><div class="tq-qm">"</div><p>Practical, encouraging, beneficial, clear and purposeful in achieving the goal of writing the book in 90 days.</p><div class="tq-nm">Emete Ogbomo</div></div>
+      <div class="tq reveal d2"><div class="tq-qm">"</div><p>Publishing with PublishU was an absolute pleasure. Their professionalism, attention to detail and commitment truly sets them apart.</p><div class="tq-nm">Ify Oji</div></div>
+      <div class="tq reveal d3"><div class="tq-qm">"</div><p>I never would have believed I'd have written and published a book in 9 months!</p><div class="tq-nm">Jess Hymus-Gant</div></div>
+      <div class="tq reveal d1"><div class="tq-qm">"</div><p>I don't think I would have a book out today without PublishU. I still am shocked that I'm a globally published author.</p><div class="tq-nm">Vicky Lloyd</div></div>
+      <div class="tq reveal d2"><div class="tq-qm">"</div><p>Writing a book always felt beyond my reach until I did the Writing My Book programme. Highly recommended.</p><div class="tq-nm">Madz Deyzel</div></div>
+      <div class="tq reveal d3"><div class="tq-qm">"</div><p>Dreams require active, purposeful steps to materialise — and that is exactly what PublishU has given me.</p><div class="tq-nm">Dr Genevieve Da Silva</div></div>
     </div>
   </div>
 
   <!-- FAQ -->
   <div class="sec so">
-    <div class="ey c">Common Questions</div>
-    <h2 style="text-align:center">Frequently Asked <em>Questions</em></h2>
+    <div class="reveal"><div class="ey c">Common Questions</div></div>
+    <div class="reveal d1"><h2 style="text-align:center">Frequently Asked <em>Questions</em></h2></div>
     <div class="faq-w">
-      <div class="fi"><div class="fq" onclick="faq(this)">Do you help once my book is written?<span class="fi-ic">+</span></div><div class="fa">The Writing My Book course explains three publishing routes with benefits and challenges of each. Many authors choose to publish worldwide through PublishU — you always choose what is right for you.</div></div>
-      <div class="fi"><div class="fq" onclick="faq(this)">What if I need to miss a session?<span class="fi-ic">+</span></div><div class="fa">We understand life happens. You receive a written resource covering every session's content plus the assignment, so you can stay completely on track with your coach's support.</div></div>
+      <div class="fi"><div class="fq" onclick="faq(this)">Do you help once my book is written?<span class="fi-ic">+</span></div><div class="fa">The Writing My Book course explains three publishing routes. Many authors choose to publish worldwide through PublishU — you always choose what is right for you.</div></div>
+      <div class="fi"><div class="fq" onclick="faq(this)">What if I need to miss a session?<span class="fi-ic">+</span></div><div class="fa">You receive a written resource covering every session's content plus the assignment, so you can stay completely on track.</div></div>
       <div class="fi"><div class="fq" onclick="faq(this)">Does the course work alongside other commitments?<span class="fi-ic">+</span></div><div class="fa">Yes. Contact time is 8 hours, plus approximately 90 hours for writing — the equivalent of one hour per day over 100 days. Designed for busy people.</div></div>
       <div class="fi"><div class="fq" onclick="faq(this)">I don't know what to write about — can you help?<span class="fi-ic">+</span></div><div class="fa">Absolutely. The Writing My Book course will help you create and crystallise the perfect book idea from the very first session.</div></div>
     </div>
@@ -593,31 +603,30 @@ footer{background:var(--dk);padding:64px 5% 32px;}
   </footer>
 </div>
 
-<!-- ═══════════ WRITING ═══════════ -->
+<!-- ══════════════════════ WRITING ══════════════════════ -->
 <div class="pg" id="pg-writing">
   <div class="ih">
-    <div class="ihbg" style="background-image:url('https://images.unsplash.com/photo-1455390582262-044cdead277a?w=1200&q=80')"></div>
-    <div class="ihgr"></div>
+    <div class="ih-img"><img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?w=1200&q=80" alt=""></div>
     <div class="ihc">
-      <div class="ey lv">The Course</div>
-      <h1>Writing<br><em style="color:var(--g2)">My Book</em></h1>
-      <div class="ru lv"></div>
+      <div class="ey">The Course</div>
+      <h1>Writing<br><em>My Book</em></h1>
+      <div class="ru"></div>
       <p class="sub">From a spark of an idea to holding your finished book — we've built the exact steps to get you there in 100 days.</p>
     </div>
   </div>
 
-  <div class="sec sw">
-    <div class="ey">Choose Your Path</div>
-    <h2>Three Ways to <em>Work With Matt</em></h2>
-    <div class="price-g">
-      <div class="pc">
+  <div class="sec" style="background:var(--wh)">
+    <div class="reveal"><div class="ey">Choose Your Path</div></div>
+    <div class="reveal d1"><h2>Three Ways to <em>Work With Matt</em></h2></div>
+    <div class="pricing">
+      <div class="pc reveal d1">
         <div class="pt">The Kickstart</div>
-        <div class="pn">Live Masterclass</div>
-        <div class="pa">£50</div>
-        <p class="pd">Perfect for exploring without a big commitment.</p>
-        <ul class="pf">
+        <div class="pname">Live Masterclass</div>
+        <div class="pamount">£50</div>
+        <p class="pdesc">Perfect for exploring without a big commitment.</p>
+        <ul class="pfeats">
           <li>60-min live masterclass with Matt Bird</li>
-          <li>Proven strategies to write your book in months</li>
+          <li>Proven strategies to write in months, not years</li>
           <li>What agents and publishers really look for</li>
           <li>How successful authors generate income</li>
           <li>Live Q&A — your questions answered</li>
@@ -625,28 +634,28 @@ footer{background:var(--dk);padding:64px 5% 32px;}
         </ul>
         <a href="https://www.publishu.com/course/webinar" target="_blank" class="btn bo">Secure My Seat</a>
       </div>
-      <div class="pc feat">
-        <div class="pt">Most Popular — Bestseller Path</div>
-        <div class="pn">Writing My Book Group Course</div>
-        <div class="pa">£995</div>
-        <p class="pd">For writers who want to finish their best book and get it published.</p>
-        <ul class="pf">
-          <li>Write your book in 100 days — six-fold framework</li>
+      <div class="pc feat reveal d2">
+        <div class="pt">Bestseller Path</div>
+        <div class="pname">Group Course</div>
+        <div class="pamount">£995</div>
+        <p class="pdesc">For writers who want to finish their best book and get it published.</p>
+        <ul class="pfeats">
+          <li>Write in 100 days — six-fold framework</li>
           <li>Max 10 places per cohort for dedicated coaching</li>
           <li>8 live sessions, assignments and ongoing support</li>
           <li>Reusable templates, techniques and tools</li>
           <li>9/10 participants finish their manuscript</li>
-          <li>£500 credit towards publication of your book</li>
+          <li>£500 credit towards publication</li>
         </ul>
         <a onclick="go('contact')" class="btn bg">Start My Book Journey</a>
       </div>
-      <div class="pc">
-        <div class="pt">The Full Mastermind</div>
-        <div class="pn">1-to-1 Coaching</div>
-        <div class="pa">£5,000</div>
-        <p class="pd">For founders and executives who want a tailored experience.</p>
-        <ul class="pf">
-          <li>3 months of private 1-to-1 mentoring with Matt</li>
+      <div class="pc reveal d3">
+        <div class="pt">Full Mastermind</div>
+        <div class="pname">1-to-1 Coaching</div>
+        <div class="pamount">£5,000</div>
+        <p class="pdesc">For founders and executives who want a tailored experience.</p>
+        <ul class="pfeats">
+          <li>3 months of private 1-to-1 with Matt</li>
           <li>Customised writing schedule and accountability</li>
           <li>Personal support with every milestone</li>
           <li>Templates and tools for future books</li>
@@ -659,34 +668,34 @@ footer{background:var(--dk);padding:64px 5% 32px;}
   </div>
 
   <div class="sec so">
-    <div class="ey">Why Us</div>
-    <h2>Why <em>PublishU?</em></h2>
-    <div class="why-g">
-      <div class="wc"><div class="wi">📚</div><h3>Proven Track Record</h3><p>Hundreds of authors published worldwide. 9/10 participants finish their manuscript within 100 days.</p><div class="wf">90%</div></div>
-      <div class="wc"><div class="wi">🎓</div><h3>Expert Guidance</h3><p>Best-selling author Matt Bird leads every programme personally — 25 books, Book of the Year, The Times.</p><div class="wf">25 Books</div></div>
-      <div class="wc"><div class="wi">🌍</div><h3>Global Reach</h3><p>Your finished book on Amazon and all major retailers worldwide in paperback, Kindle and Audiobook.</p><div class="wf">Worldwide</div></div>
+    <div class="reveal"><div class="ey">Why Us</div></div>
+    <div class="reveal d1"><h2>Why <em>PublishU?</em></h2></div>
+    <div class="why">
+      <div class="wc reveal d1"><div class="wi">📚</div><h3>Proven Track Record</h3><p>Hundreds of authors published worldwide. 9/10 participants finish their manuscript within 100 days.</p><div class="wf">90%</div></div>
+      <div class="wc reveal d2"><div class="wi">🎓</div><h3>Expert Guidance</h3><p>Best-selling author Matt Bird leads every programme personally — 25 books, Book of the Year, The Times.</p><div class="wf">25 Books</div></div>
+      <div class="wc reveal d3"><div class="wi">🌍</div><h3>Global Reach</h3><p>Your finished book on Amazon and all major retailers worldwide in paperback, Kindle and Audiobook.</p><div class="wf">Worldwide</div></div>
     </div>
   </div>
 
-  <div class="sec sw">
+  <div class="sec" style="background:var(--wh)">
     <div class="tc">
-      <img src="https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=800&q=80" alt="Writing coaching">
-      <div>
+      <img src="https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=800&q=80" alt="Writing coaching" class="reveal-l">
+      <div class="reveal-r">
         <div class="ey">Not Sure Where to Start?</div>
         <h2>Schedule A Free Call<br><em>With Matt</em></h2>
         <div class="ru"></div>
-        <p class="bt" style="margin-bottom:14px">Do you have a book idea but aren't certain where to start? Book a one-to-one consultation with Matt — completely free.</p>
-        <p class="bt" style="margin-bottom:34px">Matt has overcome remedial English classes and dyslexia to author 25 books. He knows exactly how to get you started, wherever you are right now.</p>
+        <p class="bt" style="margin-bottom:14px">Have a book idea but aren't certain where to start? Book a one-to-one consultation with Matt — completely free.</p>
+        <p class="bt" style="margin-bottom:34px">Matt has overcome remedial English classes and dyslexia to author 25 books. He knows exactly how to get you started.</p>
         <a href="mailto:mattbird@publishu.com?subject=Can%20I%20Schedule%20A%20Free%20Call%20With%20You%20Please%3F" class="btn bg">Request Free Consultation</a>
       </div>
     </div>
   </div>
 
   <div class="sec so">
-    <div class="ey c">Questions</div>
-    <h2 style="text-align:center">Writing Course <em>FAQs</em></h2>
+    <div class="reveal"><div class="ey c">Questions</div></div>
+    <div class="reveal d1"><h2 style="text-align:center">Writing Course <em>FAQs</em></h2></div>
     <div class="faq-w">
-      <div class="fi"><div class="fq" onclick="faq(this)">I'm not sure which option is right for me<span class="fi-ic">+</span></div><div class="fa">Start with the £50 masterclass to test the waters. Ready to commit? Choose the group course. Want maximum support? Go 1-to-1. Your masterclass fee is always credited towards any upgrade.</div></div>
+      <div class="fi"><div class="fq" onclick="faq(this)">I'm not sure which option is right for me<span class="fi-ic">+</span></div><div class="fa">Start with the £50 masterclass to test the waters. The masterclass fee is always credited towards any upgrade.</div></div>
       <div class="fi"><div class="fq" onclick="faq(this)">Can I upgrade later?<span class="fi-ic">+</span></div><div class="fa">Yes — the masterclass fee is always credited towards the full course.</div></div>
       <div class="fi"><div class="fq" onclick="faq(this)">Will I really finish my book?<span class="fi-ic">+</span></div><div class="fa">Our process has a 90% success rate. If you do the work, we will stay with you until the book is done.</div></div>
     </div>
@@ -703,85 +712,83 @@ footer{background:var(--dk);padding:64px 5% 32px;}
   </footer>
 </div>
 
-<!-- ═══════════ PUBLISHING ═══════════ -->
+<!-- ══════════════════════ PUBLISHING ══════════════════════ -->
 <div class="pg" id="pg-publishing">
   <div class="ih">
-    <div class="ihbg" style="background-image:url('https://images.unsplash.com/photo-1524578271613-d550eacf6090?w=1200&q=80')"></div>
-    <div class="ihgr"></div>
+    <div class="ih-img"><img src="https://images.unsplash.com/photo-1524578271613-d550eacf6090?w=1200&q=80" alt=""></div>
     <div class="ihc">
-      <div class="ey lv">Publishing</div>
-      <h1>Publishing<br><em style="color:var(--g2)">My Book</em></h1>
-      <div class="ru lv"></div>
+      <div class="ey">Publishing</div>
+      <h1>Publishing<br><em>My Book</em></h1>
+      <div class="ru"></div>
       <p class="sub">From manuscript to global publication in 100 days. Paperback, Kindle and Audiobook — available worldwide.</p>
     </div>
   </div>
 
-  <div class="sec sw">
-    <div class="ey">The Advantages</div>
-    <h2>Why Publish <em>With PublishU?</em></h2>
-    <div class="ben-g">
-      <div class="ben"><div class="bi">⚡</div><h3>100-Day Timeline</h3><p>From manuscript to global publication in 100 days — not the 18-month industry standard.</p><div class="bf">100 Days</div></div>
-      <div class="ben"><div class="bi">📈</div><h3>35–60% Margin</h3><p>Authors earn 35% of retail and 60% on wholesale — versus 8–12% from traditional publishers.</p><div class="bf">35–60%</div></div>
-      <div class="ben"><div class="bi">🌍</div><h3>Worldwide Distribution</h3><p>Print-on-demand with zero stock investment. Delivered within 24–48 hours in most countries.</p><div class="bf">Global</div></div>
-      <div class="ben"><div class="bi">🎨</div><h3>World-Class Design</h3><p>Cover design, editing, proofreading and typesetting — all handled by dedicated professionals.</p></div>
-      <div class="ben"><div class="bi">💰</div><h3>Bi-Annual Royalties</h3><p>Sales reports and payments twice a year — 31 Jan and 31 Jul. Twice the frequency of traditional publishers.</p></div>
-      <div class="ben"><div class="bi">🎧</div><h3>Three Formats</h3><p>Paperback, Kindle and Audiobook as standard. Optional hardback, human-voice audio and translations.</p></div>
+  <div class="sec" style="background:var(--wh)">
+    <div class="reveal"><div class="ey">The Advantages</div></div>
+    <div class="reveal d1"><h2>Why Publish <em>With PublishU?</em></h2></div>
+    <div class="bens">
+      <div class="ben reveal d1"><div class="bi">⚡</div><h3>100-Day Timeline</h3><p>Manuscript to global publication in 100 days — not the 18-month industry standard.</p><div class="bf">100 Days</div></div>
+      <div class="ben reveal d2"><div class="bi">📈</div><h3>35–60% Margin</h3><p>Authors earn 35% of retail and 60% on wholesale — versus 8–12% from traditional publishers.</p><div class="bf">35–60%</div></div>
+      <div class="ben reveal d3"><div class="bi">🌍</div><h3>Worldwide Distribution</h3><p>Print-on-demand, zero stock investment. Delivered within 24–48 hours in most countries.</p><div class="bf">Global</div></div>
+      <div class="ben reveal d1"><div class="bi">🎨</div><h3>World-Class Design</h3><p>Cover design, editing, proofreading and typesetting — all handled by dedicated professionals.</p></div>
+      <div class="ben reveal d2"><div class="bi">💰</div><h3>Bi-Annual Royalties</h3><p>Sales reports and payments twice a year — 31 Jan and 31 Jul.</p></div>
+      <div class="ben reveal d3"><div class="bi">🎧</div><h3>Three Formats</h3><p>Paperback, Kindle and Audiobook as standard. Optional hardback, human-voice audio and translations.</p></div>
     </div>
   </div>
 
-  <div class="sec sdk">
-    <div class="ey lv">The Process</div>
-    <h2>Your 12-Step <em>Publishing Pathway</em></h2>
-    <p style="margin-top:12px;max-width:520px;font-size:15px;line-height:1.8;color:rgba(255,255,255,.5)">From contract to global publication — a clear, structured journey with expert guidance at every stage.</p>
-    <div class="tl">
+  <div class="sec so">
+    <div class="reveal"><div class="ey">The Process</div></div>
+    <div class="reveal d1"><h2>Your 12-Step <em>Publishing Pathway</em></h2></div>
+    <div class="tl reveal d2">
       <div class="ts"><h3>Contracting</h3><p>Agree dates, sign contract and 50% deposit to secure your publication date.</p></div>
       <div class="ts"><h3>Manuscript Submission</h3><p>Submit manuscript with author questionnaire. Reviewed immediately.</p></div>
       <div class="ts"><h3>Cover Design</h3><p>2–3 creative directions presented. Together you refine until you love it.</p></div>
       <div class="ts"><h3>Cover Sign Off</h3><p>Approve the final cover as ready for print and global publication.</p></div>
       <div class="ts"><h3>Editing</h3><p>Your editor strengthens clarity and flow. Optional developmental edit available.</p></div>
-      <div class="ts"><h3>Proofreading</h3><p>Professionally proofread and checked by a second proofreader for accuracy.</p></div>
+      <div class="ts"><h3>Proofreading</h3><p>Professionally proofread and checked by a second proofreader.</p></div>
       <div class="ts"><h3>Manuscript Sign Off</h3><p>Review and approve your final manuscript as ready for typesetting.</p></div>
       <div class="ts"><h3>Typesetting</h3><p>Professionally typeset for paperback with optional hardback edition.</p></div>
-      <div class="ts"><h3>Kindle Formatting</h3><p>Formatted for Kindle ebook distribution on all digital devices worldwide.</p></div>
-      <div class="ts"><h3>Audiobook Creation</h3><p>Professional virtual voice audiobook. Option to record in your own voice.</p></div>
-      <div class="ts"><h3>Publication Sign Off</h3><p>Review the final typeset book and give approval for worldwide publication.</p></div>
+      <div class="ts"><h3>Kindle Formatting</h3><p>Formatted for Kindle on all digital devices worldwide.</p></div>
+      <div class="ts"><h3>Audiobook</h3><p>Professional virtual voice. Option to record in your own voice.</p></div>
+      <div class="ts"><h3>Publication Sign Off</h3><p>Review the final typeset book and approve for worldwide publication.</p></div>
       <div class="ts"><h3>Global Publication</h3><p>Published worldwide in paperback, Kindle and Audiobook from day one.</p></div>
     </div>
   </div>
 
-  <div class="sec so">
+  <div class="sec" style="background:var(--wh)">
     <div class="tc">
-      <div>
+      <div class="reveal-l">
         <div class="ey">The Package</div>
         <h2>Everything <em>Included</em></h2>
         <div class="ru"></div>
         <p class="bt" style="margin-bottom:14px">The standard PublishU package covers a 30,000-word book in three formats — paperback, Kindle and audiobook. Everything you need to professionally publish worldwide.</p>
-        <p class="bt">Optional enhancements include hardback, human-voice audiobook, extra word count, premium developmental editing, illustrations, infographics, language translation, and 60-day fast-track publication.</p>
+        <p class="bt">Optional enhancements include hardback, human-voice audiobook, extra word count, premium developmental editing, illustrations, infographics, language translation, and 60-day fast-track.</p>
       </div>
-      <img src="https://images.unsplash.com/photo-1553729459-efe14ef6055d?w=800&q=80" alt="Published books">
+      <img src="https://images.unsplash.com/photo-1553729459-efe14ef6055d?w=800&q=80" alt="Published books" class="reveal-r">
     </div>
   </div>
 
-  <div class="sec sdk">
-    <div class="ac">
-      <div class="ey c lv">Community</div>
+  <div class="sec sg">
+    <div class="ac reveal">
+      <div class="ey c">Community</div>
       <h2>The Global <em>Authors Club</em></h2>
-      <div class="ru lv" style="margin:20px auto"></div>
+      <div class="ru" style="margin:20px auto"></div>
       <p>When you publish with PublishU you become a lifetime member of an international community of 100+ authors. Regular gatherings, shared ideas, and a private author community — because building the impact of a book should never be done alone.</p>
       <a onclick="go('contact')" class="btn bg">Talk to Matt About Publishing</a>
     </div>
   </div>
 
-  <div class="sec sw">
-    <div class="mc-block">
-      <div class="mc-img"><img src="https://raw.githubusercontent.com/Zorian/publishu-proposal-Alex/main/assets/matt-2.jpg" alt="Matt Bird"></div>
-      <div class="mc-copy">
-        <div class="ey lv" style="margin-bottom:12px">Next Steps</div>
+  <div class="sec" style="background:var(--wh)">
+    <div class="mattcta reveal">
+      <div class="mattcta-img"><img src="https://raw.githubusercontent.com/Zorian/publishu-proposal-Alex/main/assets/matt-2.jpg" alt="Matt Bird"></div>
+      <div class="mattcta-copy">
+        <div class="ey" style="margin-bottom:12px">Next Steps</div>
         <h3>Talk to Matt About Publishing Your Book</h3>
         <p>To discuss publication of your book — costs, submission and publication dates — speak with Matt directly.</p>
         <div class="mc-btns">
           <a href="https://wa.me/+447444111222" target="_blank" class="btn bg">WhatsApp Matt</a>
-          <a href="mailto:team@publishu.com" class="btn bow">Email Matt</a>
+          <a href="mailto:team@publishu.com" class="btn bo">Email Matt</a>
         </div>
       </div>
     </div>
@@ -798,63 +805,63 @@ footer{background:var(--dk);padding:64px 5% 32px;}
   </footer>
 </div>
 
-<!-- ═══════════ MARKETING ═══════════ -->
+<!-- ══════════════════════ MARKETING ══════════════════════ -->
 <div class="pg" id="pg-marketing">
   <div class="ih">
-    <div class="ihbg" style="background-image:url('https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=1200&q=80')"></div>
-    <div class="ihgr"></div>
+    <div class="ih-img"><img src="https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=1200&q=80" alt=""></div>
     <div class="ihc">
-      <div class="ey lv">Post-Publication</div>
-      <h1>Marketing<br><em style="color:var(--g2)">My Book</em></h1>
-      <div class="ru lv"></div>
+      <div class="ey">Post-Publication</div>
+      <h1>Marketing<br><em>My Book</em></h1>
+      <div class="ru"></div>
       <p class="sub">Turn your book into credibility, conversations and opportunities — six months of structured support.</p>
     </div>
   </div>
 
-  <div class="sec sw">
+  <div class="sec" style="background:var(--wh)">
     <div class="tc">
-      <div>
+      <div class="reveal-l">
         <div class="ey">The Challenge</div>
         <h2>Your Book Deserves<br>to Be <em>Heard</em></h2>
         <div class="ru"></div>
         <p class="bt" style="margin-bottom:14px">After the excitement of publication fades, many authors are unsure what to do next. They post a few times — and hope the book finds its audience on its own.</p>
         <p class="bt">Momentum fades. Opportunities never appear. The book never becomes what it could have been. Marketing My Book exists to change that.</p>
       </div>
-      <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=800&q=80" alt="Book marketing">
-    </div>
-  </div>
-
-  <div class="sec sdk">
-    <div class="ey lv">The Programme</div>
-    <h2>What's <em>Included</em></h2>
-    <div class="pg-g">
-      <div class="pi"><div class="pi-ic">❤️</div><h3>24/7 Marketing Community</h3><p>A private WhatsApp group where authors support, encourage and learn from one another around the clock.</p></div>
-      <div class="pi"><div class="pi-ic">🎯</div><h3>Six Month Action Plan</h3><p>A simple weekly structure of recommended actions — around one hour per week — that builds real momentum.</p></div>
-      <div class="pi"><div class="pi-ic">✅</div><h3>Weekly Marketing Check-In</h3><p>Every Wednesday, share what you've done and commit to your next step. Accountability that keeps you moving.</p></div>
-      <div class="pi"><div class="pi-ic">🧠</div><h3>Monthly Mastermind</h3><p>Bring questions, share ideas, hear what's working. Live group session, first Wednesday each month.</p></div>
-    </div>
-  </div>
-
-  <div class="sec sdk2" style="padding-top:0">
-    <div class="tq-grid" style="grid-template-columns:repeat(2,1fr)">
-      <div class="tq"><div class="tq-qm">"</div><p>Immensely helpful. After the warm glow of publication I wasn't confident about promoting my book. The programme combines practical wisdom with supportive accountability that kept me proactive in the first 100 days.</p><div class="tq-auth"><div class="tq-nm">Jess Hymus-Gant, Author</div></div></div>
-      <div class="tq"><div class="tq-qm">"</div><p>I would hope every author considers this small extra cost well worth it. It was worth a great deal to me and I'm so glad I was part of it.</p><div class="tq-auth"><div class="tq-nm">Dr Colin Stoodly, Author</div></div></div>
+      <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?w=800&q=80" alt="Book marketing" class="reveal-r">
     </div>
   </div>
 
   <div class="sec so">
-    <div class="ey">The Full Journey</div>
-    <h2>Part of the <em>PublishU Pathway</em></h2>
-    <div class="path">
-      <div class="ps" onclick="go('writing')"><div class="ps-ic">✍️</div><div class="ey" style="margin-bottom:4px">Step 1</div><h3>Writing My Book</h3><p>Turning ideas into completed manuscripts in 100 days.</p></div>
-      <div class="ps" onclick="go('publishing')"><div class="ps-ic">📕</div><div class="ey" style="margin-bottom:4px">Step 2</div><h3>Publishing My Book</h3><p>Turning manuscripts into professionally produced books.</p></div>
-      <div class="ps"><div class="ps-ic">📣</div><div class="ey" style="margin-bottom:4px">Step 3 — You Are Here</div><h3>Marketing My Book</h3><p>Turning books into credibility, conversations and opportunities.</p></div>
+    <div class="reveal"><div class="ey">The Programme</div></div>
+    <div class="reveal d1"><h2>What's <em>Included</em></h2></div>
+    <div class="pgg">
+      <div class="pi reveal d1"><div class="pi-ic">❤️</div><h3>24/7 Marketing Community</h3><p>A private WhatsApp group where authors support, encourage and learn from one another around the clock.</p></div>
+      <div class="pi reveal d2"><div class="pi-ic">🎯</div><h3>Six Month Action Plan</h3><p>A simple weekly structure of recommended actions — around one hour per week — that builds real momentum.</p></div>
+      <div class="pi reveal d3"><div class="pi-ic">✅</div><h3>Weekly Marketing Check-In</h3><p>Every Wednesday, share what you've done and commit to your next step. Accountability that keeps you moving.</p></div>
+      <div class="pi reveal d4"><div class="pi-ic">🧠</div><h3>Monthly Mastermind</h3><p>Bring questions, share ideas, hear what's working. Live group session, first Wednesday each month.</p></div>
     </div>
   </div>
 
-  <div class="sec sdk" style="text-align:center">
-    <div class="ph">
-      <div class="ey c lv">Ready to Build Momentum?</div>
+  <div class="sec" style="background:var(--wh)">
+    <div class="reveal"><div class="ey">What Authors Say</div></div>
+    <div class="tq-grid" style="grid-template-columns:repeat(2,1fr);margin-top:32px">
+      <div class="tq reveal d1"><div class="tq-qm">"</div><p>Immensely helpful. After the warm glow of publication I wasn't confident about promoting my book. The programme combines practical wisdom with supportive accountability that kept me proactive in the first 100 days.</p><div class="tq-nm">Jess Hymus-Gant, Author</div></div>
+      <div class="tq reveal d2"><div class="tq-qm">"</div><p>I would hope every author considers this small extra cost well worth it. It was worth a great deal to me and I'm so glad I was part of it.</p><div class="tq-nm">Dr Colin Stoodly, Author</div></div>
+    </div>
+  </div>
+
+  <div class="sec so">
+    <div class="reveal"><div class="ey">The Full Journey</div></div>
+    <div class="reveal d1"><h2>Part of the <em>PublishU Pathway</em></h2></div>
+    <div class="path">
+      <div class="ps reveal d1" onclick="go('writing')"><div class="ps-ic">✍️</div><div class="ey" style="margin-bottom:4px">Step 1</div><h3>Writing My Book</h3><p>Turning ideas into completed manuscripts in 100 days.</p></div>
+      <div class="ps reveal d2" onclick="go('publishing')"><div class="ps-ic">📕</div><div class="ey" style="margin-bottom:4px">Step 2</div><h3>Publishing My Book</h3><p>Turning manuscripts into professionally produced books.</p></div>
+      <div class="ps reveal d3"><div class="ps-ic">📣</div><div class="ey" style="margin-bottom:4px">Step 3 — You Are Here</div><h3>Marketing My Book</h3><p>Turning books into credibility, conversations and opportunities.</p></div>
+    </div>
+  </div>
+
+  <div class="sec sg" style="text-align:center">
+    <div class="ph reveal">
+      <div class="ey c">Ready to Build Momentum?</div>
       <h2>Join Marketing <em>My Book</em></h2>
       <div class="bp">£995</div>
       <p>Six months of structure, support and accountability to help your book reach the readers, conversations and opportunities it was written for.</p>
@@ -873,38 +880,37 @@ footer{background:var(--dk);padding:64px 5% 32px;}
   </footer>
 </div>
 
-<!-- ═══════════ CONTACT ═══════════ -->
+<!-- ══════════════════════ CONTACT ══════════════════════ -->
 <div class="pg" id="pg-contact">
   <div class="ih">
-    <div class="ihbg" style="background-image:url('https://images.unsplash.com/photo-1556761175-b413da4baf72?w=1200&q=80')"></div>
-    <div class="ihgr"></div>
+    <div class="ih-img"><img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?w=1200&q=80" alt=""></div>
     <div class="ihc">
-      <div class="ey lv">Get In Touch</div>
-      <h1>Let's <em style="color:var(--g2)">Talk</em></h1>
-      <div class="ru lv"></div>
-      <p class="sub">Reach us at <a href="mailto:team@publishu.com" style="color:var(--g2);text-decoration:none;font-weight:500">team@publishu.com</a></p>
+      <div class="ey">Get In Touch</div>
+      <h1>Let's <em>Talk</em></h1>
+      <div class="ru"></div>
+      <p class="sub">Reach us at <a href="mailto:team@publishu.com" style="color:var(--g);text-decoration:none;font-weight:500">team@publishu.com</a></p>
     </div>
   </div>
 
-  <div class="sec sw">
+  <div class="sec" style="background:var(--wh)">
     <div class="cg">
-      <div>
+      <div class="reveal-l">
         <div class="ey">Send A Message</div>
-        <h2 style="margin-bottom:30px">We'd love to<br><em>hear from you</em></h2>
-        <div class="fg"><label class="fl">Full Name</label><input type="text" class="fi2" placeholder="Your name"></div>
-        <div class="fg"><label class="fl">Email Address</label><input type="email" class="fi2" placeholder="your@email.com"></div>
-        <div class="fg"><label class="fl">Mobile</label><input type="tel" class="fi2" placeholder="+44 000 000 0000"></div>
-        <div class="fg"><label class="fl">Your Message</label><textarea class="fi2" placeholder="Tell us about your book idea or any questions..."></textarea></div>
-        <button class="btn bg" style="width:100%;padding:15px;font-size:12px" onclick="this.textContent='Message Sent ✓';this.style.background='var(--g3)'">Send Message</button>
+        <h2 style="margin-bottom:28px">We'd love to<br><em>hear from you</em></h2>
+        <div class="fg-grp"><label class="fl">Full Name</label><input type="text" class="fi2" placeholder="Your name"></div>
+        <div class="fg-grp"><label class="fl">Email Address</label><input type="email" class="fi2" placeholder="your@email.com"></div>
+        <div class="fg-grp"><label class="fl">Mobile</label><input type="tel" class="fi2" placeholder="+44 000 000 0000"></div>
+        <div class="fg-grp"><label class="fl">Your Message</label><textarea class="fi2" placeholder="Tell us about your book idea or any questions..."></textarea></div>
+        <button class="btn bg" style="width:100%;padding:15px;font-size:12px;justify-content:center" onclick="this.textContent='Message Sent ✓';this.style.background='var(--g3)'">Send Message</button>
       </div>
-      <div>
+      <div class="reveal-r">
         <div class="ey">Upcoming Cohorts</div>
-        <h2 style="margin-bottom:30px">Choose <em>Your Course</em></h2>
-        <div class="sch-l">
+        <h2 style="margin-bottom:28px">Choose <em>Your Course</em></h2>
+        <div class="schl">
           <div class="sr"><div><div class="sd">07</div><div class="sm">April</div></div><div class="si"><strong>Tuesdays — 10–11am UK / 1–2pm Dubai</strong><span>7, 14, 21, 28 Apr · 12, 26 May · 9, 23 Jun</span></div><a href="https://buy.stripe.com/fZu3cvcur49ebfG6vTcQU0g" target="_blank" class="btn bg" style="padding:9px 14px;font-size:10.5px;white-space:nowrap">Register</a></div>
           <div class="sr"><div><div class="sd">06</div><div class="sm">May</div></div><div class="si"><strong>Wednesdays — 1–2pm UK / 4–5pm Dubai</strong><span>6, 13, 20, 27 May · 10, 24 Jun · 8, 22 Jul</span></div><a href="https://buy.stripe.com/00wbJ19if8pu3Ne07vcQU0p" target="_blank" class="btn bg" style="padding:9px 14px;font-size:10.5px;white-space:nowrap">Register</a></div>
           <div class="sr"><div><div class="sd">01</div><div class="sm">June</div></div><div class="si"><strong>Mondays — 5–6pm UK / 8–9pm Dubai</strong><span>1, 8, 15, 22 Jun · 6, 20 Jul · 3, 17 Aug</span></div><a href="https://buy.stripe.com/6oU14nfGD2165VmbQdcQU0s" target="_blank" class="btn bg" style="padding:9px 14px;font-size:10.5px;white-space:nowrap">Register</a></div>
-          <div class="sr" style="opacity:.5"><div><div class="sd">07</div><div class="sm">July</div></div><div class="si"><strong>Tuesdays — 10–11am UK / 1–2pm Dubai</strong><span>7, 14, 21, 28 Jul · 11, 25 Aug · 8, 22 Sep</span></div><span style="font-size:11px;font-weight:600;color:var(--mid);white-space:nowrap">Coming Soon</span></div>
+          <div class="sr" style="opacity:.45"><div><div class="sd">07</div><div class="sm">July</div></div><div class="si"><strong>Tuesdays — 10–11am UK / 1–2pm Dubai</strong><span>7, 14, 21, 28 Jul · 11, 25 Aug · 8, 22 Sep</span></div><span style="font-size:11px;font-weight:600;color:var(--mid);white-space:nowrap">Coming Soon</span></div>
         </div>
       </div>
     </div>
@@ -922,23 +928,65 @@ footer{background:var(--dk);padding:64px 5% 32px;}
 </div>
 
 <script>
+// ── PAGE NAV ──
 function go(p){
   document.querySelectorAll('.pg').forEach(x=>x.classList.remove('on'));
-  document.getElementById('pg-'+p).classList.add('on');
+  const pg=document.getElementById('pg-'+p);
+  pg.classList.add('on');
   document.querySelectorAll('.nm a').forEach(a=>a.classList.remove('on'));
   const el=document.getElementById('nl-'+p);
   if(el)el.classList.add('on');
-  window.scrollTo({top:0});
+  window.scrollTo({top:0,behavior:'instant'});
+  // re-trigger reveals on new page
+  setTimeout(()=>checkReveals(),50);
 }
 function faq(el){el.parentElement.classList.toggle('open');}
 function toggleMob(){document.getElementById('mob').classList.toggle('on');}
+
+// ── NAV SCROLL ──
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').classList.toggle('scrolled',window.scrollY>40);
+},{ passive:true });
+
+// ── SCROLL REVEAL ──
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in'); });
+},{threshold:0.12});
+function checkReveals(){
+  document.querySelectorAll('.pg.on .reveal,.pg.on .reveal-l,.pg.on .reveal-r').forEach(el=>io.observe(el));
+}
+checkReveals();
+
+// ── COUNTER ANIMATION ──
+function animateCounter(el,target,suffix=''){
+  let start=0,dur=1800,step=dur/60;
+  const inc=target/60;
+  const timer=setInterval(()=>{
+    start+=inc;
+    if(start>=target){start=target;clearInterval(timer);}
+    el.textContent=Math.floor(start)+(suffix?suffix:'');
+  },step);
+}
+const counterIO=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const el=e.target;
+      const val=parseInt(el.dataset.count);
+      const plus=val===400||val===25;
+      animateCounter(el,val,plus?'+':val===90?'%':'');
+      counterIO.unobserve(el);
+    }
+  });
+},{threshold:0.5});
+document.querySelectorAll('[data-count]').forEach(el=>counterIO.observe(el));
+
+// ── EBOOK FORM ──
 function submitEbook(){
-  const f=document.getElementById('ef-first').value;
-  const l=document.getElementById('ef-last').value;
-  const e=document.getElementById('ef-email').value;
-  if(!f||!e){alert('Please enter your name and email.');return;}
-  document.getElementById('ebook-form').style.display='none';
-  document.getElementById('ebook-thanks').style.display='block';
+  const f=document.getElementById('ef-first').value.trim();
+  const e=document.getElementById('ef-email').value.trim();
+  if(!f||!e){return;}
+  document.getElementById('ef').style.display='none';
+  document.getElementById('ef-thanks').style.display='block';
 }
 </script>
 </body>
