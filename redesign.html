@@ -20,6 +20,29 @@
 html{scroll-behavior:smooth;}
 body{font-family:var(--sans);background:var(--wh);color:var(--dk);overflow-x:hidden;}
 
+
+/* ── HERO TEXT ANIMATIONS ── */
+.hero-pre{animation:slideUp .9s var(--ease) .1s both;}
+.hero h1{animation:slideUp 1s var(--ease) .25s both;}
+.hero-sub{animation:slideUp .9s var(--ease) .45s both;}
+.hero-btns{animation:slideUp .9s var(--ease) .6s both;}
+.hero-scroll{animation:fadeIn .8s ease .9s both;}
+@keyframes slideUp{
+  from{opacity:0;transform:translateY(48px);}
+  to{opacity:1;transform:translateY(0);}
+}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+
+/* ── HERO WORD HIGHLIGHT ── */
+.hero-word{display:inline-block;position:relative;}
+.hero-word::after{
+  content:'';position:absolute;bottom:4px;left:0;right:0;
+  height:3px;background:var(--g2);
+  transform:scaleX(0);transform-origin:left;
+  animation:lineGrow 1s var(--ease) 1.1s both;
+}
+@keyframes lineGrow{from{transform:scaleX(0);}to{transform:scaleX(1);}}
+
 /* ── SCROLL ANIMATIONS ── */
 .reveal{opacity:0;transform:translateY(36px);transition:opacity .7s var(--ease),transform .7s var(--ease);}
 .reveal.in{opacity:1;transform:none;}
@@ -376,7 +399,7 @@ footer{background:var(--dk);padding:72px 5% 36px;}
     <div class="hero-bg"></div>
     <div class="hero-content">
       <div class="hero-pre">The Book Writing Programme</div>
-      <h1 style="color:#fff">Become<br><em style="color:var(--g2)">An Author</em></h1>
+      <h1 style="color:#fff">Become<br><em style="color:var(--g2)"><span class="hero-word">An Author</span></em></h1>
       <p class="hero-sub">PublishU turns willing writers into globally published authors — from first idea to finished book, in just 100 days.</p>
       <div class="hero-btns">
         <a onclick="go('writing')" class="btn bg">Join A Course</a>
@@ -429,8 +452,8 @@ footer{background:var(--dk);padding:72px 5% 36px;}
     </div>
     <div class="matt-copy" style="padding:80px 64px;background:var(--wh);display:flex;flex-direction:column;justify-content:center;">
       <div class="reveal">
-        <div class="matt-tag">✦ Your Coach</div>
-        <h2>Meet<br><em>Matt Bird</em></h2>
+        <div class="matt-tag">✦ Author · Speaker · Publisher</div>
+        <h2><em>Matt Bird</em></h2>
         <div class="ru"></div>
         <p class="bt" style="margin-bottom:16px">Matt Bird has authored 25 books, won a Book of the Year prize and written for The Times. He overcame remedial English classes and dyslexia to become one of the UK's most prolific authors and publishers.</p>
         <p class="bt" style="margin-bottom:36px">Every PublishU programme is led by Matt personally. You get direct access to his expertise, his publishing network, and 25 years of hands-on experience — from idea through to Amazon bestseller.</p>
@@ -679,7 +702,7 @@ footer{background:var(--dk);padding:72px 5% 36px;}
 
   <div class="sec" style="background:var(--wh)">
     <div class="tc">
-      <img src="https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=800&q=80" alt="Writing coaching" class="reveal-l">
+      <img src="https://raw.githubusercontent.com/Zorian/publishu-proposal-Alex/main/assets/matt-suit.jpg" alt="Matt Bird" class="reveal-l" style="object-position:center top">
       <div class="reveal-r">
         <div class="ey">Not Sure Where to Start?</div>
         <h2>Schedule A Free Call<br><em>With Matt</em></h2>
