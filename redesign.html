@@ -104,18 +104,30 @@ em{font-style:italic;color:var(--g);}
 .sg{background:var(--g5);}
 .scr{background:var(--cr);}
 
-/* ═══ HERO ═══ */
-.hero{position:relative;height:100vh;min-height:640px;overflow:hidden;display:flex;align-items:flex-end;}
-.hero-bg{position:absolute;inset:0;background:url('https://raw.githubusercontent.com/Zorian/publishu-proposal-Alex/main/assets/matt-boat.jpg') center 65%/cover no-repeat;}
-.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,10,.88) 0%,rgba(10,10,10,.45) 50%,rgba(10,10,10,.1) 100%);}
-.hero-content{position:relative;z-index:2;padding:0 5% 80px;max-width:720px;}
-.hero-pre{font-size:10px;font-weight:600;letter-spacing:.35em;text-transform:uppercase;color:var(--g2);margin-bottom:18px;display:flex;align-items:center;gap:10px;}
+/* ═══ HERO — KINETIC TYPOGRAPHY ═══ */
+.hero{position:relative;height:100vh;min-height:640px;overflow:hidden;display:flex;align-items:center;background:#0d1a10;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 85% 65% at 62% 50%,rgba(69,108,84,.3) 0%,transparent 70%);pointer-events:none;}
+.hero-grid{position:absolute;inset:0;pointer-events:none;opacity:.045;background-image:linear-gradient(rgba(98,154,120,1) 1px,transparent 1px),linear-gradient(90deg,rgba(98,154,120,1) 1px,transparent 1px);background-size:64px 64px;}
+.hero-content{position:relative;z-index:2;padding:0 5%;width:100%;}
+.hero-pre{font-size:10px;font-weight:600;letter-spacing:.35em;text-transform:uppercase;color:var(--g2);margin-bottom:22px;display:flex;align-items:center;gap:10px;opacity:0;animation:fadeIn .8s ease .1s forwards;}
 .hero-pre::before{content:'';width:24px;height:1.5px;background:var(--g2);}
-.hero h1{color:#fff;margin-bottom:0;}
-.hero-sub{font-size:17px;line-height:1.8;color:rgba(255,255,255,.62);margin:22px 0 44px;max-width:480px;}
-.hero-btns{display:flex;gap:12px;flex-wrap:wrap;}
-.hero-scroll{position:absolute;bottom:36px;right:5%;z-index:2;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;}
-.hero-scroll span{font-size:9px;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.35);}
+.hero-line1{font-family:var(--serif);font-size:clamp(20px,3vw,38px);font-weight:300;color:rgba(255,255,255,.45);letter-spacing:.06em;margin-bottom:4px;opacity:0;animation:fadeIn .7s ease .35s forwards;}
+.hero-word{display:flex;flex-wrap:wrap;line-height:.95;margin-bottom:8px;}
+.hero-letter{font-family:var(--serif);font-size:clamp(72px,11vw,150px);font-weight:300;color:#fff;display:inline-block;opacity:0;transform:translateY(70px);animation:letterDrop .6s var(--ease) both;}
+.hero-letter.gr{color:var(--g2);}
+@keyframes letterDrop{to{opacity:1;transform:translateY(0);}}
+.hero-line3{font-family:var(--serif);font-size:clamp(20px,3vw,38px);font-weight:300;font-style:italic;color:var(--g2);letter-spacing:.04em;opacity:0;animation:slideUp .8s var(--ease) 1.3s forwards;}
+.hero-sub{font-size:16px;line-height:1.8;color:rgba(255,255,255,.52);margin:28px 0 42px;max-width:420px;opacity:0;animation:slideUp .9s var(--ease) 1.5s forwards;}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;opacity:0;animation:slideUp .9s var(--ease) 1.7s forwards;}
+.stat-pill{position:absolute;background:rgba(255,255,255,.06);border:1px solid rgba(145,177,161,.22);backdrop-filter:blur(10px);padding:12px 20px;border-radius:40px;display:flex;flex-direction:column;align-items:center;}
+.stat-pill:nth-child(2){right:8%;top:20%;opacity:0;animation:floatPill 5s ease-in-out infinite,fadeIn .6s ease 1.7s both;}
+.stat-pill:nth-child(3){right:20%;bottom:30%;opacity:0;animation:floatPill 6.5s ease-in-out -2s infinite,fadeIn .6s ease 1.9s both;}
+.stat-pill:nth-child(4){right:6%;bottom:20%;opacity:0;animation:floatPill 7s ease-in-out -4s infinite,fadeIn .6s ease 2.1s both;}
+.sp-n{font-family:var(--serif);font-size:28px;font-weight:300;color:#fff;line-height:1;}
+.sp-l{font-size:9px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.38);margin-top:3px;}
+@keyframes floatPill{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
+.hero-scroll{position:absolute;bottom:36px;right:5%;z-index:2;display:flex;flex-direction:column;align-items:center;gap:6px;opacity:0;animation:fadeIn .8s ease 2s forwards;}
+.hero-scroll span{font-size:9px;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.3);}
 .scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,var(--g2),transparent);animation:scrollpulse 1.8s ease-in-out infinite;}
 @keyframes scrollpulse{0%,100%{opacity:.4;transform:scaleY(1);}50%{opacity:1;transform:scaleY(1.2);}}
 
@@ -1068,6 +1080,20 @@ document.querySelectorAll('[data-count]').forEach(el=>counterIO.observe(el));
     span.className = 'hero-letter' + (isGreen ? ' gr' : '');
     span.textContent = ch === ' ' ? ' ' : ch;
     span.style.animationDelay = (0.55 + i * 0.065) + 's';
+    container.appendChild(span);
+  });
+})();
+
+// ── KINETIC LETTERS ──
+(function(){
+  const word = 'An Author';
+  const container = document.getElementById('hero-word');
+  if(!container) return;
+  [...word].forEach((ch, i) => {
+    const span = document.createElement('span');
+    span.className = 'hero-letter' + (ch === 'A' && i > 0 ? ' gr' : '');
+    span.textContent = ch === ' ' ? '\u00A0' : ch;
+    span.style.animationDelay = (0.55 + i * 0.07) + 's';
     container.appendChild(span);
   });
 })();
