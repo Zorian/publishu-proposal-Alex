@@ -34,8 +34,8 @@ body{font-family:var(--sans);background:var(--wh);color:var(--dk);overflow-x:hid
 @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
 
 /* ── HERO WORD HIGHLIGHT ── */
-.hero-word{display:inline-block;position:relative;}
-.hero-word::after{
+/* old hero-word removed */
+.hero-word-old::after{
   content:'';position:absolute;bottom:4px;left:0;right:0;
   height:3px;background:var(--g2);
   transform:scaleX(0);transform-origin:left;
@@ -113,7 +113,7 @@ em{font-style:italic;color:var(--g);}
 .hero-pre::before{content:'';width:24px;height:1.5px;background:var(--g2);}
 .hero-line1{font-family:var(--serif);font-size:clamp(20px,3vw,38px);font-weight:300;color:rgba(255,255,255,.45);letter-spacing:.06em;margin-bottom:4px;opacity:0;animation:fadeIn .7s ease .35s forwards;}
 .hero-word{display:flex;flex-wrap:nowrap;line-height:.95;margin-bottom:8px;overflow:hidden;}
-.hero-letter{font-family:var(--serif);font-size:clamp(60px,9.5vw,130px);font-weight:300;color:#fff;display:inline-block;opacity:0;transform:translateY(70px);animation:letterDrop .6s var(--ease) both;}
+.hero-letter{font-family:var(--serif);font-size:clamp(56px,8vw,116px);font-weight:300;color:#fff;display:inline-block;opacity:0;transform:translateY(70px);animation:letterDrop .6s var(--ease) both;}
 .hero-letter.gr{color:var(--g2);}
 @keyframes letterDrop{to{opacity:1;transform:translateY(0);}}
 .hero-line3{font-family:var(--serif);font-size:clamp(20px,3vw,38px);font-weight:300;font-style:italic;color:var(--g2);letter-spacing:.04em;opacity:0;animation:slideUp .8s var(--ease) 1.3s forwards;}
@@ -1068,21 +1068,6 @@ const counterIO=new IntersectionObserver((entries)=>{
   });
 },{threshold:0.5});
 document.querySelectorAll('[data-count]').forEach(el=>counterIO.observe(el));
-
-// ── HERO KINETIC LETTERS ──
-(function(){
-  const word = 'An Author';
-  const container = document.getElementById('hero-word');
-  if(!container) return;
-  [...word].forEach((ch, i) => {
-    const span = document.createElement('span');
-    const isGreen = (ch === 'A' && i > 0) || ch === 'u' && i > 3;
-    span.className = 'hero-letter' + (isGreen ? ' gr' : '');
-    span.textContent = ch === ' ' ? ' ' : ch;
-    span.style.animationDelay = (0.55 + i * 0.065) + 's';
-    container.appendChild(span);
-  });
-})();
 
 // ── KINETIC LETTERS ──
 (function(){
