@@ -396,11 +396,17 @@ footer{background:var(--dk);padding:72px 5% 36px;}
 <div class="pg on" id="pg-home">
 
   <div class="hero">
-    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <!-- Floating stat pills -->
+    <div class="stat-pill"><div class="sp-n">90%</div><div class="sp-l">Completion</div></div>
+    <div class="stat-pill"><div class="sp-n">400+</div><div class="sp-l">Authors</div></div>
+    <div class="stat-pill"><div class="sp-n">100</div><div class="sp-l">Days</div></div>
     <div class="hero-content">
       <div class="hero-pre">The Book Writing Programme</div>
-      <h1 style="color:#fff">Become<br><em style="color:var(--g2)"><span class="hero-word">An Author</span></em></h1>
-      <p class="hero-sub">PublishU turns willing writers into globally published authors — from first idea to finished book, in just 100 days.</p>
+      <div class="hero-line1">You could be</div>
+      <div class="hero-word" id="hero-word"></div>
+      <div class="hero-line3">in 100 days.</div>
+      <p class="hero-sub">PublishU turns willing writers into globally published authors — with expert coaching, professional publishing, and a system that actually works.</p>
       <div class="hero-btns">
         <a onclick="go('writing')" class="btn bg">Join A Course</a>
         <a href="#about" class="btn bow">How It Works</a>
@@ -1050,6 +1056,21 @@ const counterIO=new IntersectionObserver((entries)=>{
   });
 },{threshold:0.5});
 document.querySelectorAll('[data-count]').forEach(el=>counterIO.observe(el));
+
+// ── HERO KINETIC LETTERS ──
+(function(){
+  const word = 'An Author';
+  const container = document.getElementById('hero-word');
+  if(!container) return;
+  [...word].forEach((ch, i) => {
+    const span = document.createElement('span');
+    const isGreen = (ch === 'A' && i > 0) || ch === 'u' && i > 3;
+    span.className = 'hero-letter' + (isGreen ? ' gr' : '');
+    span.textContent = ch === ' ' ? ' ' : ch;
+    span.style.animationDelay = (0.55 + i * 0.065) + 's';
+    container.appendChild(span);
+  });
+})();
 
 // ── EBOOK FORM ──
 function submitEbook(){
