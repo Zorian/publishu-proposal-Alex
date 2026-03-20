@@ -369,16 +369,52 @@ footer{background:var(--dk);padding:72px 5% 36px;}
   .pillars,.cohorts,.tq-grid,.pricing,.tl,.bens,.why,.path,.pgg,.cg,.fg2,.authors{grid-template-columns:1fr;}
   .pc.feat{padding-top:52px;}
   .matt,.impact,.ebook,.tc{grid-template-columns:1fr;}
-  .matt-img{height:340px;max-height:340px;}
+  .matt-img{height:300px;max-height:300px;}
   .ih-img{display:none;}
   .mattcta{grid-template-columns:1fr;}
-  .mattcta-img{height:240px;}
+  .mattcta-img{height:220px;}
+  .tl{grid-template-columns:repeat(2,1fr);}
 }
 @media(max-width:768px){
   .nm{display:none;}.hb{display:flex;}
   .stats{grid-template-columns:repeat(2,1fr);}
   .stat:nth-child(2){border-right:none;}
-  .hero-content{padding-bottom:60px;}
+  /* ── HERO MOBILE ── */
+  .hero{align-items:flex-start;padding-top:60px;}
+  .hero-content{padding:0 5%;width:100%;}
+  .hero-line1{font-size:clamp(16px,4vw,22px);}
+  .hero-letter{font-size:clamp(48px,13vw,80px);}
+  .hero-line3{font-size:clamp(16px,4vw,22px);}
+  .hero-sub{font-size:14px;max-width:100%;margin:18px 0 28px;}
+  .hero-btns{gap:10px;}
+  .hero-btns .btn{padding:12px 20px;font-size:10.5px;}
+  /* hide pills on mobile — they overlap */
+  .stat-pill{display:none;}
+  /* Matt section mobile */
+  .matt-img{height:260px;max-height:260px;}
+  .matt-copy{padding:44px 5%;}
+  /* Impact section */
+  .impact{padding:56px 5%;gap:36px;}
+  .impact-l .big-stat{font-size:clamp(50px,14vw,80px);}
+  /* Ebook section */
+  .ebook{padding:56px 5%;gap:40px;}
+  .book-wrap{transform:none;}
+  /* Section padding */
+  .sec{padding:64px 5%;}
+  /* Pricing */
+  .pricing{border:none;gap:16px;}
+  .pc{border:1px solid rgba(0,0,0,.08);}
+  /* Authors */
+  .authors{grid-template-columns:1fr;}
+  /* Pathway */
+  .path{grid-template-columns:1fr;}
+  .ps:last-child{border-left:none;border-top:3px solid var(--g);}
+  /* Footer */
+  .fg2{grid-template-columns:1fr 1fr;gap:32px;}
+  /* Contact schedule */
+  .sr{grid-template-columns:50px 1fr;gap:10px;}
+  .sr .btn{display:none;}
+  .si strong{font-size:12px;}
 }
 </style>
 </head>
